@@ -143,6 +143,10 @@ dashboard.
 | Price impact + slippage (micro-cap) | 0.3–5% | 0.3–5% | 0.3–5% |
 | **Realistic round trip** | **~1–4%** | **~1–4%** | dominated by gas |
 
+⚠️ **Measured (Solana, Nov 2026, [`CALIBRATION.md`](CALIBRATION.md)):** swap round trip at
+$25–$300 has median ~53 bps, p90 ~105 bps, max ~244 bps (thin tokens), *before* platform and
+network fees — strongly token-specific, so trades are priced with exact-size quotes.
+
 At 20 trades/day a 2% round trip is a heavy drag; the opportunity scorer requires
 expected move ≫ round-trip cost, and the risk engine sizes using stop distance
 **plus** round-trip cost.

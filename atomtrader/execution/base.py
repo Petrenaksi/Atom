@@ -3,9 +3,11 @@ replaceable; an execution provider only needs a quote source to price paper fill
 
 from __future__ import annotations
 
+from decimal import Decimal
 from typing import Protocol
 
 from atomtrader.core.models import AccountKind, ExecutionResult, MarketQuote, OrderRequest, TokenRef
+from atomtrader.core.money import MissingMarketData
 
 
 class QuoteSource(Protocol):
@@ -25,4 +27,25 @@ class ExecutionProvider(Protocol):
     async def lookup(self, client_order_id: str) -> ExecutionResult | None:
         """Return the outcome of a previously submitted order (for restart reconciliation),
         or None if the provider has no record of it."""
+        ...
+
+
+class NoRoute(MissingMarketData):
+    """The venue/aggregator has no executable route for this token and size. Token-specific
+    (e.g. no liquidity, sell blocked) — not an outage. Nothing is sent."""
+
+
+class QuoteUnavailable(MissingMarketData):
+    """A sized quote could not be obtained (rate limit, network, provider error)."""
+
+
+class SizedQuoter(Protocol):
+    """Executable prices for an exact trade size, in USD terms (stablecoin base asset)."""
+
+    async def buy(self, address: str, spend_usd: Decimal, slippage_bps: int) -> tuple[Decimal, dict[str, str]]:
+        """Tokens received for ``spend_usd``; plus details (route etc.)."""
+        ...
+
+    async def sell(self, address: str, quantity: Decimal, slippage_bps: int) -> tuple[Decimal, dict[str, str]]:
+        """USD received for ``quantity`` tokens; plus details."""
         ...

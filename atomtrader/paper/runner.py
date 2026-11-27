@@ -13,13 +13,16 @@ import asyncio
 import signal
 
 from atomtrader.config.settings import Settings, TradingMode
+from atomtrader.core.models import Chain
 from atomtrader.core.money import FxTable, MissingMarketData
+from atomtrader.execution.paper import PaperExecutionProvider
 from atomtrader.logging import configure_logging, get_logger
 from atomtrader.marketdata.base_assets import BaseAssetRegistry
 from atomtrader.marketdata.dexscreener import DexScreenerClient, DexScreenerQuoteSource
 from atomtrader.marketdata.fx import FxService
 from atomtrader.marketdata.geckoterminal import GeckoTerminalClient
 from atomtrader.marketdata.ingestion import IngestionConfig, IngestionService
+from atomtrader.marketdata.jupiter import JupiterClient, JupiterSizedQuoter
 from atomtrader.paper.session import PaperTradingSession
 from atomtrader.persistence.marketdata_store import MarketDataStore
 from atomtrader.persistence.repository import Repository
@@ -34,9 +37,13 @@ async def run(settings: Settings, cycles: int | None, interval: float) -> None:
     repo = Repository(settings.database_url)
     fx_table = FxTable()
     registry = BaseAssetRegistry.load()
-    dex, gt = DexScreenerClient(), GeckoTerminalClient()
+    dex, gt, jup = DexScreenerClient(), GeckoTerminalClient(), JupiterClient()
     fx = FxService(fx_table)
-    session = PaperTradingSession(settings, repo, DexScreenerQuoteSource(dex, registry), fx_table)
+    quotes = DexScreenerQuoteSource(dex, registry)
+    usdc = next(a.address for a in registry.assets if a.chain is Chain.SOLANA and a.symbol == "USDC")
+    # Solana paper fills at exact-size Jupiter quotes (see docs/CALIBRATION.md).
+    provider = PaperExecutionProvider(quotes, fx_table, sized_quoters={Chain.SOLANA: JupiterSizedQuoter(jup, usdc)})
+    session = PaperTradingSession(settings, repo, quotes, fx_table, provider=provider)
     unresolved = await session.start()
     if unresolved:
         log.warning("unresolved_orders_at_start", orders=unresolved)
@@ -69,6 +76,7 @@ async def run(settings: Settings, cycles: int | None, interval: float) -> None:
     finally:
         await dex.aclose()
         await gt.aclose()
+        await jup.aclose()
         await fx.aclose()
         await repo.close()
 

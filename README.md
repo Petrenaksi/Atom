@@ -10,6 +10,7 @@ execution provider exists, and live mode requires explicit owner authorization.
 
 - Phase 1 research, infrastructure choice and architecture: [`docs/PHASE1_RESEARCH.md`](docs/PHASE1_RESEARCH.md)
 - Live endpoint verification: [`docs/CONNECTIVITY.md`](docs/CONNECTIVITY.md)
+- Slippage calibration (Solana, live Jupiter quotes): [`docs/CALIBRATION.md`](docs/CALIBRATION.md)
 - Implemented so far: config with hard risk ceilings, EUR/Decimal accounting, secret-redacting
   logs, authoritative risk engine, paper execution (AMM impact, fees, failures, slippage
   reverts), event-sourced ledger, idempotent order persistence with restart reconciliation,

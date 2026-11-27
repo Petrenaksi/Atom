@@ -97,6 +97,8 @@ class OrderRow(Base):
     failed_fee_eur: Mapped[Decimal] = mapped_column(DecimalString, default=Decimal(0))
     realized_slippage_bps: Mapped[Decimal | None] = mapped_column(DecimalString, nullable=True)
     error: Mapped[str | None] = mapped_column(String(512), nullable=True)
+    # Execution provenance, e.g. {"fill_basis": "exact_quote", "route": "...", "calibration": "..."}
+    details: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
     created_at: Mapped[datetime] = mapped_column(UTCDateTime)
     updated_at: Mapped[datetime] = mapped_column(UTCDateTime)
 
@@ -227,6 +229,7 @@ class Repository:
             row.failed_fee_eur = result.failed_fee_eur
             row.realized_slippage_bps = result.realized_slippage_bps
             row.error = (result.error or None) and result.error[:512]
+            row.details = dict(result.details) if result.details else None
             row.updated_at = now
             if result.fill is not None:
                 f = result.fill
@@ -305,6 +308,7 @@ class Repository:
                         failed_fee_eur=o.failed_fee_eur,
                         realized_slippage_bps=o.realized_slippage_bps,
                         error=o.error,
+                        details=dict(o.details or {}),
                     )
                 )
             return out

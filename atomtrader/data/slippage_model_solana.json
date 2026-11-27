@@ -1,0 +1,65 @@
+{
+ "chain": "solana",
+ "fitted_at": "2026-11-27T14:04:49.141629+00:00",
+ "fill_basis": "jupiter_exact_quote",
+ "noise_bps_sd": 10.0,
+ "fallback_extra_cost_bps_per_side": 10.912605625650151,
+ "measured": {
+  "round_trip": {
+   "n": 48,
+   "mean_bps": 55.493199688338535,
+   "median_bps": 52.69880161987126,
+   "p75_bps": 71.8252112513003,
+   "p90_bps": 104.69091916923341,
+   "min_bps": -0.2481272921991362,
+   "max_bps": 244.31930340097364,
+   "uncalibrated_error": {
+    "mean_bps": -10.351989765141063,
+    "rmse_bps": 53.192956338599004
+   },
+   "by_liquidity": [
+    {
+     "liq_min_usd": 0.0,
+     "liq_max_usd": 300000.0,
+     "n": 20,
+     "median_bps": 58.69607501095911,
+     "p75_bps": 104.69091916923341,
+     "max_bps": 244.31930340097364
+    },
+    {
+     "liq_min_usd": 300000.0,
+     "liq_max_usd": 2000000.0,
+     "n": 16,
+     "median_bps": 59.16411092693217,
+     "p75_bps": 67.56380524808685,
+     "max_bps": 85.13101986900843
+    },
+    {
+     "liq_min_usd": 2000000.0,
+     "liq_max_usd": null,
+     "n": 12,
+     "median_bps": 5.5898914509354425,
+     "p75_bps": 36.653791434944296,
+     "max_bps": 53.38869107472611
+    }
+   ]
+  },
+  "drift": {
+   "n": 12,
+   "delay_s": 5.0,
+   "mean_bps": -0.7889042283312775,
+   "sd_bps": 3.93886548446079,
+   "abs_p50_bps": 3.046351172417694,
+   "abs_p90_bps": 5.5552276793147115
+  },
+  "linear_fit_r2": {
+   "buy": 0.1081834949694842,
+   "sell": 0.00098038274544765
+  }
+ },
+ "caveats": [
+  "Quote-based costs exclude Jupiter's platform fee and network fees (charged separately).",
+  "Quotes are not landed fills: MEV/latency can make real fills worse than drift suggests.",
+  "Small sample of tokens/sizes; refit regularly; outside $25-$300 sizes it is extrapolation."
+ ]
+}
