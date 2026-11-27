@@ -169,3 +169,38 @@ class MarketDataStore:
 
         async with self._session() as s:
             return int((await s.execute(select(func.count()).select_from(table))).scalar() or 0)
+
+
+def row_to_snapshot(r: PairSnapshotRow) -> PairSnapshot:
+    from atomtrader.core.models import TokenRef
+    from atomtrader.marketdata.models import WindowStats
+
+    def dec(v: Any) -> Decimal | None:
+        return None if v is None else Decimal(v)
+
+    windows = {
+        w: WindowStats(buys=v.get("buys"), sells=v.get("sells"), buyers=v.get("buyers"), sellers=v.get("sellers"),
+                       volume_usd=dec(v.get("volume_usd")), price_change_pct=dec(v.get("price_change_pct")))
+        for w, v in (r.windows or {}).items()
+    }
+    chain = Chain(r.chain)
+    return PairSnapshot(
+        chain=chain, dex=r.dex, pair_address=r.pair_address, base=TokenRef(chain, r.token_address, r.symbol),
+        quote_symbol=r.quote_symbol, quote_address="", price_usd=r.price_usd, liquidity_usd=r.liquidity_usd,
+        fdv_usd=r.fdv_usd, market_cap_usd=r.market_cap_usd, pair_created_at=r.pair_created_at, as_of=r.as_of,
+        source=r.source, windows=windows,
+    )
+
+
+async def recent_snapshots(store: MarketDataStore, token_address: str, since: datetime) -> list[PairSnapshot]:
+    async with store._session() as s:
+        q = (select(PairSnapshotRow).where(PairSnapshotRow.token_address == token_address, PairSnapshotRow.as_of >= since)
+             .order_by(PairSnapshotRow.as_of))
+        return [row_to_snapshot(r) for r in (await s.execute(q)).scalars()]
+
+
+async def recently_boosted(store: MarketDataStore, token_address: str, since: datetime) -> bool:
+    async with store._session() as s:
+        q = select(AttentionRow.id).where(AttentionRow.token_address == token_address, AttentionRow.kind == "boost",
+                                          AttentionRow.as_of >= since).limit(1)
+        return (await s.execute(q)).first() is not None
