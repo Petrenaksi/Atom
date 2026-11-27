@@ -4,11 +4,21 @@ Everything here is **paper trading**: simulated fills on live market data. No wa
 real order exists anywhere in the system. Live trading is not implemented and requires your
 explicit authorization (see the end of this document).
 
-## 1. Server
+## 1. Server requirements (exact)
 
-A small EU VPS is enough: 2–4 vCPU, 4–8 GB RAM, 40 GB disk, Ubuntu 24.04 or Debian 12.
-A dedicated server matters for data quality: keyless provider rate limits (GeckoTerminal,
-CoinGecko, GDELT) are per IP, and shared egress IPs exhaust them quickly.
+| Item | Minimum | Recommended | Why |
+|---|---|---|---|
+| CPU | 2 vCPU | 4 vCPU (x86_64 or ARM64) | Engine + PostgreSQL + dashboard; TA/backtests are CPU-bound bursts |
+| RAM | 4 GB | 8 GB | Python processes ~0.5–1 GB each, PostgreSQL shared buffers |
+| Disk | 40 GB SSD | 80 GB SSD | Measured ≈1.1 kB per snapshot → ≈90–100 MB/day, ≈3 GB/month at default cadence (+ indexes, logs, backups) |
+| OS | Ubuntu 24.04 LTS or Debian 12 | same | Docker Engine 24+ with the compose plugin |
+| Network | Dedicated public IPv4, outbound HTTPS | EU region (DE/FI) | Keyless provider limits are per IP; a shared egress IP exhausts them |
+| Inbound | SSH only (key auth, no passwords) | + firewall (ufw/nftables) default-deny | Dashboard is reached through an SSH tunnel, never exposed |
+| Time | NTP enabled (systemd-timesyncd/chrony) | | Daily loss limit resets at local midnight (Europe/Madrid) |
+| Backups | Daily `pg_dump` | + off-server copy (storage box / object storage) | Ledger, decisions and the recorded dataset are the system's memory |
+| Monitoring | Dashboard heartbeat | + free uptime/cron check (e.g. a healthcheck ping) | Engine-stale alert if it stops |
+
+No GPU, no Kubernetes, no message broker. One server runs everything.
 
 Outbound HTTPS must reach:
 
@@ -20,7 +30,28 @@ Outbound HTTPS must reach:
 | Token security | `api.rugcheck.xyz`, `api.gopluslabs.io`, `api.honeypot.is` |
 | Public RPC (read-only) | `api.mainnet-beta.solana.com`, `mainnet.base.org`, `bsc-dataseed.bnbchain.org` |
 | News (narratives) | `hn.algolia.com`, `api.gdeltproject.org` |
-| Optional | your webhook host; `api.anthropic.com` if the LLM classifier is enabled |
+| Build/updates | Docker Hub, PyPI, GitHub |
+| Optional | your webhook host; `api.anthropic.com` if the LLM classifier is enabled; Helius if added |
+
+## 1b. Estimated monthly operating costs (EUR)
+
+Prices change often (Hetzner raised cloud prices in 2026 and some plans have limited
+availability) — confirm on the providers' pages before ordering. VAT shown at 21 % (Spain).
+
+| Item | Lean (recommended for the 14-day paper run) | Standard (only if data limits prove binding) |
+|---|---|---|
+| VPS, e.g. Hetzner CAX21 (4 vCPU ARM, 8 GB, 80 GB) | ≈ €10.5–12.5 excl. VAT | same |
+| Public IPv4 | ≈ €0.5–0.7 | same |
+| Off-server backups (storage box / snapshot) | ≈ €2–4 | same |
+| Market/security/news data | €0 (keyless) | CoinGecko API Basic ≈ $35 or Analyst ≈ $129 (higher on-chain limits) |
+| Solana RPC | €0 (public) | Helius Developer ≈ $49 (10 M credits; holder polling R2) |
+| Alerts webhook | €0 | €0 |
+| LLM narrative classifier | €0 (off) | optional; cost depends on model and call volume — classify only new/changed narratives |
+| **Total (incl. VAT)** | **≈ €16–21 / month** | **≈ €95–190 / month** |
+
+Context on €1,000 capital: the lean setup is a ≈1.6–2.1 %/month hurdle; the standard setup
+≈10–19 %/month. Only upgrade data when the paper results show the missing data is what
+limits performance. Infrastructure is excluded from trading P&L in the reports.
 
 ## 2. Install (Docker — recommended)
 

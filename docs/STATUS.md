@@ -1,8 +1,9 @@
 # Project status — 2026-11-27
 
 Mode: **paper trading only.** No live execution provider exists; no wallet, key or real
-order is used anywhere. 176 automated tests (+2 PostgreSQL tests run against a real
-PostgreSQL 16 server).
+order is used anywhere. 197 automated tests (+2 PostgreSQL tests run against a real
+PostgreSQL 16 server). Independent audit: [`AUDIT.md`](AUDIT.md) — 7 critical and 6 high-priority
+defects found and fixed before deployment.
 
 ## Requirements → implementation
 
@@ -31,10 +32,10 @@ PostgreSQL 16 server).
 
 ## Known limitations (honest list)
 
-1. **EVM sell verification gap.** Honeypot.is cannot simulate many brand-new BSC/Base pairs
-   ("pair not found"). Such tokens are blocked from entry (`sell_simulation_unavailable`),
-   which is safe but means few EVM trades. A self-hosted sell simulation (eth_call against
-   the router) would close this gap.
+1. **EVM sell verification gap.** Honeypot.is cannot simulate Uniswap v4 / Aerodrome
+   Slipstream pools — measured 0/7 new Base pools verifiable. Such tokens are blocked from
+   entry (`sell_simulation_unavailable`): safe, but almost no new-EVM-pool trades. A
+   self-hosted sell simulation (eth_call against the routers) would close this gap.
 2. **EVM slippage uncalibrated.** Solana fills use exact Jupiter quotes; Base/BNB use the
    single-pool model (labelled uncalibrated).
 3. **Keyless rate limits.** GeckoTerminal/CoinGecko/GDELT throttle shared IPs; a dedicated

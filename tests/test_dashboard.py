@@ -66,3 +66,16 @@ def test_commands_are_validated_and_queued_not_executed(setup) -> None:
 
     rows = asyncio.run(check())
     assert [r.action for r in rows] == ["emergency_stop"] and rows[0].actor == "dashboard"
+
+
+def test_no_attacker_controlled_data_inside_inline_handlers() -> None:
+    """Token symbols are attacker-controlled. HTML-escaping does not protect a JavaScript
+    string inside an inline event handler (the browser decodes entities first) — an audit
+    reproduced script execution via a crafted symbol. Data must travel via data-* attributes."""
+    import re
+    from pathlib import Path
+
+    html = (Path(__file__).parent.parent / "atomtrader" / "dashboard" / "static" / "index.html").read_text()
+    handlers = re.findall(r'on\w+="[^"]*"', html) + re.findall(r"on\w+=\\\\?'[^']*'", html)
+    assert not [h for h in handlers if "esc(" in h], handlers
+    assert 'class="close-pos"' in html and "dataset.pid" in html
