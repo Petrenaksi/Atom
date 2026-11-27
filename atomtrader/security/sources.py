@@ -114,6 +114,8 @@ def apply_goplus(report: SecurityReport, raw: dict[str, Any], address: str) -> N
         report.sources["goplus"] = "error: token not in result"
         return
     report.sources["goplus"] = "ok"
+    hp, csa = _flag(info.get("is_honeypot")), _flag(info.get("cannot_sell_all"))
+    report.goplus_honeypot = None if hp is None and csa is None else bool(hp or csa)
     for key, reason in GOPLUS_HARD.items():
         if _flag(info.get(key)):
             report.hard_fail.append(reason)
@@ -158,6 +160,8 @@ def apply_honeypot(report: SecurityReport, raw: dict[str, Any]) -> None:
         report.sources["honeypot_is"] = f"error: {raw.get('error')}"
         return
     report.sources["honeypot_is"] = "ok"
+    report.honeypot_is_reason = (raw.get("honeypotResult") or {}).get("honeypotReason")
+    report.honeypot_is_sell_tax = _d((raw.get("simulationResult") or {}).get("sellTax"))
     if (raw.get("honeypotResult") or {}).get("isHoneypot"):
         report.hard_fail.append("honeypot_is_honeypot")
     if raw.get("simulationSuccess") is False:

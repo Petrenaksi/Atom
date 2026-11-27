@@ -54,7 +54,7 @@ class FakeScanner:
         self.market = None
         self.age = 0.0
 
-    async def evaluate(self, token, pool_address=None, narrative_strength=None, assess=True):
+    async def evaluate(self, token, pool_address=None, narrative_strength=None, assess=True, security_max_age=None):
         from atomtrader.security.models import SecurityReport
 
         c = self.market

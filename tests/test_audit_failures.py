@@ -338,3 +338,75 @@ def test_backtest_charges_failed_transactions() -> None:
     assert clean.failed_tx_fees_eur == 0 and lossy.failed_transactions > 0
     assert lossy.failed_tx_fees_eur == lossy.failed_transactions * Decimal("0.05")
     assert abs(lossy.net_pnl_eur - (lossy.ending_cash_eur - lossy.starting_eur)) < Decimal("1e-20")
+
+
+# --------------------------------------------------------------------------- rotation vs market-wide activity
+
+
+def _rotation_universe(unrelated_surging: bool):
+    from tests.test_narrative import feats, penguin_narrative
+
+    narr = penguin_narrative(["LEAD", "F1"])
+    fs = {"solana:LEADMint": feats("LEAD", 2500, -4, 5_000, 30), "solana:F1Mint": feats("F1", 40, 10, 25_000, 70)}
+    for i in range(6):  # tokens with NO link to the narrative
+        sym = f"U{i}"
+        fs[f"solana:{sym}Mint"] = feats(sym, 30, 8, 25_000 if unrelated_surging else 5_000, 70 if unrelated_surging else 15)
+    return narr, fs
+
+
+def test_rotation_requires_relative_strength_against_unrelated_tokens() -> None:
+    from atomtrader.narrative.rotation import detect_rotations
+
+    narr, quiet = _rotation_universe(unrelated_surging=False)
+    alerts = detect_rotations(narr, quiet)
+    assert [a.follower for a in alerts] == ["solana:F1Mint"]
+    assert alerts[0].evidence["market_baseline_volume_accel"] is not None
+    narr, market_wide = _rotation_universe(unrelated_surging=True)
+    assert detect_rotations(narr, market_wide) == []  # everything is surging: not a second wave
+
+
+async def test_held_tokens_are_reassessed_sooner_than_candidates() -> None:
+    from datetime import UTC, datetime
+
+    from atomtrader.security.assessor import SecurityAssessor
+    from tests.test_security import BONK, FakeSources, Quoter, fx as sfx
+
+    t = {"now": datetime(2026, 11, 27, 15, 0, tzinfo=UTC)}
+    src = FakeSources(rug=sfx("rugcheck_report_bonk.json"))
+    a = SecurityAssessor(src, Quoter(), clock=lambda: t["now"])
+    await a.assess(BONK)
+    t["now"] += timedelta(minutes=3)
+    await a.assess(BONK)  # candidate TTL (10 min): cached
+    assert src.calls.count("rugcheck") == 1
+    await a.assess(BONK, max_age_seconds=120)  # held TTL (2 min): refreshed
+    assert src.calls.count("rugcheck") == 2
+
+
+# --------------------------------------------------------------------------- contested honeypot verdicts
+
+
+async def test_contested_honeypot_blocks_entry_without_forcing_exit() -> None:
+    from datetime import UTC, datetime
+
+    from atomtrader.security.assessor import SecurityAssessor
+    from tests.test_security import ELSA, FakeSources, fx as sfx
+
+    now = datetime(2026, 11, 27, 15, 0, tzinfo=UTC)
+    hp = sfx("honeypot_base_token.json")
+    hp["honeypotResult"] = {"isHoneypot": True, "honeypotReason": "HONEYPOT DETECTED"}
+    hp["simulationResult"]["sellTax"] = 0
+    r = await SecurityAssessor(FakeSources(goplus=sfx("goplus_base_token.json"), honeypot=hp), clock=lambda: now).assess(ELSA)
+    assert r.passed and not r.entry_allowed and "honeypot_verdicts_conflict" in r.unverified
+
+    # A revert ("STF", transfer-restricted token) remains a confirmed failure.
+    hp2 = sfx("honeypot_base_token.json")
+    hp2["honeypotResult"] = {"isHoneypot": True, "honeypotReason": "execution reverted: STF"}
+    hp2["simulationResult"]["sellTax"] = 100
+    r2 = await SecurityAssessor(FakeSources(goplus=sfx("goplus_base_token.json"), honeypot=hp2), clock=lambda: now).assess(ELSA)
+    assert not r2.passed and "honeypot_is_honeypot" in r2.hard_fail
+
+    # Both sources agree it is a honeypot: confirmed.
+    gp = sfx("goplus_base_token.json")
+    gp["result"][ELSA.address]["is_honeypot"] = "1"
+    r3 = await SecurityAssessor(FakeSources(goplus=gp, honeypot=hp), clock=lambda: now).assess(ELSA)
+    assert not r3.passed

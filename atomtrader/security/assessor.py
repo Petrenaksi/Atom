@@ -54,13 +54,15 @@ class SecurityAssessor:
         self.clock = clock
         self._cache: dict[str, SecurityReport] = {}
 
-    async def assess(self, token: TokenRef, force: bool = False, pool_addresses: Iterable[str] = ()) -> SecurityReport:
+    async def assess(self, token: TokenRef, force: bool = False, pool_addresses: Iterable[str] = (),
+                     max_age_seconds: float | None = None) -> SecurityReport:
         """``pool_addresses``: the token's known pool/pair addresses (from market data). On EVM
         chains the pool contract holds the tokens, so such holders are relabelled as AMM
         instead of counting as concentration. Unidentified contracts still count."""
         cached = self._cache.get(token.key)
         now = self.clock()
-        if cached and not force and (now - cached.checked_at).total_seconds() < self.policy.cache_seconds:
+        ttl = self.policy.cache_seconds if max_age_seconds is None else max_age_seconds
+        if cached and not force and (now - cached.checked_at).total_seconds() < ttl:
             return cached
         report = SecurityReport(token=token, checked_at=now)
         if token.chain is Chain.SOLANA:
@@ -97,6 +99,15 @@ class SecurityAssessor:
 
     def apply_policy(self, r: SecurityReport) -> None:
         p = self.policy
+        # Contested honeypot verdict: Honeypot.is reports a generic detection with a 0 % sell
+        # tax while GoPlus independently reports a sellable token. Observed live on several
+        # PancakeSwap v3 0.01 % pools. Not confirmed -> unverified (entry stays blocked, but it
+        # does not force an exit). Reverts, high taxes or agreeing sources stay hard failures.
+        if ("honeypot_is_honeypot" in r.hard_fail and r.goplus_honeypot is False
+                and (r.honeypot_is_sell_tax is None or r.honeypot_is_sell_tax == 0)
+                and "revert" not in (r.honeypot_is_reason or "").lower()):
+            r.hard_fail.remove("honeypot_is_honeypot")
+            r.unverified.append("honeypot_verdicts_conflict")
         if not r.verified:
             r.unverified.append("no_security_source_answered")
         if r.sell_route_ok is False:

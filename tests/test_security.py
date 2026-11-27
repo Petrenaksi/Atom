@@ -153,7 +153,10 @@ async def test_evm_assessor_uses_goplus_and_honeypot() -> None:
     hp["honeypotResult"] = {"isHoneypot": True}
     src = FakeSources(goplus=fx("goplus_base_token.json"), honeypot=hp)
     r = await SecurityAssessor(src, clock=lambda: NOW).assess(ELSA)
-    assert src.calls == ["goplus", "honeypot"] and "honeypot_is_honeypot" in r.hard_fail
+    assert src.calls == ["goplus", "honeypot"]
+    # GoPlus reports the token sellable and the simulation shows a 0 % tax: contested, so entry
+    # is blocked (unverified) but a held position is not force-exited (audit change).
+    assert "honeypot_verdicts_conflict" in r.unverified and not r.entry_allowed
 
 
 # ------------------------------------------------------------------ insider exit risk situations

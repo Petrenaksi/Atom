@@ -129,7 +129,7 @@ async def test_scanner_service_measures_distribution_between_checks(tmp_path) ->
         def __init__(self):
             self.n = 0
 
-        async def assess(self, token, pool_addresses=()):
+        async def assess(self, token, pool_addresses=(), max_age_seconds=None):
             self.n += 1
             whale = "30" if self.n == 1 else "22"
             r = SecurityReport(token, clock.now, sources={"rugcheck": "ok"})

@@ -72,6 +72,9 @@ class EngineConfig:
     platform_fee_pct: Decimal = D("0.10")
     network_fee_eur: Decimal = D("0.05")
     gdelt_queries_per_refresh: int = 2
+    # Held tokens are re-assessed more often than candidates so holder snapshots (insider
+    # distribution) refresh faster. RugCheck caches holder data on its side as well.
+    held_security_max_age_s: float = 120.0
     entry: EntryConfig = field(default_factory=EntryConfig)
     exit: ExitConfig = field(default_factory=ExitConfig)
     weights: OpportunityWeights = field(default_factory=OpportunityWeights)
@@ -223,7 +226,7 @@ class TradingEngine:
         now = self.clock()
         for pos in open_pos:
             pid = pos.position_id
-            cand = await self.scanner.evaluate(pos.token)
+            cand = await self.scanner.evaluate(pos.token, security_max_age=self.cfg.held_security_max_age_s)
             if cand is None:
                 if f"nodata:{pid}" not in self._alerted:
                     self._alerted.add(f"nodata:{pid}")

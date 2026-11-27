@@ -57,7 +57,8 @@ class ScannerService:
         self.max_data_age = max_data_age
 
     async def evaluate(self, token: TokenRef, pool_address: str | None = None,
-                       narrative_strength: float | None = None, assess: bool = True) -> Candidate | None:
+                       narrative_strength: float | None = None, assess: bool = True,
+                       security_max_age: float | None = None) -> Candidate | None:
         """``assess=False`` skips the (rate-limited) security assessment for a cheap
         preliminary ranking; candidates that survive it are re-evaluated with ``assess=True``."""
         now = self.clock()
@@ -75,7 +76,7 @@ class ScannerService:
 
         report = insider = None
         if self.assessor is not None and assess:
-            report = await self.assessor.assess(token, pool_addresses=pools)
+            report = await self.assessor.assess(token, pool_addresses=pools, max_age_seconds=security_max_age)
             prior = []
             if self.security_store is not None:
                 holder_hist = await self.security_store.holder_history(token.key, now - timedelta(hours=6))

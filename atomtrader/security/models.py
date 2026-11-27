@@ -52,6 +52,9 @@ class SecurityReport:
     rugcheck_score: Decimal | None = None  # 0..100, higher = riskier (RugCheck's own scale)
     sell_route_ok: bool | None = None
     simulated_sell_failures: int | None = None
+    goplus_honeypot: bool | None = None  # GoPlus is_honeypot / cannot_sell_all verdict
+    honeypot_is_reason: str | None = None
+    honeypot_is_sell_tax: Decimal | None = None
 
     @property
     def passed(self) -> bool:
