@@ -160,6 +160,7 @@ class Repository:
     async def init(self) -> None:
         # Register tables defined in sibling modules on the shared metadata.
         import atomtrader.persistence.marketdata_store  # noqa: F401
+        import atomtrader.persistence.security_store  # noqa: F401
         import atomtrader.persistence.trading_store  # noqa: F401
 
         async with self.engine.begin() as conn:
