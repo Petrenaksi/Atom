@@ -1,0 +1,23 @@
+[Unit]
+Description=Atom trader engine (paper mode)
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=atom
+WorkingDirectory=/opt/atom
+EnvironmentFile=/opt/atom/.env
+Environment=ATOM_MODE=paper
+ExecStart=/opt/atom/.venv/bin/python -m atomtrader.engine.main
+Restart=always
+RestartSec=10
+# hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/atom
+
+[Install]
+WantedBy=multi-user.target

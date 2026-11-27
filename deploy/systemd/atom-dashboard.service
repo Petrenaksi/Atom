@@ -1,0 +1,19 @@
+[Unit]
+Description=Atom trader dashboard (read-only + command queue)
+After=network-online.target postgresql.service
+
+[Service]
+Type=simple
+User=atom
+WorkingDirectory=/opt/atom
+EnvironmentFile=/opt/atom/.env
+ExecStart=/opt/atom/.venv/bin/python -m atomtrader.dashboard.app --host 127.0.0.1 --port 8080
+Restart=always
+RestartSec=10
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

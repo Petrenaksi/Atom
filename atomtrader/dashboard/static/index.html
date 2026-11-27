@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atom Trader</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--fg:#1b1f24;--muted:#5f6b7a;--line:#e3e7ec;--pos:#137a3f;--neg:#b42318;--warn:#b54708;--accent:#2557d6;--paper:#7a4cc2}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1216;--card:#171b21;--fg:#e6e9ee;--muted:#9aa4b2;--line:#262c35;--pos:#3ccf7a;--neg:#ff6b5e;--warn:#f5a524;--accent:#6f9bff;--paper:#b48cff}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0;z-index:2}
+h1{font-size:17px;margin:0}h2{font-size:14px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid currentColor}
+.paper{color:var(--paper)}.stale{color:var(--neg)}.ok{color:var(--pos)}
+main{padding:16px;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));max-width:1500px;margin:0 auto}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
+.wide{grid-column:1/-1}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.kpi{border:1px solid var(--line);border-radius:8px;padding:8px 10px}.kpi b{display:block;font-size:17px}.kpi span{color:var(--muted);font-size:12px}
+.tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:500}td.num{text-align:right;font-variant-numeric:tabular-nums}
+.pos{color:var(--pos)}.neg{color:var(--neg)}.muted{color:var(--muted)}
+button{font:inherit;padding:6px 12px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}
+button.danger{background:var(--neg);color:#fff;border-color:var(--neg)}button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}input{font:inherit;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--fg);min-width:0}
+.feed{max-height:360px;overflow:auto;font-size:12.5px}.feed div{padding:4px 0;border-bottom:1px solid var(--line)}
+#login{max-width:420px;margin:60px auto;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+svg{width:100%;height:70px}
+</style>
+</head>
+<body>
+<div id="login" hidden>
+  <h1>Atom Trader</h1><p class="muted">Enter the dashboard token (stored only in this browser).</p>
+  <div class="controls"><input id="tok" type="password" placeholder="token" style="flex:1"><button class="primary" onclick="saveTok()">Open</button></div>
+</div>
+<div id="app" hidden>
+<header>
+  <div><h1>Atom Trader <span id="label" class="badge paper">PAPER — simulated funds</span></h1>
+  <div class="muted" id="hb"></div></div>
+  <div class="controls">
+    <button class="danger" onclick="confirmCmd('emergency_stop',{reason:'dashboard'},'EMERGENCY STOP: block all new entries?')">Emergency stop</button>
+    <button onclick="cmd('clear_emergency_stop')">Clear stop</button>
+    <button onclick="cmd('pause')">Pause</button><button onclick="cmd('resume')">Resume</button>
+    <button id="autoBtn" onclick="toggleAuto()">Autonomous: ?</button>
+  </div>
+</header>
+<main>
+  <section class="wide"><h2>Account</h2><div class="kpis" id="kpis"></div><svg id="curve" preserveAspectRatio="none"></svg></section>
+  <section class="wide"><h2>Active positions</h2><div class="tbl"><table id="positions"></table></div></section>
+  <section class="wide"><h2>Opportunities</h2><div class="tbl"><table id="opps"></table></div></section>
+  <section><h2>Narratives</h2><div class="tbl"><table id="narr"></table></div><h2 style="margin-top:14px">Rotation alerts</h2><div class="tbl"><table id="rot"></table></div></section>
+  <section><h2>Performance (net of fees)</h2><div class="kpis" id="perf"></div><div class="tbl" style="margin-top:10px"><table id="byStrat"></table></div><div class="tbl"><table id="byMode"></table></div><div class="tbl"><table id="byChain"></table></div></section>
+  <section><h2>Controls</h2>
+    <div class="controls" id="chains"></div>
+    <div class="controls" style="margin-top:10px"><input id="bl" placeholder="chain:address to blacklist" style="flex:1"><button onclick="blacklist()">Blacklist</button></div>
+    <div class="controls" style="margin-top:10px"><input id="riskKey" placeholder="risk field e.g. max_open_positions" style="flex:1"><input id="riskVal" placeholder="value" style="width:90px"><button onclick="setRisk()">Set</button></div>
+    <div class="tbl" style="margin-top:10px"><table id="limits"></table></div>
+    <div class="muted" id="cmdres" style="margin-top:8px"></div></section>
+  <section><h2>Events &amp; notifications</h2><div class="feed" id="events"></div></section>
+  <section class="wide"><h2>Recent trades</h2><div class="tbl"><table id="trades"></table></div></section>
+</main>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let TOKEN=null; try{TOKEN=localStorage.getItem('atomTok')}catch(e){}
+let STATE=null;
+function saveTok(){TOKEN=$('tok').value.trim();try{localStorage.setItem('atomTok',TOKEN)}catch(e){};boot()}
+const esc=s=>String(s??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const eur=v=>v==null?'—':'€'+Number(v).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct=v=>v==null?'—':(Number(v)>=0?'+':'')+Number(v).toFixed(1)+'%';
+const cls=v=>v==null?'':(Number(v)>=0?'pos':'neg');
+const num=(v,d=2)=>v==null?'—':Number(v).toFixed(d);
+async function api(path,opts={}){const r=await fetch(path,{...opts,headers:{'Authorization':'Bearer '+TOKEN,'Content-Type':'application/json'}});if(r.status===401){try{localStorage.removeItem('atomTok')}catch(e){};TOKEN=null;boot();throw new Error('unauthorized')}return r.json()}
+async function cmd(action,args={}){const r=await api('/api/command',{method:'POST',body:JSON.stringify({action,args})});$('cmdres').textContent=r.detail?('Rejected: '+r.detail):('Queued #'+r.queued+' ('+action+') — the engine applies it on its next cycle.');setTimeout(load,1500)}
+function confirmCmd(a,args,msg){if(confirm(msg))cmd(a,args)}
+function toggleAuto(){const on=!!(STATE&&STATE.controls.autonomous);confirmCmd('autonomous',{enabled:!on},on?'Disable autonomous mode?':'Enable autonomous PAPER trading?')}
+function blacklist(){const t=$('bl').value.trim();if(t)confirmCmd('blacklist',{token:t,reason:'dashboard'},'Blacklist '+t+'?')}
+function setRisk(){const k=$('riskKey').value.trim(),v=$('riskVal').value.trim();if(k&&v)confirmCmd('set_risk',{[k]:isNaN(v)?v:Number(v)},'Set '+k+' = '+v+'? (hard ceilings still apply)')}
+function table(el,head,rows){$(el).innerHTML='<tr>'+head.map(h=>'<th>'+h+'</th>').join('')+'</tr>'+(rows.length?rows.join(''):'<tr><td class="muted" colspan="'+head.length+'">None</td></tr>')}
+function curve(points){const s=$('curve');const v=points.map(Number).filter(x=>!isNaN(x));if(v.length<2){s.innerHTML='';return}
+ const mn=Math.min(...v),mx=Math.max(...v),w=1000,h=70,r=mx-mn||1;const d=v.map((x,i)=>(i?'L':'M')+(i/(v.length-1)*w).toFixed(1)+','+(h-(x-mn)/r*(h-6)-3).toFixed(1)).join('');
+ s.setAttribute('viewBox','0 0 '+w+' '+h);s.innerHTML='<path d="'+d+'" fill="none" stroke="var(--accent)" stroke-width="2" vector-effect="non-scaling-stroke"/>'}
+function mt(m){return m||{}}
+function render(st){STATE=st;const a=st.account||{};$('label').textContent=st.label;
+ $('hb').innerHTML=st.engine.stale?'<span class="stale">Engine heartbeat stale ('+esc(st.engine.heartbeat)+') — positions may not be managed</span>':'<span class="ok">Engine live</span> · last update '+esc(st.engine.heartbeat);
+ $('autoBtn').textContent='Autonomous: '+(st.controls.autonomous?'ON':'OFF');
+ const k=[['Total equity',eur(a.equity_eur)],['Available cash',eur(a.cash_eur)],['Invested',eur(a.invested_eur)],['Realized P&L',eur(a.realized_pnl_eur)],['Unrealized P&L',eur(a.unrealized_pnl_eur)],['Daily P&L',eur(a.daily_pnl_eur)],['Total fees',eur(a.fees_eur)],['Current drawdown',num(a.current_drawdown_pct,1)+'%'],['Max drawdown',num(a.max_drawdown_pct,1)+'%'],['Entries today',a.entries_today??'—'],['Status',st.controls.emergency_stop?'EMERGENCY STOP':st.controls.global_pause?'PAUSED':a.daily_halt?'DAILY LOSS HALT':'running']];
+ $('kpis').innerHTML=k.map(([l,v])=>'<div class="kpi"><span>'+l+'</span><b>'+esc(v)+'</b></div>').join('');curve(a.equity_curve||[]);
+ table('positions',['Token','Chain','Strategy','Entry $','Now $','Value','Unrealized','Return','Held (min)','Mode','Stop $','Target','']
+  ,st.positions.map(p=>'<tr><td>'+esc(p.token)+'</td><td>'+esc(p.chain)+'</td><td>'+esc(p.strategy)+'</td><td class="num">'+esc(p.entry_price_usd)+'</td><td class="num">'+esc(p.current_price_usd)+'</td><td class="num">'+eur(p.value_eur)+'</td><td class="num '+cls(p.unrealized_pnl_eur)+'">'+eur(p.unrealized_pnl_eur)+'</td><td class="num '+cls(p.return_pct)+'">'+pct(p.return_pct)+'</td><td class="num">'+esc(p.holding_minutes)+'</td><td>'+esc(p.mode)+'</td><td class="num">'+esc(p.stop_usd&&Number(p.stop_usd).toPrecision(6))+'</td><td class="num">'+pct(p.target_pct)+'</td><td><button onclick="confirmCmd(\'close_position\',{position_id:\''+esc(p.position_id)+'\'},\'Close '+esc(p.token)+' at market?\')">Close</button></td></tr>'));
+ const o=st.opportunities||{};
+ table('opps',['Token','Chain','Moonshot','Conf.','Liquidity','Vol accel','Buyer accel','1h','24h','Narrative','Insider risk','Flags'],(o.candidates||[]).map(c=>'<tr><td>'+esc(c.token)+'</td><td>'+esc(c.chain)+'</td><td class="num"><b>'+num(c.moonshot,0)+'</b></td><td class="num">'+num(c.confidence)+'</td><td class="num">$'+Number(c.liquidity_usd||0).toLocaleString(undefined,{maximumFractionDigits:0})+'</td><td class="num">'+num(c.volume_accel,1)+'×</td><td class="num">'+num(c.buyer_accel,1)+'×</td><td class="num '+cls(c.chg_h1)+'">'+pct(c.chg_h1)+'</td><td class="num '+cls(c.chg_h24)+'">'+pct(c.chg_h24)+'</td><td>'+esc(c.narrative)+'</td><td class="num">'+esc(c.insider_score)+'</td><td class="muted">'+esc((c.flags||[]).join(', '))+'</td></tr>'));
+ table('narr',['Term','Status','Strength','Mentions','Authors','Accel','Tokens'],(o.narratives||[]).map(n=>'<tr title="'+esc(n.headline)+'"><td>'+esc(n.term)+'</td><td>'+esc(n.status)+'</td><td class="num">'+num(n.strength)+'</td><td class="num">'+esc(n.mentions)+'</td><td class="num">'+esc(n.authors)+'</td><td class="num">'+num(n.acceleration,1)+'×</td><td>'+esc((n.tokens||[]).join(', '))+'</td></tr>'));
+ table('rot',['Narrative','Leader','Follower','Score','Crowded','Evidence'],(o.rotations||[]).map(r=>'<tr><td>'+esc(r.narrative)+'</td><td>'+esc(r.leader.split(':')[1]?.slice(0,8))+'</td><td>'+esc(r.follower.split(':')[1]?.slice(0,8))+'</td><td class="num">'+num(r.score)+'</td><td>'+(r.crowded?'yes':'no')+'</td><td class="muted">'+esc(r.evidence_type)+'</td></tr>'));
+ const pf=st.performance.overall;const pk=[['Trades',pf.trades],['Win rate',pf.win_rate==null?'—':(pf.win_rate*100).toFixed(0)+'%'],['Net P&L',eur(pf.net_pnl_eur)],['Profit factor',pf.profit_factor==null?'—':pf.profit_factor],['Avg win',eur(pf.avg_win_eur)],['Avg loss',eur(pf.avg_loss_eur)],['Avg hold',pf.avg_hold_minutes==null?'—':num(pf.avg_hold_minutes,0)+' min'],['Fees',eur(pf.fees_eur)]];
+ $('perf').innerHTML=pk.map(([l,v])=>'<div class="kpi"><span>'+l+'</span><b>'+esc(v)+'</b></div>').join('');
+ const bt=(el,title,obj)=>table(el,[title,'Trades','Win rate','Net','PF'],Object.entries(obj||{}).map(([k,m])=>'<tr><td>'+esc(k)+'</td><td class="num">'+m.trades+'</td><td class="num">'+(m.win_rate==null?'—':(m.win_rate*100).toFixed(0)+'%')+'</td><td class="num '+cls(m.net_pnl_eur)+'">'+eur(m.net_pnl_eur)+'</td><td class="num">'+esc(m.profit_factor)+'</td></tr>'));
+ bt('byStrat','Strategy',st.performance.by_strategy);bt('byMode','Exit mode (runner perf.)',st.performance.by_mode);bt('byChain','Chain',st.performance.by_chain);
+ $('chains').innerHTML=['solana','base','bsc'].map(c=>{const paused=(st.controls.paused_chains||[]).includes(c);return '<button onclick="cmd(\''+(paused?'resume_chain':'pause_chain')+'\',{chain:\''+c+'\'})">'+c+': '+(paused?'paused — resume':'enabled — pause')+'</button>'}).join('');
+ table('limits',['Risk limit','Value'],Object.entries(st.risk_limits).map(([k,v])=>'<tr><td>'+esc(k)+'</td><td class="num">'+esc(v)+'</td></tr>'));
+ $('events').innerHTML=st.events.map(e=>'<div><span class="muted">'+esc(String(e.at).slice(11,19))+'</span> <b>'+esc(e.kind)+'</b> '+esc(e.detail)+'</div>').join('');
+ table('trades',['Closed','Token','Strategy','Net','Fees','Return','Peak','Held','Exit reason','Mode'],(st.performance.recent_trades||[]).map(t=>'<tr><td>'+esc(String(t.closed_at).slice(5,16))+'</td><td>'+esc(String(t.token).split(':')[1]?.slice(0,8))+'</td><td>'+esc(t.strategy)+'</td><td class="num '+cls(t.net_pnl_eur)+'">'+eur(t.net_pnl_eur)+'</td><td class="num">'+eur(t.fees_eur)+'</td><td class="num '+cls(t.realized_return_pct)+'">'+pct(t.realized_return_pct)+'</td><td class="num">'+pct(t.max_favorable_pct)+'</td><td class="num">'+Math.round((new Date(t.closed_at)-new Date(t.opened_at))/60000)+'m</td><td>'+esc(t.exit_reason)+'</td><td>'+esc(t.max_mode)+'</td></tr>'));
+}
+async function load(){try{render(await api('/api/state'))}catch(e){}}
+function boot(){if(!TOKEN){$('login').hidden=false;$('app').hidden=true;return}$('login').hidden=true;$('app').hidden=false;load()}
+boot();setInterval(()=>{if(TOKEN)load()},5000);
+</script>
+</body>
+</html>
