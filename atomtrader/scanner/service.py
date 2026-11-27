@@ -33,6 +33,8 @@ class Candidate:
     insider: InsiderRisk | None
     candles_1m: tuple[Candle, ...]
     snapshots: tuple[PairSnapshot, ...]
+    data_age_seconds: float = 0.0  # age of the newest snapshot when evaluated
+    stale: bool = False
 
 
 class ScannerService:
@@ -44,6 +46,7 @@ class ScannerService:
         clock: Callable[[], datetime] = lambda: datetime.now(UTC),
         history_window: timedelta = timedelta(minutes=90),
         candle_window: timedelta = timedelta(hours=3),
+        max_data_age: timedelta = timedelta(minutes=3),
     ) -> None:
         self.store = store
         self.security_store = security_store
@@ -51,6 +54,7 @@ class ScannerService:
         self.clock = clock
         self.history_window = history_window
         self.candle_window = candle_window
+        self.max_data_age = max_data_age
 
     async def evaluate(self, token: TokenRef, pool_address: str | None = None,
                        narrative_strength: float | None = None, assess: bool = True) -> Candidate | None:
@@ -87,5 +91,6 @@ class ScannerService:
 
         boosted = await recently_boosted(self.store, token.address, now - timedelta(hours=6))
         features = build_features(list(latest_by_source.values()), history, candles, report, insider, boosted)
+        age = (now - newest).total_seconds()
         return Candidate(token, features, moonshot_score(features, narrative_strength), report, insider,
-                         tuple(candles), tuple(history))
+                         tuple(candles), tuple(history), age, age > self.max_data_age.total_seconds())

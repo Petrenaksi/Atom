@@ -59,6 +59,7 @@ class IngestionReport:
     attention: int = 0
     watchlist_size: int = 0
     rejected_non_base_quote: int = 0
+    dropped_unverified_liquidity: int = 0
     errors: list[str] = field(default_factory=list)
 
 
@@ -119,7 +120,8 @@ class IngestionService:
                     # Liquidity of pools quoted in unknown tokens is not trustworthy.
                     report.rejected_non_base_quote += 1
                     continue
-                if p.liquidity_usd is not None and p.liquidity_usd >= self.cfg.min_liquidity_usd_to_watch:
+                screen = p.liquidity_usd if p.liquidity_usd is not None else p.reported_liquidity_usd
+                if screen is not None and screen >= self.cfg.min_liquidity_usd_to_watch:
                     self.watch(p.base, p.pair_address, "new_pool")
 
         if self.cfg.record_attention:
@@ -140,8 +142,16 @@ class IngestionService:
                 continue
             report.snapshots += await self.store.save_snapshots(snaps)
             for s in snaps:
-                if s.base.key in self.watchlist:
-                    self.watchlist[s.base.key].pool_address = s.pair_address  # track main pool
+                item = self.watchlist.get(s.base.key)
+                if item is None:
+                    continue
+                item.pool_address = s.pair_address  # track main pool
+                verified = s.liquidity_usd
+                if (item.reason == "new_pool" and verified is not None
+                        and verified < self.cfg.min_liquidity_usd_to_watch):
+                    # Admitted on a provider-reported figure; verified depth is too small.
+                    self.unwatch(s.base)
+                    report.dropped_unverified_liquidity += 1
 
         items = list(self.watchlist.values())
         if items:

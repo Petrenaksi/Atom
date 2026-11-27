@@ -49,7 +49,7 @@ def test_daily_report_contents_and_no_mixing() -> None:
     ts = [tr("a", "10", mode="runner"), tr("b", "-4", strategy="E_vwap_reclaim")]
     rep = daily_report("2026-11-20", ts, Decimal(1000), Decimal(1006), anomalies=["1 execution failure"])
     md = rep.to_markdown()
-    for s in ("PAPER (simulated funds)", "Starting equity: €1,000.00", "Net P&L (after all fees): €6.00",
+    for s in ("PAPER (simulated funds)", "Starting equity: €1,000.00", "Net P&L (after all trading costs, incl. failed transactions): €6.00",
               "By exit mode (runner performance)", "Anomalies", "E_vwap_reclaim"):
         assert s in md
     try:
@@ -75,8 +75,9 @@ def test_backtest_mechanics_and_accounting() -> None:
     res = Backtester(BacktestConfig(min_opportunity=30)).run(tls)
     m = res.metrics
     assert res.signals > 0 and m.trades > 0
-    # every euro of cash change is explained by closed-trade P&L (to 1e-20; 40-digit Decimal context)
-    assert abs(sum((t.net_pnl_eur for t in res.trades), Decimal(0)) - (res.ending_cash_eur - res.starting_eur)) < Decimal('1e-20')
+    # every euro of cash change is explained by closed-trade P&L minus fees burned by failed
+    # transactions (to 1e-20; 40-digit Decimal context)
+    assert abs(res.net_pnl_eur - (res.ending_cash_eur - res.starting_eur)) < Decimal('1e-20')
     assert all(t.fees_eur > 0 for t in res.trades)
     # Risk limits hold inside the backtest: never more than 3 concurrent positions.
     opens = sorted([(t.opened_at, 1) for t in res.trades] + [(t.closed_at, -1) for t in res.trades])

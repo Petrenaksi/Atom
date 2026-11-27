@@ -17,7 +17,7 @@ from __future__ import annotations
 import uuid
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 from typing import Any
 
@@ -79,6 +79,7 @@ class PaperTradingSession:
         provider: ExecutionProvider | None = None,
         clock: Callable[[], datetime] = lambda: datetime.now(UTC),
         seed: int | None = None,
+        entry_failure_cooloff: timedelta = timedelta(minutes=30),
     ) -> None:
         if settings.mode is not TradingMode.PAPER:
             raise RuntimeError("PaperTradingSession only runs in paper mode")
@@ -97,6 +98,8 @@ class PaperTradingSession:
         self.risk: RiskEngine | None = None
         self.exec: ExecutionEngine | None = None
         self.meta: dict[str, PositionMetaRow] = {}
+        self.entry_failure_cooloff = entry_failure_cooloff
+        self.entry_failures: dict[str, datetime] = {}  # token key -> last failed entry
         self._risk_events_flushed = 0
         self._control_events_flushed = 0
 
@@ -111,6 +114,8 @@ class PaperTradingSession:
             self.controls = TradingControls.from_dict(c)
         if (r := await self.store.load_state(self.RISK_KEY)) is not None:
             self.state = DailyRiskState.from_dict(r)
+        if (f := await self.store.load_state("entry_failures:paper")) is not None:
+            self.entry_failures = {k: datetime.fromisoformat(v) for k, v in f.items()}
         self.meta = await self.store.position_meta()
         self.risk = RiskEngine(self.settings.risk, self.controls, self.state, self.settings.enabled_chains)
         self.exec = ExecutionEngine(self.provider, self.repo, self.ledger, self.clock)
@@ -124,6 +129,8 @@ class PaperTradingSession:
         now = self.clock()
         await self.store.save_state(self.CONTROLS_KEY, self.controls.to_dict(), now)
         await self.store.save_state(self.RISK_KEY, self.state.to_dict(), now)
+        await self.store.save_state("entry_failures:paper",
+                                    {k: v.isoformat() for k, v in self.entry_failures.items()}, now)
         for ev in self.state.events[self._risk_events_flushed:]:
             await self.repo.log_event(ev.at, f"risk:{ev.kind}", ev.detail)
         self._risk_events_flushed = len(self.state.events)
@@ -225,6 +232,13 @@ class PaperTradingSession:
             await self._log_decision(intent, d, evidence, now)
             return EntryResult("rejected", d)
 
+        last_fail = self.entry_failures.get(intent.token.key)
+        if last_fail is not None and now - last_fail < self.entry_failure_cooloff:
+            # A token whose last entry failed (revert, dropped tx) is not retried every scan:
+            # each attempt burns network fees. Execution-safety throttle, not a risk limit.
+            d = RiskDecision.reject("recent_entry_failure", caps={"last_failure": last_fail.isoformat()})
+            await self._log_decision(intent, d, evidence, now)
+            return EntryResult("rejected", d)
         d = risk.evaluate(intent, pv, now)
         await self._log_decision(intent, d, evidence, now)
         if not d.approved:
@@ -244,7 +258,10 @@ class PaperTradingSession:
         outcome = await ex.submit(order, max_attempts=1)  # entries don't chase price
         self._book_failed_fees(failed_before, now)
         status = {OrderStatus.FILLED: "filled", OrderStatus.FAILED: "failed"}.get(outcome.result.status, "not_executed")
+        if outcome.result.status is OrderStatus.FAILED:
+            self.entry_failures[intent.token.key] = now
         if outcome.result.status is OrderStatus.FILLED:
+            self.entry_failures.pop(intent.token.key, None)
             self.state.record_entry()
             meta = PositionMetaRow(
                 position_id=position_id, account_kind=AccountKind.PAPER.value, chain=intent.token.chain.value,
@@ -269,10 +286,10 @@ class PaperTradingSession:
             raise ValueError(f"no open position {position_id}")
         now = self.clock()
         qty = pos.quantity if fraction == 1 else pos.quantity * fraction
-        prior_exits = {oid.rsplit(".a", 1)[0] for oid in self.ledger.applied_order_ids
-                       if oid.startswith(f"{position_id}-x")}
+        # Every exit decision is a new order with its own id. (Reusing a deterministic id made a
+        # once-rejected exit replay its stored rejection forever — found in the audit.)
         order = OrderRequest(
-            client_order_id=f"{position_id}-x{len(prior_exits) + 1}", position_id=position_id, token=pos.token,
+            client_order_id=f"{position_id}-x{uuid.uuid4().hex[:10]}", position_id=position_id, token=pos.token,
             side=Side.SELL, max_slippage_bps=self.settings.risk.max_slippage_bps, reason=reason, quantity=qty,
         )
         failed_before = self.ledger.failed_tx_fees_eur

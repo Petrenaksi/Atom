@@ -1,0 +1,120 @@
+[
+ {
+  "chainId": "base",
+  "dexId": "uniswap",
+  "url": "https://dexscreener.com/base/0x15b0296f0797eca38a99e867bd389fec674d1ae2f86d63766b39edf036aacb0f",
+  "pairAddress": "0x15b0296f0797eca38a99e867bd389fec674d1ae2f86d63766b39edf036aacb0f",
+  "labels": [
+   "v4"
+  ],
+  "baseToken": {
+   "address": "0x38f0159393c73E7FBAc320Dbc6f7e9afB6edA9E9",
+   "name": "UODF",
+   "symbol": "United Oil Dividend Fund"
+  },
+  "quoteToken": {
+   "address": "0x4200000000000000000000000000000000000006",
+   "name": "Wrapped Ether",
+   "symbol": "WETH"
+  },
+  "priceNative": "0.00004784",
+  "priceUsd": "0.07945",
+  "txns": {
+   "m5": {
+    "buys": 1,
+    "sells": 0
+   },
+   "h1": {
+    "buys": 7,
+    "sells": 1
+   },
+   "h6": {
+    "buys": 7,
+    "sells": 1
+   },
+   "h24": {
+    "buys": 7,
+    "sells": 1
+   }
+  },
+  "volume": {
+   "h24": 50148.76,
+   "h6": 50148.76,
+   "h1": 50148.76,
+   "m5": 1.57
+  },
+  "priceChange": {
+   "m5": 0.67,
+   "h1": 1.14,
+   "h6": 1.14,
+   "h24": 1.14
+  },
+  "liquidity": {
+   "base": 1499993708,
+   "quote": 0.501,
+   "usd": 119176279.85
+  },
+  "fdv": 794506318,
+  "marketCap": 794506318,
+  "pairCreatedAt": 1795791795000
+ },
+ {
+  "chainId": "base",
+  "dexId": "uniswap",
+  "url": "https://dexscreener.com/base/0x7c31ac8ad2e0892d151b2865a30f33ab9db8fecd7c09643f03e3d92bf0acc2d8",
+  "pairAddress": "0x7c31ac8ad2e0892d151b2865a30f33ab9db8fecd7c09643f03e3d92bf0acc2d8",
+  "labels": [
+   "v4"
+  ],
+  "baseToken": {
+   "address": "0x3F66C6D12d893c022303cd41d66dFc84c92B81d4",
+   "name": "AGI",
+   "symbol": "Artificial Gooner intelligence"
+  },
+  "quoteToken": {
+   "address": "0x4200000000000000000000000000000000000006",
+   "name": "Wrapped Ether",
+   "symbol": "WETH"
+  },
+  "priceNative": "0.0000003024",
+  "priceUsd": "0.0005022",
+  "txns": {
+   "m5": {
+    "buys": 1,
+    "sells": 0
+   },
+   "h1": {
+    "buys": 9,
+    "sells": 3
+   },
+   "h6": {
+    "buys": 9,
+    "sells": 3
+   },
+   "h24": {
+    "buys": 9,
+    "sells": 3
+   }
+  },
+  "volume": {
+   "h24": 230863.78,
+   "h6": 230863.78,
+   "h1": 230863.78,
+   "m5": 1.62
+  },
+  "priceChange": {
+   "m5": 0.67,
+   "h1": 1.14,
+   "h6": 1.14,
+   "h24": 1.14
+  },
+  "liquidity": {
+   "base": 1498995567,
+   "quote": 0.4038,
+   "usd": 753575.93
+  },
+  "fdv": 5022733,
+  "marketCap": 5022733,
+  "pairCreatedAt": 1795791795000
+ }
+]

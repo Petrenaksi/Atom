@@ -52,13 +52,15 @@ class FakeScanner:
 
     def __init__(self):
         self.market = None
+        self.age = 0.0
 
     async def evaluate(self, token, pool_address=None, narrative_strength=None, assess=True):
         from atomtrader.security.models import SecurityReport
 
         c = self.market
         sec = SecurityReport(token, T0, sources={"rugcheck": "ok", "sell_route": "ok"}, sell_route_ok=True) if assess else None
-        return Candidate(token, c.features, moonshot_score(c.features), sec, None, c.candles_1m, ())
+        return Candidate(token, c.features, moonshot_score(c.features), sec, None, c.candles_1m, (),
+                         self.age, self.age > 180)
 
 
 class FakeQuoter:

@@ -220,12 +220,35 @@ async def test_restart_reconciliation(repo, quotes, fx, clock) -> None:
 
     eng = ExecutionEngine(p, repo, ledger, clock)
     unresolved = await eng.reconcile_on_startup()
-    assert unresolved == ["lost.a1"]
+    # Paper: a simulated fill lost in a crash never happened -> resolved, not blocking.
+    assert unresolved == []
     assert await repo.get_order_status("pending.a1") is OrderStatus.REJECTED
     assert await repo.get_order_status("known.a1") is OrderStatus.FILLED
+    assert await repo.get_order_status("lost.a1") is OrderStatus.REJECTED
     assert "p2" in ledger.positions
+    assert [e.detail for e in await repo.events("paper_order_lost_in_restart")] == ["lost.a1"]
+
+
+async def test_unknown_outcome_from_non_paper_provider_blocks_token(repo, clock) -> None:
+    """Generic path a future live provider relies on: if the venue cannot tell us what
+    happened, the token is blocked. (Test double only — no execution capability.)"""
+
+    class UnknownOutcomeVenue:
+        account_kind = AccountKind.LIVE
+
+        async def execute(self, order):
+            raise AssertionError("must not be called")
+
+        async def lookup(self, cid):
+            return None
+
+    lost = buy(cid="lost.a1", pos="p3", token=OTHER)
+    await repo.insert_order(lost, AccountKind.LIVE, clock())
+    await repo.mark_submitted("lost.a1", clock())
+    eng = ExecutionEngine(UnknownOutcomeVenue(), repo, Ledger(AccountKind.LIVE, Decimal(0)), clock)
+    assert await eng.reconcile_on_startup() == ["lost.a1"]
     with pytest.raises(UnreconciledOrderError):
-        await eng.submit(buy(cid="new", token=OTHER, pos="p4"))
+        await eng.submit(OrderRequest("new", "p4", OTHER, Side.BUY, 300, "x", notional_eur=Decimal(10)))
     assert [e.detail for e in await repo.events("unreconciled_order")] == ["lost.a1"]
 
 

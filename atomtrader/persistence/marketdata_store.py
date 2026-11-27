@@ -46,6 +46,7 @@ class PairSnapshotRow(Base):
     quote_symbol: Mapped[str] = mapped_column(String(64))
     price_usd: Mapped[Decimal] = mapped_column(DecimalString)
     liquidity_usd: Mapped[Decimal | None] = mapped_column(DecimalString, nullable=True)
+    reported_liquidity_usd: Mapped[Decimal | None] = mapped_column(DecimalString, nullable=True)
     fdv_usd: Mapped[Decimal | None] = mapped_column(DecimalString, nullable=True)
     market_cap_usd: Mapped[Decimal | None] = mapped_column(DecimalString, nullable=True)
     pair_created_at: Mapped[datetime | None] = mapped_column(UTCDateTime, nullable=True)
@@ -99,6 +100,7 @@ class MarketDataStore:
                     quote_symbol=p.quote_symbol[:64],
                     price_usd=p.price_usd,
                     liquidity_usd=p.liquidity_usd,
+                    reported_liquidity_usd=p.reported_liquidity_usd,
                     fdv_usd=p.fdv_usd,
                     market_cap_usd=p.market_cap_usd,
                     pair_created_at=p.pair_created_at,
@@ -188,7 +190,7 @@ def row_to_snapshot(r: PairSnapshotRow) -> PairSnapshot:
         chain=chain, dex=r.dex, pair_address=r.pair_address, base=TokenRef(chain, r.token_address, r.symbol),
         quote_symbol=r.quote_symbol, quote_address="", price_usd=r.price_usd, liquidity_usd=r.liquidity_usd,
         fdv_usd=r.fdv_usd, market_cap_usd=r.market_cap_usd, pair_created_at=r.pair_created_at, as_of=r.as_of,
-        source=r.source, windows=windows,
+        source=r.source, windows=windows, reported_liquidity_usd=r.reported_liquidity_usd,
     )
 
 

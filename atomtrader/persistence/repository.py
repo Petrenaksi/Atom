@@ -314,6 +314,29 @@ class Repository:
                 )
             return out
 
+    async def cost_breakdown(self, account_kind: AccountKind, start: datetime, end: datetime) -> dict[str, Decimal]:
+        """Costs that do not belong to any closed trade's P&L (failed transactions) plus an
+        estimate of slippage/price impact versus mid (already inside fill prices)."""
+        async with self._session() as s:
+            orders = list((await s.execute(
+                select(OrderRow).where(OrderRow.account_kind == account_kind.value,
+                                       OrderRow.updated_at >= start, OrderRow.updated_at < end))).scalars())
+            fills = {f.client_order_id: f for f in (await s.execute(
+                select(FillRow).where(FillRow.account_kind == account_kind.value,
+                                      FillRow.executed_at >= start, FillRow.executed_at < end))).scalars()}
+        failed = sum((o.failed_fee_eur for o in orders if o.status == OrderStatus.FAILED.value), Decimal(0))
+        slip = Decimal(0)
+        fees = Decimal(0)
+        for o in orders:
+            f = fills.get(o.client_order_id)
+            if f is None:
+                continue
+            fees += f.fee_eur
+            if o.realized_slippage_bps is not None and o.realized_slippage_bps > 0:
+                slip += f.gross_eur * o.realized_slippage_bps / Decimal(10_000)
+        return {"failed_tx_fees_eur": failed, "fill_fees_eur": fees, "slippage_vs_mid_eur": slip,
+                "failed_transactions": Decimal(sum(1 for o in orders if o.status == OrderStatus.FAILED.value))}
+
     # --------------------------------------------------------------- audit log
     async def log_decision(
         self,

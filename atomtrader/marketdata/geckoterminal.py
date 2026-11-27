@@ -11,7 +11,7 @@ from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 from typing import Any
 
-from atomtrader.core.models import Chain, TokenRef
+from atomtrader.core.models import Chain, TokenRef, norm_address
 from atomtrader.marketdata.http import JsonHttpClient
 from atomtrader.marketdata.models import Candle, PairSnapshot, WindowStats
 
@@ -96,12 +96,13 @@ def parse_pool(item: dict[str, Any], chain: Chain, as_of: datetime) -> PairSnaps
     return PairSnapshot(
         chain=chain,
         dex=((rel.get("dex") or {}).get("data") or {}).get("id", ""),
-        pair_address=a["address"],
+        pair_address=norm_address(chain, a["address"]),
         base=_token_from_rel(rel["base_token"], chain, base_sym.strip()),
         quote_symbol=quote_sym.strip(),
         quote_address=quote.address if quote else "",
         price_usd=price,
-        liquidity_usd=_dec(a.get("reserve_in_usd")),
+        liquidity_usd=None,  # reserve_in_usd values the token side at its own price: unverified
+        reported_liquidity_usd=_dec(a.get("reserve_in_usd")),
         fdv_usd=_dec(a.get("fdv_usd")),
         market_cap_usd=_dec(a.get("market_cap_usd")),
         pair_created_at=datetime.fromisoformat(created.replace("Z", "+00:00")) if created else None,

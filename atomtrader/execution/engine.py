@@ -16,7 +16,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 
-from atomtrader.core.models import ExecutionResult, OrderRequest, OrderStatus
+from atomtrader.core.models import AccountKind, ExecutionResult, OrderRequest, OrderStatus
 from atomtrader.execution.base import ExecutionProvider
 from atomtrader.persistence.repository import Repository
 from atomtrader.portfolio.ledger import ClosedTrade, Ledger
@@ -75,6 +75,15 @@ class ExecutionEngine:
                 )
                 continue
             result = await self.provider.lookup(row.client_order_id)
+            if result is None and self.provider.account_kind is AccountKind.PAPER:
+                # Simulated fills exist only in process memory: a crash before recording
+                # means the paper trade never happened. (A live provider must instead query
+                # the chain; unknown live outcomes stay blocked below.)
+                await self.repo.save_result(ExecutionResult(
+                    client_order_id=row.client_order_id, status=OrderStatus.REJECTED,
+                    account_kind=AccountKind.PAPER, error="paper_fill_lost_in_restart"), now)
+                await self.repo.log_event(now, "paper_order_lost_in_restart", row.client_order_id)
+                continue
             if result is None or result.status in (OrderStatus.PENDING, OrderStatus.SUBMITTED):
                 unresolved.append(row.client_order_id)
                 self.unresolved_tokens.add(f"{row.chain}:{row.token_address}")
@@ -128,5 +137,9 @@ class ExecutionEngine:
             self.unresolved_tokens.add(order.token.key)
             await self.repo.log_event(self.clock(), "execution_exception", f"{order.client_order_id}: {exc!r}")
             raise UnreconciledOrderError(order.client_order_id) from exc
-        await self.repo.save_result(result, self.clock())
+        try:
+            await self.repo.save_result(result, self.clock())
+        except Exception as exc:  # executed but not recorded: ledger cannot be trusted for this token
+            self.unresolved_tokens.add(order.token.key)
+            raise UnreconciledOrderError(f"{order.client_order_id}: result not recorded ({exc!r})") from exc
         return result

@@ -229,6 +229,10 @@ class TradingEngine:
                     self._alerted.add(f"nodata:{pid}")
                     await self.notifier.notify("system_error", f"no market data for open position {pos.token.symbol}", pid, "warning")
                 continue
+            if cand.stale:
+                await self._protect_stale_position(pos, cand.data_age_seconds)
+                continue
+            self._alerted.discard(f"stale:{pid}")
             ctx = self._context(cand)
             if cand.insider is not None and cand.insider.situation in ("large_holder_selling", "liquidity_deterioration"):
                 key = f"insider:{pid}:{cand.insider.situation}"
@@ -245,6 +249,24 @@ class TradingEngine:
                 continue
             frac = D(1) if d.action == "exit" else D(str(round(d.fraction_of_current, 6)))
             await self._close(pid, d.reason, frac)
+
+    async def _protect_stale_position(self, pos: Any, age_s: float) -> None:
+        """Snapshot data is stale (ingestion stalled): no mode/target decisions on old data,
+        but the stop is still enforced against a fresh direct quote."""
+        pid = pos.position_id
+        if f"stale:{pid}" not in self._alerted:
+            self._alerted.add(f"stale:{pid}")
+            await self.notifier.notify("system_error", f"stale market data for open position {pos.token.symbol}",
+                                       f"newest snapshot {age_s:.0f}s old; enforcing stop on direct quotes only", "warning")
+        state = self.exit_states.get(pid) or self._fallback_state(pid)
+        try:
+            q = await self.session.quotes.get_quote(pos.token)
+        except MissingMarketData as exc:
+            await self.notifier.notify("system_error", f"open position {pos.token.symbol} cannot be priced",
+                                       str(exc)[:300], "critical")
+            return
+        if float(q.price_usd) <= state.stop:
+            await self._close(pid, "stop_loss_hit_on_direct_quote")
 
     async def _close(self, pid: str, reason: str, fraction: Decimal = D(1)) -> None:
         pos = self.session.ledger.positions.get(pid)
@@ -360,6 +382,8 @@ class TradingEngine:
                 continue
             strength, _, _ = self._narrative_for(item.token)
             cand = await self.scanner.evaluate(item.token, item.pool_address or None, strength, assess=False)
+            if cand is not None and cand.stale:
+                continue  # never rank or enter on stale data
             if cand is not None and cand.moonshot.score >= self.cfg.min_moonshot:
                 prelim.append(cand)
         self.rotations = {a.follower: a for a in detect_rotations(self.narratives, {x.token.key: x.features for x in prelim})}
@@ -382,6 +406,9 @@ class TradingEngine:
         strength, narr, _ = self._narrative_for(pre.token)
         cand = await self.scanner.evaluate(pre.token, pre.features.pair_address, strength, assess=True)
         if cand is None:
+            return
+        if cand.stale:
+            await self._reject(cand, "data", [f"stale_market_data:{cand.data_age_seconds:.0f}s"], {})
             return
         base_ev: dict[str, Any] = {
             "moonshot": cand.moonshot.score, "moonshot_components": cand.moonshot.components,
@@ -475,7 +502,12 @@ class TradingEngine:
         anomalies = [f"{e.kind}: {e.detail[:160]}" for e in await self.session.repo.events()
                      if _local(e.at, tz) == day and e.kind in ("notify:execution_failure", "notify:system_error",
                                                                "unreconciled_order", "risk:daily_loss_limit")]
-        rep = daily_report(day, trades, start_eq, end_eq, anomalies[:50])
+        costs = await self.session.repo.cost_breakdown(AccountKind.PAPER, start.astimezone(UTC),
+                                                       (start + timedelta(days=1)).astimezone(UTC))
+        rep = daily_report(day, trades, start_eq, end_eq, anomalies[:50],
+                           failed_tx_fees_eur=costs["failed_tx_fees_eur"],
+                           failed_transactions=int(costs["failed_transactions"]),
+                           slippage_vs_mid_eur=costs["slippage_vs_mid_eur"])
         md = rep.to_markdown()
         await self.store.save_state(f"report:{day}", {"markdown": md}, now)
         await self.notifier.notify("daily_report", f"daily report {day}",
@@ -519,6 +551,7 @@ class TradingEngine:
             "equity_eur": _s(snap.equity_eur), "cash_eur": _s(snap.cash_eur), "invested_eur": _s(snap.invested_eur),
             "realized_pnl_eur": _s(snap.realized_pnl_eur), "unrealized_pnl_eur": _s(snap.unrealized_pnl_eur),
             "fees_eur": _s(snap.total_fees_eur), "daily_pnl_eur": _s(st.realized_net_pnl_eur),
+            "failed_tx_fees_eur": _s(self.session.ledger.failed_tx_fees_eur),
             "daily_start_equity_eur": _s(st.start_equity_eur), "entries_today": st.entries_today,
             "daily_halt": st.daily_halt, "cooldown_until": st.cooldown_until.isoformat() if st.cooldown_until else None,
             "current_drawdown_pct": float((peak - eq_hist[-1]) / peak * 100) if peak else 0.0,

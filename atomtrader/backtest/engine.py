@@ -14,6 +14,7 @@ promise returns.
 from __future__ import annotations
 
 import heapq
+import random
 import uuid
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass, field, replace
@@ -60,6 +61,10 @@ class BacktestConfig:
     enabled_strategies: tuple[str, ...] | None = None
     chains: frozenset[Chain] = frozenset({Chain.SOLANA, Chain.BASE, Chain.BSC})
     timezone: str = "Europe/Madrid"
+    # Share of transactions that fail (dropped/reverted) and burn the network fee; exits retry
+    # on the next frame. Seeded for reproducibility.
+    failure_rate: float = 0.03
+    seed: int = 0
 
 
 @dataclass
@@ -86,10 +91,17 @@ class BacktestResult:
     rejected_by_risk: dict[str, int]
     ending_cash_eur: Decimal
     starting_eur: Decimal
+    failed_tx_fees_eur: Decimal = D(0)
+    failed_transactions: int = 0
 
     @property
     def metrics(self) -> Metrics:
         return metrics(self.trades)
+
+    @property
+    def net_pnl_eur(self) -> Decimal:
+        """Closed-trade P&L minus fees burned by failed transactions."""
+        return self.metrics.net_pnl_eur - self.failed_tx_fees_eur
 
     @property
     def max_drawdown(self) -> tuple[Decimal, float]:
@@ -101,7 +113,7 @@ class BacktestResult:
         if m.trades < min_trades:
             return float("-inf")
         dd, _ = self.max_drawdown
-        return float(m.net_pnl_eur / max(dd, D(1)))
+        return float(self.net_pnl_eur / max(dd, D(1)))
 
 
 def merge_frames(timelines: Iterable[Sequence[Frame]]) -> list[Frame]:
@@ -126,6 +138,19 @@ class Backtester:
         trades: list[TradeRecord] = []
         signals = 0
         rejected: dict[str, int] = {}
+        rng = random.Random(cfg.seed)
+        failed_fees = D(0)
+        failed_n = 0
+
+        def tx_failed(at: datetime) -> bool:
+            nonlocal cash, failed_fees, failed_n
+            if rng.random() >= cfg.failure_rate:
+                return False
+            cash -= cfg.network_fee_eur
+            failed_fees += cfg.network_fee_eur
+            failed_n += 1
+            risk.state.record_failed_tx_fee(cfg.network_fee_eur, at, cfg.limits.max_daily_loss_pct)
+            return True
 
         def sell(o: _Open, price: float, fraction: float, at: datetime, reason: str) -> None:
             nonlocal cash
@@ -174,7 +199,7 @@ class Backtester:
                 o.state = d.state
                 if d.state.mode is Mode.RUNNER or (d.state.mode is Mode.MOMENTUM and o.max_mode is Mode.NORMAL):
                     o.max_mode = d.state.mode
-                if d.action in ("exit", "partial"):
+                if d.action in ("exit", "partial") and not tx_failed(fr.at):
                     sell(o, price, d.fraction_of_current, fr.at, d.reason)
                 continue
 
@@ -204,6 +229,8 @@ class Backtester:
                 for r in decision.reasons:
                     rejected[r.split(":")[0]] = rejected.get(r.split(":")[0], 0) + 1
                 continue
+            if tx_failed(fr.at):
+                continue
             half_cost = D(str(sig.round_trip_cost_bps / 2 / 10_000))
             fill_price = price * (1 + float(half_cost))
             fee = decision.notional_eur * cfg.fee_pct_per_side / 100 + cfg.network_fee_eur
@@ -218,7 +245,7 @@ class Backtester:
 
         for o in list(open_.values()):  # close anything left at the last seen price
             sell(o, o.last_price, 1.0, frames[-1].at if frames else o.state.opened_at, "end_of_data")
-        return BacktestResult(cfg.name, trades, signals, rejected, cash, cfg.starting_eur)
+        return BacktestResult(cfg.name, trades, signals, rejected, cash, cfg.starting_eur, failed_fees, failed_n)
 
 
 # --------------------------------------------------------------------------- walk-forward

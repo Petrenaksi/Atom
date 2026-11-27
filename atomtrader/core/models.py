@@ -42,11 +42,20 @@ class OrderStatus(StrEnum):
     REJECTED = "rejected"  # refused before submission (risk, controls, validation)
 
 
+def norm_address(chain: Chain, address: str) -> str:
+    """EVM addresses are case-insensitive (providers mix checksummed and lowercase forms):
+    normalise to lowercase. Solana base58 addresses are case-sensitive: keep as is."""
+    return address if chain is Chain.SOLANA else address.lower()
+
+
 @dataclass(frozen=True, slots=True)
 class TokenRef:
     chain: Chain
     address: str
     symbol: str = ""
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "address", norm_address(self.chain, self.address))
 
     @property
     def key(self) -> str:

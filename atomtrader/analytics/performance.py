@@ -204,6 +204,9 @@ class DailyReport:
     reviews: list[TradeReview]
     anomalies: list[str] = field(default_factory=list)
     proposals: list[Proposal] = field(default_factory=list)
+    failed_tx_fees_eur: Decimal = Decimal(0)
+    failed_transactions: int = 0
+    slippage_vs_mid_eur: Decimal | None = None
 
     def to_markdown(self) -> str:
         label = "PAPER (simulated funds)" if self.account_kind == "paper" else "LIVE"
@@ -230,8 +233,12 @@ class DailyReport:
             f"# Daily report {self.day} — {label}", "",
             f"- Starting equity: {fmt(self.starting_equity_eur)}",
             f"- Ending equity: {fmt(self.ending_equity_eur)}",
-            f"- Net P&L (after all fees): {fmt(self.net_pnl_eur)}",
-            f"- Fees: {fmt(self.fees_eur)}",
+            f"- Net P&L (after all trading costs, incl. failed transactions): {fmt(self.net_pnl_eur)}",
+            f"- Fees on fills: {fmt(self.fees_eur)}",
+            f"- Failed-transaction fees: {fmt(self.failed_tx_fees_eur)} ({self.failed_transactions} failed tx)",
+            f"- Slippage/price impact vs mid (already inside fill prices): {fmt(self.slippage_vs_mid_eur)}",
+            f"- Total explicit costs: {fmt(self.fees_eur + self.failed_tx_fees_eur)}",
+            "- Not included: infrastructure and data subscriptions (see RUNBOOK cost table)",
             f"- Trades: {o.trades} (wins {o.wins}, losses {o.losses}, win rate {fmt(o.win_rate, True)})",
             f"- Best / worst trade: {fmt(o.best_eur)} / {fmt(o.worst_eur)}",
             f"- Max drawdown: {fmt(self.max_drawdown_eur)} ({self.max_drawdown_pct:.1f}%)",
@@ -252,14 +259,20 @@ class DailyReport:
 
 
 def daily_report(day: str, trades: Sequence[TradeRecord], starting_equity: Decimal,
-                 ending_equity: Decimal | None, anomalies: Sequence[str] = (), account_kind: str = "paper") -> DailyReport:
+                 ending_equity: Decimal | None, anomalies: Sequence[str] = (), account_kind: str = "paper",
+                 failed_tx_fees_eur: Decimal = Decimal(0), failed_transactions: int = 0,
+                 slippage_vs_mid_eur: Decimal | None = None) -> DailyReport:
+    """Net P&L = closed-trade net P&L (fills incl. their fees) minus network fees burned by
+    failed transactions, which belong to no trade but are a real trading cost."""
     if any(t.account_kind != account_kind for t in trades):
         raise ValueError("paper and live trades must not be mixed in one report")
     dd_eur, dd_pct = max_drawdown(equity_from_trades(starting_equity, trades))
     m = metrics(trades)
     return DailyReport(
         day=day, account_kind=account_kind, starting_equity_eur=starting_equity, ending_equity_eur=ending_equity,
-        net_pnl_eur=m.net_pnl_eur, fees_eur=m.fees_eur, overall=m, max_drawdown_eur=dd_eur, max_drawdown_pct=dd_pct,
+        net_pnl_eur=m.net_pnl_eur - failed_tx_fees_eur, fees_eur=m.fees_eur,
+        failed_tx_fees_eur=failed_tx_fees_eur, failed_transactions=failed_transactions,
+        slippage_vs_mid_eur=slippage_vs_mid_eur, overall=m, max_drawdown_eur=dd_eur, max_drawdown_pct=dd_pct,
         by_strategy=breakdown(trades, "strategy"), by_chain=breakdown(trades, "chain"), by_mode=breakdown(trades, "max_mode"),
         reviews=[review_trade(t) for t in trades], anomalies=list(anomalies), proposals=propose_adjustments(trades),
     )

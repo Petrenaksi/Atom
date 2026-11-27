@@ -48,6 +48,10 @@ class PairSnapshot:
     as_of: datetime
     source: str
     windows: dict[str, WindowStats] = field(default_factory=dict)
+    # What the provider reported. ``liquidity_usd`` is the *verified* depth used for
+    # decisions (2 x the quote-asset side); providers value the token side at its own,
+    # possibly fabricated, price (observed: $119M "liquidity" backed by 0.5 WETH).
+    reported_liquidity_usd: Decimal | None = None
 
     def window(self, name: str) -> WindowStats:
         return self.windows.get(name, WindowStats())

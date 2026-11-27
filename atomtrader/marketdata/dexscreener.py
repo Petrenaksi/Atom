@@ -11,7 +11,7 @@ from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Any
 
-from atomtrader.core.models import Chain, MarketQuote, TokenRef
+from atomtrader.core.models import Chain, MarketQuote, TokenRef, norm_address
 from atomtrader.core.money import MissingMarketData
 from atomtrader.marketdata.base_assets import BaseAssetRegistry
 from atomtrader.marketdata.http import JsonHttpClient
@@ -63,21 +63,30 @@ def parse_pair(raw: dict[str, Any], as_of: datetime) -> PairSnapshot | None:
     }
     created = raw.get("pairCreatedAt")
     liquidity = raw.get("liquidity")
+    reported = _dec(liquidity.get("usd")) if isinstance(liquidity, dict) else None
+    verified = None
+    if isinstance(liquidity, dict):
+        quote_amt = _dec(liquidity.get("quote"))
+        native = _dec(raw.get("priceNative"))
+        if quote_amt is not None and native is not None and native > 0:
+            quote_side_usd = quote_amt * price / native  # quote-asset units x USD per quote unit
+            verified = min(reported, 2 * quote_side_usd) if reported is not None else 2 * quote_side_usd
     return PairSnapshot(
         chain=chain,
         dex=raw.get("dexId", ""),
-        pair_address=raw["pairAddress"],
+        pair_address=norm_address(chain, raw["pairAddress"]),
         base=TokenRef(chain, base["address"], base.get("symbol", "")),
         quote_symbol=quote.get("symbol", ""),
-        quote_address=quote.get("address", ""),
+        quote_address=norm_address(chain, quote.get("address", "")),
         price_usd=price,
-        liquidity_usd=_dec(liquidity.get("usd")) if isinstance(liquidity, dict) else None,
+        liquidity_usd=verified,
         fdv_usd=_dec(raw.get("fdv")),
         market_cap_usd=_dec(raw.get("marketCap")),
         pair_created_at=datetime.fromtimestamp(int(created) / 1000, UTC) if created else None,
         as_of=as_of,
         source="dexscreener",
         windows=windows,
+        reported_liquidity_usd=reported,
     )
 
 
