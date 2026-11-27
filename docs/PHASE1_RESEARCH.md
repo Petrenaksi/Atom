@@ -11,6 +11,14 @@ Status date: 2026-11-27. Reporting currency: EUR. Mode: **paper only** (no live 
 > environment after the host allowlist is widened). Numbers marked *(unconfirmed)*
 > had conflicting sources.
 
+> **Update 2026-11-27 — live verification done.** After the "Atom" environment was created
+> (12 allowlisted hosts), every endpoint was verified live; see
+> [`CONNECTIVITY.md`](CONNECTIVITY.md). Corrections to this document, marked ⚠️ below:
+> GeckoTerminal *does* provide unique buyers/sellers per window for free; Frankfurter moved
+> to `api.frankfurter.dev` (v2 API); keyless CoinGecko/GeckoTerminal limits were hit in
+> practice from this environment; a pool reporting **$2.16B fake liquidity** was observed,
+> so liquidity is only trusted for pools quoted in a verified base asset.
+
 ---
 
 ## 1. FOMO application
@@ -63,11 +71,11 @@ live — only the risk/accounting layer and dashboard know, and they label it.
 | Source | Access | Gives | Limits / gaps |
 |---|---|---|---|
 | **DexScreener API** | Free, keyless | Pairs by token, search, price, liquidity, FDV/mcap, buys/sells **counts** and volume for m5/h1/h6/h24, pair age, boosts/profiles | 300 req/min (pairs), 60 req/min (boosts). **No OHLCV candles. No unique-wallet counts.** |
-| **GeckoTerminal API** | Free keyless; paid via CoinGecko | OHLCV (minute/hour/day, ≤1000 bars), new pools, trending pools, trades | **30 req/min** free (one doc says ~10). Enough to track ~5–10 tokens' 1-m candles, not a whole market. |
+| **GeckoTerminal API** | Free keyless; paid via CoinGecko | OHLCV (minute/hour/day, ≤1000 bars), new pools, trending pools, trades, ⚠️ **unique `buyers`/`sellers`/`unique_traders` per window (m5…h24)** | Documented 30 req/min (one doc says ~10); ⚠️ 429s observed live at 8–20/min from this shared-egress environment → adaptive limiter. Only a handful of tokens' 1-m candles per minute. |
 | **Birdeye** | Paid (compute-unit plans; WebSocket on higher tiers ~$199/mo *(unconfirmed)*; x402 pay-per-request) | Real-time trades WS, OHLCV, holders, unique wallets, 17 chains incl. Solana/Base | Cost. Optional upgrade once paper results justify it. |
 | **Helius (Solana RPC)** | Free 1M credits; paid tiers *(Developer $49 vs $499 conflicting)* | RPC, `getTokenLargestAccounts`, mint/freeze authority, Enhanced WebSockets/LaserStream (2 credits / 0.1 MB) | Building own candles from raw swaps is data-heavy; budget-gated. |
 | EVM RPC (Alchemy/QuickNode/public) | Free tiers | Contract reads, holder balances, logs | Public RPCs are rate-limited and unreliable for execution. |
-| **FX**: ECB reference rates (Frankfurter) + CoinGecko | Free | EUR/USD, SOL/ETH/BNB in EUR | ECB is daily; intraday EUR conversion uses stablecoin/native prices. Every fill stores the FX rate used. |
+| **FX**: ECB reference rates (Frankfurter, ⚠️ `api.frankfurter.dev` `/v2/providers/ecb/rates`) + CoinGecko | Free | EUR/USD, SOL/ETH/BNB in EUR | Intraday USD→EUR from CoinGecko USDC EUR/USD, cross-checked against ECB (±2%); labelled ECB fallback when CoinGecko is rate-limited. Every fill stores the FX rate used. |
 
 ### Token security
 | Source | Chains | Use |
@@ -233,9 +241,15 @@ Principles:
 
 1. **No live API verification from this dev container** (network policy). Adapters get
    live smoke tests on first deploy.
-2. **Free data has no unique-buyer / holder-flow data and no candles at scale.** DexScreener
-   gives buy/sell *counts*, not unique wallets; GeckoTerminal candles are limited to ~30
-   calls/min. Until paid data is added, "unique buyers" is unavailable (not estimated).
+2. ⚠️ **Corrected:** GeckoTerminal's free pool data *does* include unique buyers/sellers
+   per window. Still missing for free: holder distribution over time, wallet-level flows,
+   and candles at scale (keyless GeckoTerminal ≈ a few calls/min in practice). DexScreener
+   gives buy/sell *counts* only; those fields stay `None` rather than estimated.
+2a. **Fake liquidity.** Pools paired against self-priced tokens can report absurd
+   liquidity (observed: $2.16B). Liquidity is only trusted when the quote asset is a
+   verified base asset resolved by address (`atomtrader/data/base_assets.json`).
+2b. **Token identity.** Symbols are not identity: Jupiter search returns unverified
+   "USDC"/"USDT" impostors. Tokens are keyed by mint/contract address plus verification.
 3. **Backtesting meme coins is weak evidence.** Dead/rugged tokens vanish from APIs
    (survivorship bias), minute data is sparse, and historical slippage is unknowable. The
    system therefore **records its own dataset from day one**; paper trading on live data

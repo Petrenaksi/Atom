@@ -69,6 +69,25 @@ class TradingControls:
         self.blacklist.add(token.key)
         self._log(now, "blacklist", f"{token.key}: {reason}", actor)
 
+    def to_dict(self) -> dict:
+        return {
+            "emergency_stop": self.emergency_stop,
+            "global_pause": self.global_pause,
+            "autonomous": self.autonomous,
+            "paused_chains": sorted(c.value for c in self.paused_chains),
+            "blacklist": sorted(self.blacklist),
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> TradingControls:
+        return cls(
+            emergency_stop=bool(d.get("emergency_stop", False)),
+            global_pause=bool(d.get("global_pause", False)),
+            autonomous=bool(d.get("autonomous", False)),
+            paused_chains={Chain(c) for c in d.get("paused_chains", [])},
+            blacklist=set(d.get("blacklist", [])),
+        )
+
     def entry_block_reason(self, token: TokenRef) -> str | None:
         if self.emergency_stop:
             return "emergency_stop"

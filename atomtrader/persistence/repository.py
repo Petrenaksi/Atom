@@ -156,11 +156,19 @@ class Repository:
         self._session = async_sessionmaker(self.engine, expire_on_commit=False)
 
     async def init(self) -> None:
+        # Register tables defined in sibling modules on the shared metadata.
+        import atomtrader.persistence.marketdata_store  # noqa: F401
+        import atomtrader.persistence.trading_store  # noqa: F401
+
         async with self.engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
 
     async def close(self) -> None:
         await self.engine.dispose()
+
+    @property
+    def sessionmaker(self) -> async_sessionmaker:  # type: ignore[type-arg]
+        return self._session
 
     # ------------------------------------------------------------------ orders
     async def insert_order(self, order: OrderRequest, account_kind: AccountKind, now: datetime) -> bool:

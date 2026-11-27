@@ -1,0 +1,89 @@
+[
+ {
+  "url": "https://dexscreener.com/solana/6c9r2gzu8pr54htevho3x5gsj9jqtpapj7objnrtpump",
+  "chainId": "solana",
+  "tokenAddress": "6C9r2gzu8Pr54hTevHo3x5gSj9JqtpApj7obJnrtpump",
+  "description": "The raccoon who steals the show in Avengers: Doomsday. $ROCKET \ud83d\ude80",
+  "icon": "oY4S_0r45qmHZ0gq",
+  "header": "https://cdn.dexscreener.com/cms/images/RbNFql0yJ0G6pXAy?width=900&height=300&fit=crop&quality=95&format=auto",
+  "openGraph": "https://cdn.dexscreener.com/token-images/og/solana/6C9r2gzu8Pr54hTevHo3x5gSj9JqtpApj7obJnrtpump?timestamp=1795785000000",
+  "links": [
+   {
+    "url": "https://rocketraccoon.xyz/"
+   },
+   {
+    "type": "twitter",
+    "url": "https://x.com/rocketavengers"
+   },
+   {
+    "type": "telegram",
+    "url": "https://t.me/rocketavengers"
+   }
+  ],
+  "totalAmount": 10,
+  "amount": 10
+ },
+ {
+  "url": "https://dexscreener.com/elysium/0x597e37295e8ee74d55969def5007dd5afb3a6b2a",
+  "chainId": "elysium",
+  "tokenAddress": "0x597E37295E8Ee74d55969def5007dD5Afb3A6b2a",
+  "description": "Uniswap v4 hooks that trade on HyperCore now on  @Enter_Elysium",
+  "icon": "PIXT2Ajz5uFFEtns",
+  "header": "https://cdn.dexscreener.com/cms/images/vmRCYnGlSG3FyMdI?width=900&height=300&fit=crop&quality=95&format=auto",
+  "openGraph": "https://cdn.dexscreener.com/token-images/og/elysium/0x597e37295e8ee74d55969def5007dd5afb3a6b2a?timestamp=1795785000000",
+  "links": [
+   {
+    "url": "https://troy-protocol.xyz/"
+   },
+   {
+    "url": "https://github.com/troy-protocol"
+   },
+   {
+    "type": "twitter",
+    "url": "https://x.com/troy_protocol"
+   }
+  ],
+  "totalAmount": 10,
+  "amount": 10
+ },
+ {
+  "url": "https://dexscreener.com/solana/ejbu9xdbn3xudilj9a61sctivzyocf3tpkojibpvpump",
+  "chainId": "solana",
+  "tokenAddress": "Ejbu9xDBN3XuDiLj9A61sctiVzYocF3TpKojiBPvpump",
+  "description": "Suki, is one of the original dogs behind the Doge meme alongside Kabosu, the face of Dogecoin. Her iconic purple-scarf photo was taken in February 2010\u2014two Shibas, one legendary meme.",
+  "icon": "C0JZ97aobF1rIGHd",
+  "header": "https://cdn.dexscreener.com/cms/images/3f7HudJ_la7G5mDW?width=900&height=300&fit=crop&quality=95&format=auto",
+  "openGraph": "https://cdn.dexscreener.com/token-images/og/solana/Ejbu9xDBN3XuDiLj9A61sctiVzYocF3TpKojiBPvpump?timestamp=1795785000000",
+  "links": [
+   {
+    "url": "https://knowyourmeme.com/sensitive/memes/doge"
+   },
+   {
+    "type": "twitter",
+    "url": "https://twitter.com/comethankme12/status/2126246790957564046"
+   }
+  ],
+  "totalAmount": 10,
+  "amount": 10
+ },
+ {
+  "url": "https://dexscreener.com/robinhood/0x524988ccc8d7a23566e2fffb24b1b07e5aa2f134",
+  "chainId": "robinhood",
+  "tokenAddress": "0x524988ccc8D7A23566E2ffFb24B1B07E5Aa2f134",
+  "description": "Your idle GPU, earning.\nMost GPUs sit dark for most of the day. Idlex links them into one compute network that runs AI jobs for apps and agents. Every verified job earns you $IDLEX, and the $IDLEX you hold earns tokenized NVDA.",
+  "icon": "c2ZMJk4I-E827alT",
+  "header": "https://cdn.dexscreener.com/cms/images/_NbrHqFO9xuw4OAD?width=900&height=300&fit=crop&quality=95&format=auto",
+  "openGraph": "https://cdn.dexscreener.com/token-images/og/robinhood/0x524988ccc8d7a23566e2fffb24b1b07e5aa2f134?timestamp=1795785000000",
+  "links": [
+   {
+    "url": "https://www.idlex.network/"
+   },
+   {
+    "type": "twitter",
+    "url": "https://x.com/idlexnetwork?s=11"
+   }
+  ],
+  "totalAmount": 10,
+  "amount": 10
+ }
+]

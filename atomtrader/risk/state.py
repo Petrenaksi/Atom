@@ -92,5 +92,30 @@ class DailyRiskState:
                 RiskEvent(now, "daily_loss_limit", f"realized_net={self.realized_net_pnl_eur} limit={limit}")
             )
 
+    def to_dict(self) -> dict:
+        return {
+            "timezone": self.timezone,
+            "trading_day": self.trading_day.isoformat() if self.trading_day else None,
+            "start_equity_eur": str(self.start_equity_eur),
+            "realized_net_pnl_eur": str(self.realized_net_pnl_eur),
+            "entries_today": self.entries_today,
+            "consecutive_losses": self.consecutive_losses,
+            "cooldown_until": self.cooldown_until.isoformat() if self.cooldown_until else None,
+            "daily_halt": self.daily_halt,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> DailyRiskState:
+        return cls(
+            timezone=d["timezone"],
+            trading_day=date.fromisoformat(d["trading_day"]) if d.get("trading_day") else None,
+            start_equity_eur=Decimal(d["start_equity_eur"]),
+            realized_net_pnl_eur=Decimal(d["realized_net_pnl_eur"]),
+            entries_today=int(d["entries_today"]),
+            consecutive_losses=int(d["consecutive_losses"]),
+            cooldown_until=datetime.fromisoformat(d["cooldown_until"]) if d.get("cooldown_until") else None,
+            daily_halt=bool(d["daily_halt"]),
+        )
+
     def in_cooldown(self, now: datetime) -> bool:
         return self.cooldown_until is not None and now < self.cooldown_until
