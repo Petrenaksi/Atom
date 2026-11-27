@@ -370,6 +370,7 @@ class TradingEngine:
                                            f"leader {a.leader} cooling, follower {a.follower} accelerating "
                                            f"(score {a.score}, {a.evidence_type})")
 
+        await self._publish_opportunities(prelim)
         for pre in sorted(prelim, key=lambda x: -x.moonshot.score)[: self.cfg.max_full_evaluations]:
             try:
                 await self._consider(pre)
@@ -488,6 +489,7 @@ class TradingEngine:
         while not stop.is_set():
             await self._safe("commands", self.process_commands)
             await self._safe("positions", self.manage_positions)
+            await self._safe("publish_positions", self._publish_positions)
             if time.monotonic() >= next_scan:
                 await self._safe("scan", self.scan_and_enter)
                 next_scan = time.monotonic() + self.cfg.scan_interval_s
@@ -502,12 +504,89 @@ class TradingEngine:
 
     async def _snapshot(self) -> None:
         try:
-            await self.session.snapshot()
+            snap = await self.session.snapshot()
         except MissingMarketData as exc:
             log.warning("snapshot_skipped", reason=str(exc)[:200])
+            return
+        st = self.session.state
+        eq_hist = [s.equity_eur for s in await self.store.equity_snapshots() if s.equity_eur is not None]
+        from atomtrader.analytics.performance import max_drawdown
+
+        dd_eur, dd_pct = max_drawdown(eq_hist) if eq_hist else (D(0), 0.0)
+        peak = max(eq_hist) if eq_hist else None
+        await self.store.save_state("dash:account", {
+            "label": snap.label, "account_kind": snap.account_kind.value, "at": snap.at.isoformat(),
+            "equity_eur": _s(snap.equity_eur), "cash_eur": _s(snap.cash_eur), "invested_eur": _s(snap.invested_eur),
+            "realized_pnl_eur": _s(snap.realized_pnl_eur), "unrealized_pnl_eur": _s(snap.unrealized_pnl_eur),
+            "fees_eur": _s(snap.total_fees_eur), "daily_pnl_eur": _s(st.realized_net_pnl_eur),
+            "daily_start_equity_eur": _s(st.start_equity_eur), "entries_today": st.entries_today,
+            "daily_halt": st.daily_halt, "cooldown_until": st.cooldown_until.isoformat() if st.cooldown_until else None,
+            "current_drawdown_pct": float((peak - eq_hist[-1]) / peak * 100) if peak else 0.0,
+            "max_drawdown_eur": _s(dd_eur), "max_drawdown_pct": dd_pct, "unpriced": list(snap.unpriced),
+            "equity_curve": [_s(x) for x in eq_hist[-300:]],
+        }, self.clock())
+        await self._publish_positions()
+
+    async def _publish_positions(self) -> None:
+        rows = []
+        now = self.clock()
+        usd = None
+        try:
+            usd = self.session.fx.get("USD", now)
+        except MissingMarketData:
+            pass
+        for pos in self.session.ledger.open_positions():
+            st = self.exit_states.get(pos.position_id)
+            meta = self.session.meta.get(pos.position_id)
+            price = None
+            try:
+                price = (await self.session.quotes.get_quote(pos.token)).price_usd
+            except MissingMarketData:
+                pass
+            value = pos.quantity * usd.to_eur(price) if price is not None and usd else None
+            rows.append({
+                "position_id": pos.position_id, "token": pos.token.symbol or pos.token.address[:8],
+                "address": pos.token.address, "chain": pos.token.chain.value,
+                "strategy": meta.strategy if meta else None, "narrative": meta.narrative if meta else None,
+                "entry_price_usd": _s(pos.entry_price_usd), "current_price_usd": _s(price),
+                "value_eur": _s(value), "cost_basis_eur": _s(pos.cost_basis_eur),
+                "unrealized_pnl_eur": _s(value - pos.cost_basis_eur) if value is not None else None,
+                "return_pct": float((price / pos.entry_price_usd - 1) * 100) if price is not None and pos.entry_price_usd else None,
+                "holding_minutes": round((now - pos.opened_at).total_seconds() / 60, 1),
+                "mode": st.mode.value if st else None, "stop_usd": st.stop if st else None,
+                "target_pct": st.target_pct if st else None, "highest_usd": st.highest if st else None,
+                "partials_done": st.partial_levels_done if st else 0,
+            })
+        await self.store.save_state("dash:positions", {"at": now.isoformat(), "positions": rows}, now)
+
+    async def _publish_opportunities(self, prelim: list[Candidate]) -> None:
+        now = self.clock()
+        top = sorted(prelim, key=lambda x: -x.moonshot.score)[:25]
+        await self.store.save_state("dash:opportunities", {
+            "at": now.isoformat(),
+            "candidates": [{
+                "token": c.token.symbol or c.token.address[:8], "key": c.token.key, "chain": c.token.chain.value,
+                "moonshot": c.moonshot.score, "confidence": c.moonshot.confidence, "flags": list(c.moonshot.flags),
+                "penalties": c.moonshot.penalties, "liquidity_usd": c.features.liquidity_usd,
+                "volume_accel": c.features.volume_accel_m5_h1, "buyer_accel": c.features.buyer_accel_m5_h1,
+                "chg_h1": c.features.chg_h1, "chg_h24": c.features.chg_h24,
+                "narrative": (self._narrative_for(c.token)[1].term if self._narrative_for(c.token)[1] else None),
+                "insider_score": c.insider.score if c.insider else None,
+            } for c in top],
+            "narratives": [{"term": n.term, "status": n.status, "strength": n.strength, "mentions": n.mentions_recent,
+                            "authors": n.unique_authors, "acceleration": n.acceleration, "category": n.category,
+                            "headline": n.headlines[0] if n.headlines else "", "tokens": [lk.token.symbol for lk in n.tokens][:6],
+                            "flags": list(n.flags)} for n in self.narratives[:15]],
+            "rotations": [{"narrative": a.narrative, "leader": a.leader, "follower": a.follower, "score": a.score,
+                           "crowded": a.crowded, "evidence_type": a.evidence_type} for a in self.rotations.values()],
+        }, now)
 
 
 # ---------------------------------------------------------------------- helpers
+
+
+def _s(v: Any) -> str | None:
+    return None if v is None else str(v)
 
 
 def _f(v: Any) -> float | None:

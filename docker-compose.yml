@@ -1,0 +1,45 @@
+# Paper-trading stack: PostgreSQL + engine + dashboard.
+#   cp .env.example .env   # then set ATOM_DB_PASSWORD and ATOM_DASHBOARD_TOKEN
+#   docker compose up -d --build
+# The dashboard is bound to localhost only; reach it through an SSH tunnel or VPN.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: atom
+      POSTGRES_DB: atom
+      POSTGRES_PASSWORD: ${ATOM_DB_PASSWORD:?set ATOM_DB_PASSWORD in .env}
+    volumes:
+      - atom-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atom -d atom"]
+      interval: 10s
+      retries: 10
+
+  engine:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      ATOM_MODE: paper
+      ATOM_DATABASE_URL: postgresql+asyncpg://atom:${ATOM_DB_PASSWORD}@db:5432/atom
+
+  dashboard:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      ATOM_DATABASE_URL: postgresql+asyncpg://atom:${ATOM_DB_PASSWORD}@db:5432/atom
+    command: ["python", "-m", "atomtrader.dashboard.app", "--host", "0.0.0.0", "--port", "8080"]
+    ports:
+      - "127.0.0.1:8080:8080"
+
+volumes:
+  atom-db:
