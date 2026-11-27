@@ -53,7 +53,9 @@ class ScannerService:
         self.candle_window = candle_window
 
     async def evaluate(self, token: TokenRef, pool_address: str | None = None,
-                       narrative_strength: float | None = None) -> Candidate | None:
+                       narrative_strength: float | None = None, assess: bool = True) -> Candidate | None:
+        """``assess=False`` skips the (rate-limited) security assessment for a cheap
+        preliminary ranking; candidates that survive it are re-evaluated with ``assess=True``."""
         now = self.clock()
         history = await recent_snapshots(self.store, token.address, now - self.history_window)
         if not history:
@@ -68,7 +70,7 @@ class ScannerService:
         candles = await self.store.load_candles(token.chain, pool, "1m", now - self.candle_window)
 
         report = insider = None
-        if self.assessor is not None:
+        if self.assessor is not None and assess:
             report = await self.assessor.assess(token, pool_addresses=pools)
             prior = []
             if self.security_store is not None:

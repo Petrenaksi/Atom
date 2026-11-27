@@ -226,3 +226,10 @@ def test_solana_cost_model_loads_calibration_or_falls_back(tmp_path) -> None:
     assert m.calibration == "jupiter_quotes:X" and m.pool_fee_bps == 25
     missing = load_solana_cost_model(tmp_path / "nope.json")
     assert missing.calibration == "uncalibrated" and missing.adverse_noise_bps_sd == 40
+
+
+async def test_unknown_token_to_jupiter_is_no_route_not_a_crash() -> None:
+    price = (200, json.dumps({USDC: {"usdPrice": 1.0, "decimals": 6, "liquidity": 1e8}}))
+    jq = JupiterSizedQuoter(jupiter({"/price/v3": price}), USDC)
+    with pytest.raises(NoRoute):
+        await jq.buy("UnknownMint111111111111111111111111111111", Decimal(10), 300)

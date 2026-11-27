@@ -133,7 +133,9 @@ async def test_assessor_hard_fails() -> None:
     assert {"freeze_authority_active", "sell_tax_too_high:12.0%", "buy_tax_too_high:12.0%"} <= set(r.hard_fail)
 
     nothing = await SecurityAssessor(FakeSources(), None, clock=lambda: NOW).assess(BONK)
-    assert nothing.hard_fail == ["security_unverified"] and not nothing.verified
+    assert nothing.hard_fail == [] and not nothing.verified and not nothing.entry_allowed
+    assert {"no_security_source_answered", "sell_route_unverified"} <= set(nothing.unverified)
+    assert nothing.passed  # unverified never forces an exit on its own
 
 
 async def test_assessor_falls_back_to_rpc_and_tolerates_quote_outage() -> None:
@@ -142,7 +144,8 @@ async def test_assessor_falls_back_to_rpc_and_tolerates_quote_outage() -> None:
     assert src.calls == ["rugcheck", "rpc"]
     assert r.sources["solana_rpc"] == "ok" and r.freeze_authority_active is False
     assert r.sell_route_ok is None and r.sources["sell_route"].startswith("error")
-    assert r.passed  # verified by RPC; sell route unknown is not a hard fail (re-probed before entry)
+    assert r.passed and not r.entry_allowed  # no confirmed problem, but entry needs a verified sell route
+    assert r.unverified == ["sell_route_unverified"]
 
 
 async def test_evm_assessor_uses_goplus_and_honeypot() -> None:
@@ -240,3 +243,9 @@ async def test_known_pool_address_is_not_counted_as_concentration() -> None:
     with_pool = await SecurityAssessor(src, clock=lambda: NOW).assess(ELSA, pool_addresses=[top.upper()])
     assert without.top_pct(10) > 85
     assert with_pool.holders[0].kind is HolderKind.AMM and with_pool.top_pct(10) < 20
+
+
+async def test_evm_without_sell_simulation_blocks_entry_but_not_holding() -> None:
+    src = FakeSources(goplus=fx("goplus_base_token.json"), honeypot={"error": "api_rejection: pair not found"})
+    r = await SecurityAssessor(src, clock=lambda: NOW).assess(ELSA)
+    assert r.passed and not r.entry_allowed and r.unverified == ["sell_simulation_unavailable"]

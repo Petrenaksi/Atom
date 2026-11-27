@@ -1,13 +1,20 @@
 """Token security assessment: merges sources, applies hard-fail policy, caches results.
 
-Hard failures block new entries (the risk engine rejects ``security_hard_fail``):
-  * no security source answered at all (unverified tokens are never traded)
+Two tiers.
+
+Confirmed hard failures (block entries AND make the exit engine leave an open position):
   * honeypot / simulated sell failure / cannot sell (GoPlus, Honeypot.is)
   * no executable sell route at a small size (Jupiter, Solana)
   * freeze authority active (Solana: the issuer can freeze holders' tokens)
   * owner can change balances or modify taxes (EVM)
   * buy or sell tax above policy
   * RugCheck marks the token as rugged
+
+Unverified (block NEW entries only — a temporary API outage is not evidence of a scam, so it
+never forces an exit):
+  * no security source answered at all
+  * EVM: no sell simulation available (Honeypot.is could not simulate this pair)
+  * Solana: the sell-route probe could not run
 """
 
 from __future__ import annotations
@@ -18,6 +25,7 @@ from datetime import UTC, datetime
 from decimal import Decimal
 
 from atomtrader.core.models import Chain, TokenRef
+from atomtrader.core.money import MissingMarketData
 from atomtrader.execution.base import NoRoute, QuoteUnavailable, SizedQuoter
 from atomtrader.security.models import HolderKind, SecurityReport
 from atomtrader.security.sources import SecuritySources, apply_goplus, apply_honeypot, apply_rugcheck, apply_solana_mint
@@ -84,15 +92,19 @@ class SecurityAssessor:
             report.sell_route_ok = False
             report.sources["sell_route"] = "ok"
             report.warnings.append(f"no_route_detail:{str(exc)[:80]}")
-        except QuoteUnavailable as exc:
+        except (QuoteUnavailable, MissingMarketData) as exc:
             report.sources["sell_route"] = f"error: {str(exc)[:120]}"
 
     def apply_policy(self, r: SecurityReport) -> None:
         p = self.policy
         if not r.verified:
-            r.hard_fail.append("security_unverified")
+            r.unverified.append("no_security_source_answered")
         if r.sell_route_ok is False:
             r.hard_fail.append("no_sell_route")
+        if r.token.chain is Chain.SOLANA and r.sell_route_ok is None:
+            r.unverified.append("sell_route_unverified")
+        if r.token.chain is not Chain.SOLANA and r.sources.get("honeypot_is") != "ok":
+            r.unverified.append("sell_simulation_unavailable")
         if r.freeze_authority_active and p.freeze_authority_is_hard_fail:
             r.hard_fail.append("freeze_authority_active")
         if r.mint_authority_active:
@@ -102,4 +114,5 @@ class SecurityAssessor:
         if r.buy_tax_pct is not None and r.buy_tax_pct > p.max_buy_tax_pct:
             r.hard_fail.append(f"buy_tax_too_high:{r.buy_tax_pct:.1f}%")
         r.hard_fail = list(dict.fromkeys(r.hard_fail))
+        r.unverified = list(dict.fromkeys(r.unverified))
         r.warnings = list(dict.fromkeys(r.warnings))

@@ -319,6 +319,10 @@ class PaperTradingSession:
         self.controls.pause_chain(chain, self.clock(), actor)
         await self._persist()
 
+    async def resume_chain(self, chain: Chain, actor: str = "operator") -> None:
+        self.controls.resume_chain(chain, self.clock(), actor)
+        await self._persist()
+
     async def blacklist(self, token: TokenRef, reason: str, actor: str = "operator") -> None:
         self.controls.blacklist_token(token, self.clock(), reason, actor)
         await self._persist()

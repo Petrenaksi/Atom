@@ -123,8 +123,11 @@ class JupiterSizedQuoter:
                 prices = await self.client.prices([mint, self.usdc])
             except ApiError as err:
                 raise QuoteUnavailable(f"jupiter price: {err}") from err
-            if mint not in prices or self.usdc not in prices:
-                raise MissingMarketData(f"no Jupiter price/decimals for {mint}")
+            if self.usdc not in prices:
+                raise QuoteUnavailable("jupiter price: USDC missing from response")
+            if mint not in prices:
+                # Token-specific: Jupiter does not price/route this token.
+                raise NoRoute(f"no Jupiter price/decimals for {mint}")
             self._decimals[mint] = prices[mint].decimals
             self._decimals[self.usdc] = prices[self.usdc].decimals
         return self._decimals[mint]

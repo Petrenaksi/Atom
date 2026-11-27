@@ -167,6 +167,19 @@ class IngestionService:
                  errors=len(report.errors))
         return report
 
+    async def refresh_tokens(self, tokens: list[TokenRef]) -> int:
+        """Fresh DexScreener snapshots for specific tokens (e.g. open positions)."""
+        by_chain: dict[Chain, list[str]] = {}
+        for t in tokens:
+            by_chain.setdefault(t.chain, []).append(t.address)
+        n = 0
+        for chain, addrs in by_chain.items():
+            try:
+                n += await self.store.save_snapshots(await self.dex.token_pairs(chain, addrs))
+            except ApiError as err:
+                await self._error(IngestionReport(self.clock()), f"refresh:{chain.value}", err)
+        return n
+
     async def run_forever(self, interval_seconds: float, stop: asyncio.Event) -> None:
         while not stop.is_set():
             try:

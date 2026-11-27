@@ -80,3 +80,4 @@ class AttentionSignal:
     boost_amount: Decimal | None
     links: tuple[str, ...]
     as_of: datetime
+    description: str = ""

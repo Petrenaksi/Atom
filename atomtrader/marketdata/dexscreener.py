@@ -121,6 +121,7 @@ class DexScreenerClient:
                 boost_amount=_dec(i.get("totalAmount")) if kind == "boost" else None,
                 links=tuple(link.get("url", "") for link in i.get("links") or [] if isinstance(link, dict)),
                 as_of=now,
+                description=str(i.get("description") or "")[:1000],
             )
             for i in items
             if i.get("tokenAddress")

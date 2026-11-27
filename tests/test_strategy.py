@@ -134,6 +134,8 @@ def test_security_failure_blocks_all_strategies() -> None:
     bad = SecurityReport(TOK, T0, sources={"rugcheck": "ok"}, hard_fail=["no_sell_route"])
     rs = evaluate_all(ctx(bars(path, vols), security=bad))
     assert all(r.signal is None for r in rs)
+    unverified = SecurityReport(TOK, T0, sources={"goplus": "ok"}, unverified=["sell_simulation_unavailable"])
+    assert all(r.signal is None for r in evaluate_all(ctx(bars(path, vols), security=unverified)))
 
 
 # ------------------------------------------------------------------ scoring

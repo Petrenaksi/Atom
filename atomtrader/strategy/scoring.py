@@ -76,7 +76,7 @@ def opportunity_score(ctx: MarketContext, reward_to_risk: float | None = None,
                       weights: OpportunityWeights | None = None) -> OpportunityScore:
     w = (weights or OpportunityWeights()).as_dict()
     f = ctx.features
-    if ctx.security is not None and not ctx.security.passed:
+    if ctx.security is not None and not ctx.security.entry_allowed:
         return OpportunityScore(0.0, 1.0, {"token_security": 0.0}, ())
 
     c: dict[str, float | None] = {

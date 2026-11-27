@@ -114,7 +114,7 @@ def build_signal(ctx: MarketContext, cfg: EntryConfig, name: str, structure_stop
     rr = (expected - cost_pct) / (stop_pct + cost_pct)
     checks["reward_to_risk_after_costs"] = rr >= cfg.min_reward_to_risk
     checks["liquidity_minimum"] = (ctx.features.liquidity_usd or 0) >= cfg.min_liquidity_usd
-    checks["security_passed"] = ctx.security is None or ctx.security.passed
+    checks["security_entry_allowed"] = ctx.security is None or ctx.security.entry_allowed
     if not all(checks.values()):
         return StrategyResult(name, None, checks)
     return StrategyResult(name, Signal(

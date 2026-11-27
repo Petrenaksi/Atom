@@ -36,7 +36,8 @@ class SecurityReport:
     token: TokenRef
     checked_at: datetime
     sources: dict[str, str] = field(default_factory=dict)  # source -> "ok" | "error: ..." | "n/a"
-    hard_fail: list[str] = field(default_factory=list)
+    hard_fail: list[str] = field(default_factory=list)  # confirmed problems: block entries AND exit
+    unverified: list[str] = field(default_factory=list)  # could not verify: block entries only
     warnings: list[str] = field(default_factory=list)
     buy_tax_pct: Decimal | None = None
     sell_tax_pct: Decimal | None = None
@@ -54,7 +55,13 @@ class SecurityReport:
 
     @property
     def passed(self) -> bool:
+        """No confirmed security problem. (An open position is exited when this is False.)"""
         return not self.hard_fail
+
+    @property
+    def entry_allowed(self) -> bool:
+        """New entries need a clean AND verified result — an unverifiable sell blocks entry."""
+        return not self.hard_fail and not self.unverified
 
     @property
     def verified(self) -> bool:

@@ -52,6 +52,7 @@ class SecurityStore:
             "top10_excl_pools_pct": _s(r.top_pct(10)), "creator_pct": _s(r.creator_pct),
             "insider_network_pct": _s(r.insider_network_pct), "lp_locked_pct": _s(r.lp_locked_pct),
             "rugcheck_score": _s(r.rugcheck_score), "total_holders": r.total_holders, "sell_route_ok": r.sell_route_ok,
+            "unverified": list(r.unverified),
         }
         async with self._session() as s:
             s.add(SecurityReportRow(at=r.checked_at, token_key=r.token.key, passed=r.passed, hard_fail=list(r.hard_fail),
