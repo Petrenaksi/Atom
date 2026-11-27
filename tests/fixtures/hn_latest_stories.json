@@ -1,0 +1,1885 @@
+{
+ "exhaustive": {
+  "nbHits": false,
+  "typo": true
+ },
+ "exhaustiveNbHits": false,
+ "exhaustiveTypo": true,
+ "hits": [
+  {
+   "_tags": [
+    "story",
+    "author_vipulgupta2048_",
+    "story_50667340",
+    "show_hn"
+   ],
+   "author": "vipulgupta2048_",
+   "created_at": "2026-11-27T14:26:44Z",
+   "created_at_i": 1795789604,
+   "num_comments": 0,
+   "objectID": "50667340",
+   "points": 1,
+   "story_id": 50667340,
+   "story_text": "While moving around, I really missed my mechanical keyboard at home. It&#x27;s kinda calm feeling of keys - clacking while i am aggressively addressing my agents.<p>That&#x27;s when I came up with Clacketier. Open-source package to add mechanical keyboard sounds to any supported MacOS terminal: <a href=\"https:&#x2F;&#x2F;github.com&#x2F;vipulgupta2048&#x2F;clacketier\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;vipulgupta2048&#x2F;clacketier</a><p>Currently supports: Cherry MX Blue, Brown and Red switches.<p>Will be maintianing this going forward as I use it more. Tried a few alternatives too but feel they are either lagging way too much, way too heavy or not having the right support. Clacketier can play sounds per key with afplay in under 1ms.<p>Features incoming:\n1. Acuation point adjustments \n2. Add your keyboard sound by switches \n3. Support more application beyond the terminal",
+   "title": "Show HN: Clacketier \u2013 Cherry MX sounds for any macOS terminal",
+   "updated_at": "2026-11-27T14:28:16Z",
+   "url": "https://twitter.com/vipulgupta2048/status/2126313196743266511"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Brajeshwar",
+    "story_50667336"
+   ],
+   "author": "Brajeshwar",
+   "created_at": "2026-11-27T14:25:55Z",
+   "created_at_i": 1795789555,
+   "num_comments": 0,
+   "objectID": "50667336",
+   "points": 1,
+   "story_id": 50667336,
+   "title": "How to stop Hisense smart TVs from spying on you",
+   "updated_at": "2026-11-27T14:28:16Z",
+   "url": "https://www.techspot.com/news/114709-here-how-stop-hisense-tvs-spying-you.html"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_bookofjoe",
+    "story_50667326"
+   ],
+   "author": "bookofjoe",
+   "children": [
+    50667329
+   ],
+   "created_at": "2026-11-27T14:25:17Z",
+   "created_at_i": 1795789517,
+   "num_comments": 1,
+   "objectID": "50667326",
+   "points": 1,
+   "story_id": 50667326,
+   "title": "The Deadly Problem the Car Industry Can't Solve: Holdouts Who Won't Buckle Up",
+   "updated_at": "2026-11-27T14:27:46Z",
+   "url": "https://www.wsj.com/business/autos/seat-belt-use-car-crash-fatalities-141a7f9a"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_theanonymousone",
+    "story_50667313"
+   ],
+   "author": "theanonymousone",
+   "created_at": "2026-11-27T14:24:17Z",
+   "created_at_i": 1795789457,
+   "num_comments": 0,
+   "objectID": "50667313",
+   "points": 1,
+   "story_id": 50667313,
+   "title": "PEP 671 \u2013 Syntax for late-bound function argument defaults",
+   "updated_at": "2026-11-27T14:26:02Z",
+   "url": "https://peps.python.org/pep-0671/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_jmathai",
+    "story_50667307",
+    "show_hn"
+   ],
+   "author": "jmathai",
+   "children": [
+    50667343
+   ],
+   "created_at": "2026-11-27T14:23:52Z",
+   "created_at_i": 1795789432,
+   "num_comments": 0,
+   "objectID": "50667307",
+   "points": 1,
+   "story_id": 50667307,
+   "title": "Show HN: A Christmas question a day, answered verbatim from scripture",
+   "updated_at": "2026-11-27T14:28:16Z",
+   "url": "https://trysojourn.app/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_croes",
+    "story_50667301"
+   ],
+   "author": "croes",
+   "created_at": "2026-11-27T14:22:57Z",
+   "created_at_i": 1795789377,
+   "num_comments": 0,
+   "objectID": "50667301",
+   "points": 1,
+   "story_id": 50667301,
+   "title": "What defenders need to know about agentic AI framework ARTEX threat actors abuse",
+   "updated_at": "2026-11-27T14:26:02Z",
+   "url": "https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_mgh2",
+    "story_50667294"
+   ],
+   "author": "mgh2",
+   "created_at": "2026-11-27T14:21:57Z",
+   "created_at_i": 1795789317,
+   "num_comments": 0,
+   "objectID": "50667294",
+   "points": 1,
+   "story_id": 50667294,
+   "title": "Nvidia Blackwell Chips Turn Up at China Site Tied to Alice Huang",
+   "updated_at": "2026-11-27T14:26:02Z",
+   "url": "https://finance.yahoo.com/technology/articles/nvidia-blackwell-chips-turn-china-114546617.html"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_MrBuddyCasino",
+    "story_50667291"
+   ],
+   "author": "MrBuddyCasino",
+   "created_at": "2026-11-27T14:21:44Z",
+   "created_at_i": 1795789304,
+   "num_comments": 0,
+   "objectID": "50667291",
+   "points": 1,
+   "story_id": 50667291,
+   "title": "Anthropic sponsors 178 (133 D, 45 R) House members, which is 41%",
+   "updated_at": "2026-11-27T14:26:02Z",
+   "url": "https://x.com/KimChiSpicey/status/2125775831276679216"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_horatio_thomas",
+    "story_50667289"
+   ],
+   "author": "horatio_thomas",
+   "created_at": "2026-11-27T14:21:41Z",
+   "created_at_i": 1795789301,
+   "num_comments": 0,
+   "objectID": "50667289",
+   "points": 1,
+   "story_id": 50667289,
+   "title": "What ten years as a retail investor taught me, and how AI helped me test it",
+   "updated_at": "2026-11-27T14:26:02Z",
+   "url": "https://horatiothomas.com/blog/investing-rules-backtest"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_mgh2",
+    "story_50667274"
+   ],
+   "author": "mgh2",
+   "created_at": "2026-11-27T14:20:01Z",
+   "created_at_i": 1795789201,
+   "num_comments": 0,
+   "objectID": "50667274",
+   "points": 1,
+   "story_id": 50667274,
+   "title": "Anthropic loses Monzo co-founder Tom Blomfield weeks after its $83 IPO",
+   "updated_at": "2026-11-27T14:21:02Z",
+   "url": "https://techfundingnews.com/tom-blomfield-reportedly-leaves-anthropic-six-months/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_lehi",
+    "story_50667265"
+   ],
+   "author": "lehi",
+   "created_at": "2026-11-27T14:19:23Z",
+   "created_at_i": 1795789163,
+   "num_comments": 0,
+   "objectID": "50667265",
+   "points": 1,
+   "story_id": 50667265,
+   "title": "Costa Rica bars UN rapporteur Francesca Albanese amid push for Israel trade deal",
+   "updated_at": "2026-11-27T14:20:47Z",
+   "url": "https://www.intellinews.com/costa-rica-bars-un-rapporteur-francesca-albanese-amid-push-for-israel-trade-deal-489031/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_madsmtm",
+    "story_50667257"
+   ],
+   "author": "madsmtm",
+   "created_at": "2026-11-27T14:19:03Z",
+   "created_at_i": 1795789143,
+   "num_comments": 0,
+   "objectID": "50667257",
+   "points": 1,
+   "story_id": 50667257,
+   "title": "Needles, Haystacks, and Numbers Between 0 and 1",
+   "updated_at": "2026-11-27T14:20:47Z",
+   "url": "https://rustfoundation.org/media/needles-haystacks-and-numbers-between-0-and-1/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_theanonymousone",
+    "story_50667245"
+   ],
+   "author": "theanonymousone",
+   "created_at": "2026-11-27T14:17:48Z",
+   "created_at_i": 1795789068,
+   "num_comments": 0,
+   "objectID": "50667245",
+   "points": 2,
+   "story_id": 50667245,
+   "title": "Airline Norse Atlantic's Norwegian operating unit declares bankruptcy",
+   "updated_at": "2026-11-27T14:20:47Z",
+   "url": "https://www.reuters.com/legal/litigation/airline-norse-atlantics-norwegian-operating-unit-declares-bankruptcy-2026-11-27/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_lcubw",
+    "story_50667234"
+   ],
+   "author": "lcubw",
+   "children": [
+    50667235
+   ],
+   "created_at": "2026-11-27T14:16:35Z",
+   "created_at_i": 1795788995,
+   "num_comments": 1,
+   "objectID": "50667234",
+   "points": 1,
+   "story_id": 50667234,
+   "title": "Riemann, Primes and Problems",
+   "updated_at": "2026-11-27T14:20:47Z",
+   "url": "https://read.misalignedmag.com/riemann-primes-and-problems-4ee950c475e3"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_madprops",
+    "story_50667232"
+   ],
+   "author": "madprops",
+   "created_at": "2026-11-27T14:16:31Z",
+   "created_at_i": 1795788991,
+   "num_comments": 0,
+   "objectID": "50667232",
+   "points": 2,
+   "story_id": 50667232,
+   "title": "Commercial Seed License",
+   "updated_at": "2026-11-27T14:20:47Z",
+   "url": "https://github.com/Merkoba/CSL/blob/main/csl_v1.md"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_ivica00",
+    "story_50667212"
+   ],
+   "author": "ivica00",
+   "children": [
+    50667224
+   ],
+   "created_at": "2026-11-27T14:15:36Z",
+   "created_at_i": 1795788936,
+   "num_comments": 0,
+   "objectID": "50667212",
+   "points": 1,
+   "story_id": 50667212,
+   "title": "QEMU/Unicorn emulator and RAM-only mods for Sony BIONZ X cameras",
+   "updated_at": "2026-11-27T14:20:47Z",
+   "url": "https://github.com/ivica00/bionz-x-research"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_latissi",
+    "story_50667197",
+    "show_hn"
+   ],
+   "author": "latissi",
+   "created_at": "2026-11-27T14:14:20Z",
+   "created_at_i": 1795788860,
+   "num_comments": 0,
+   "objectID": "50667197",
+   "points": 1,
+   "story_id": 50667197,
+   "story_text": "Woodada is a free desktop app for windows and mac. Two cats, one for CPU and one for memory, run along your taskbar or Dock. The busier your computer gets, the faster they run.<p>I loved RunCat but wanted the cat actually running across my screen, where I&#x27;d notice it. The cat sprites come from RunCat365 (Apache 2.0).<p>I built it with C#, .NET 9 and Avalonia, with help from AI. Just run the .exe or open the .dmg. As the cats run they collect fish, which you can spend on new colors and skins.<p>The app isn&#x27;t code-signed yet, so you&#x27;ll see a warning the first time you open it. VirusTotal results are on the homepage: \n<a href=\"https:&#x2F;&#x2F;hyuntae-jeong.github.io&#x2F;Woodada&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;hyuntae-jeong.github.io&#x2F;Woodada&#x2F;</a><p>I&#x27;d love your feedback!",
+   "title": "Show HN: Woodada \u2013 Cats that run across your taskbar as your CPU gets busy",
+   "updated_at": "2026-11-27T14:15:33Z",
+   "url": "https://github.com/Hyuntae-Jeong/Woodada"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_hjm",
+    "story_50667154"
+   ],
+   "author": "hjm",
+   "children": [
+    50667306,
+    50667155
+   ],
+   "created_at": "2026-11-27T14:10:37Z",
+   "created_at_i": 1795788637,
+   "num_comments": 1,
+   "objectID": "50667154",
+   "points": 1,
+   "story_id": 50667154,
+   "title": "Torqwave \u2013 Open-source C++20/JUCE spectral audio editor and DAW (AGPL-3.0)",
+   "updated_at": "2026-11-27T14:24:17Z",
+   "url": "https://github.com/BobClawblaw/torqwave"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_theanonymousone",
+    "story_50667143",
+    "front_page"
+   ],
+   "author": "theanonymousone",
+   "created_at": "2026-11-27T14:09:44Z",
+   "created_at_i": 1795788584,
+   "num_comments": 0,
+   "objectID": "50667143",
+   "points": 4,
+   "story_id": 50667143,
+   "title": "Norse Atlantic suspends all flights as it faces potential collapse",
+   "updated_at": "2026-11-27T14:28:16Z",
+   "url": "https://www.bbc.com/news/articles/c9kgmd0ldy0lo"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_pj3677",
+    "story_50667133",
+    "show_hn"
+   ],
+   "author": "pj3677",
+   "created_at": "2026-11-27T14:08:49Z",
+   "created_at_i": 1795788529,
+   "num_comments": 0,
+   "objectID": "50667133",
+   "points": 1,
+   "story_id": 50667133,
+   "title": "Show HN: Paper Sky Rally \u2013 a multiplayer paper-plane racer in the browser",
+   "updated_at": "2026-11-27T14:10:20Z",
+   "url": "https://paperskyrally.com/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_geox",
+    "story_50667117"
+   ],
+   "author": "geox",
+   "children": [
+    50667331
+   ],
+   "created_at": "2026-11-27T14:07:27Z",
+   "created_at_i": 1795788447,
+   "num_comments": 1,
+   "objectID": "50667117",
+   "points": 3,
+   "story_id": 50667117,
+   "title": "US pushed Venezuela, Iraq to consider leaving OPEC",
+   "updated_at": "2026-11-27T14:26:31Z",
+   "url": "https://www.reuters.com/business/energy/us-pushed-venezuela-iraq-consider-leaving-opec-sources-say-2026-11-27/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_jonbaer",
+    "story_50667111"
+   ],
+   "author": "jonbaer",
+   "created_at": "2026-11-27T14:06:59Z",
+   "created_at_i": 1795788419,
+   "num_comments": 0,
+   "objectID": "50667111",
+   "points": 1,
+   "story_id": 50667111,
+   "title": "Recent Outages Have Economic Causes",
+   "updated_at": "2026-11-27T14:10:20Z",
+   "url": "https://www.schneier.com/blog/archives/2026/11/recent-outages-have-economic-causes.html"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_kyisaiah47",
+    "story_50667091",
+    "show_hn"
+   ],
+   "author": "kyisaiah47",
+   "children": [
+    50667093,
+    50667316
+   ],
+   "created_at": "2026-11-27T14:05:56Z",
+   "created_at_i": 1795788356,
+   "num_comments": 1,
+   "objectID": "50667091",
+   "points": 2,
+   "story_id": 50667091,
+   "title": "Show HN: Permission Slips: only your prompt can issue coding-agent grants",
+   "updated_at": "2026-11-27T14:25:35Z",
+   "url": "https://github.com/kyisaiah47/permission-slips"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_vasiliyasp",
+    "story_50667080"
+   ],
+   "author": "vasiliyasp",
+   "children": [
+    50667081
+   ],
+   "created_at": "2026-11-27T14:04:56Z",
+   "created_at_i": 1795788296,
+   "num_comments": 1,
+   "objectID": "50667080",
+   "points": 1,
+   "story_id": 50667080,
+   "title": "The SMS Pumping Attack: Every Dashboard Reports Healthy While Your Bill Climbs",
+   "updated_at": "2026-11-27T14:10:20Z",
+   "url": "https://signalgate.ai/blog/sms-pumping-attack"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_jojo960527",
+    "story_50667071"
+   ],
+   "author": "jojo960527",
+   "children": [
+    50667209
+   ],
+   "created_at": "2026-11-27T14:03:40Z",
+   "created_at_i": 1795788220,
+   "num_comments": 0,
+   "objectID": "50667071",
+   "points": 1,
+   "story_id": 50667071,
+   "title": "We took our Chinese and Japanese pages from 77 to 100 on mobile Lighthouse",
+   "updated_at": "2026-11-27T14:15:46Z",
+   "url": "https://nexupira.com/news/cjk-mobile-performance"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_rushil_b_patel",
+    "story_50667069"
+   ],
+   "author": "rushil_b_patel",
+   "created_at": "2026-11-27T14:03:13Z",
+   "created_at_i": 1795788193,
+   "num_comments": 0,
+   "objectID": "50667069",
+   "points": 1,
+   "story_id": 50667069,
+   "title": "How UPI works and Who pays for it",
+   "updated_at": "2026-11-27T14:05:02Z",
+   "url": "https://www.rushilpatel.tech/writing/how-upi-works"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_HugoDz",
+    "story_50667062"
+   ],
+   "author": "HugoDz",
+   "created_at": "2026-11-27T14:02:52Z",
+   "created_at_i": 1795788172,
+   "num_comments": 0,
+   "objectID": "50667062",
+   "points": 2,
+   "story_id": 50667062,
+   "title": "Making a 3D fantasy map like a 16th-Century atlas",
+   "updated_at": "2026-11-27T14:10:46Z",
+   "url": "https://www.spritefusion.com/blog/making-a-fantasy-map-like-a-16th-century-atlas"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_AlenaSato",
+    "story_50667059"
+   ],
+   "author": "AlenaSato",
+   "created_at": "2026-11-27T14:02:25Z",
+   "created_at_i": 1795788145,
+   "num_comments": 0,
+   "objectID": "50667059",
+   "points": 1,
+   "story_id": 50667059,
+   "title": "Fireflies (2017)",
+   "updated_at": "2026-11-27T14:05:02Z",
+   "url": "https://ncase.me/fireflies/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_only_in_america",
+    "story_50667049"
+   ],
+   "author": "only_in_america",
+   "created_at": "2026-11-27T14:01:27Z",
+   "created_at_i": 1795788087,
+   "num_comments": 0,
+   "objectID": "50667049",
+   "points": 2,
+   "story_id": 50667049,
+   "title": "AI Hacking Incidents",
+   "updated_at": "2026-11-27T14:12:38Z",
+   "url": "https://hackingincidents.ai/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_ferrarosimone",
+    "story_50667038",
+    "show_hn"
+   ],
+   "author": "ferrarosimone",
+   "children": [
+    50667051
+   ],
+   "created_at": "2026-11-27T14:00:22Z",
+   "created_at_i": 1795788022,
+   "num_comments": 0,
+   "objectID": "50667038",
+   "points": 1,
+   "story_id": 50667038,
+   "title": "Show HN: Dub Digger dataset, a curated graph of the dub techno scene (SQLite)",
+   "updated_at": "2026-11-27T14:05:02Z",
+   "url": "https://github.com/leselecta/dubdigger-data"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_joexov",
+    "story_50667027"
+   ],
+   "author": "joexov",
+   "created_at": "2026-11-27T13:59:22Z",
+   "created_at_i": 1795787962,
+   "num_comments": 0,
+   "objectID": "50667027",
+   "points": 1,
+   "story_id": 50667027,
+   "title": "My YouTube tier list, six years later",
+   "updated_at": "2026-11-27T14:00:21Z",
+   "url": "https://thume.ca/2026/11/01/youtube-tier-list-2026/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_o_-_o",
+    "story_50667025"
+   ],
+   "author": "o_-_o",
+   "created_at": "2026-11-27T13:59:11Z",
+   "created_at_i": 1795787951,
+   "num_comments": 0,
+   "objectID": "50667025",
+   "points": 2,
+   "story_id": 50667025,
+   "title": "Weird Little Guys of FOSS (a.k.a. the Fourth Reich of FOSS)",
+   "updated_at": "2026-11-27T14:22:01Z",
+   "url": "https://drewdevault.com/weird-guys/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_rbanffy",
+    "story_50667022"
+   ],
+   "author": "rbanffy",
+   "created_at": "2026-11-27T13:59:02Z",
+   "created_at_i": 1795787942,
+   "num_comments": 0,
+   "objectID": "50667022",
+   "points": 2,
+   "story_id": 50667022,
+   "title": "Dyed Hair Turns into Gel-Free EEG Interface",
+   "updated_at": "2026-11-27T14:25:03Z",
+   "url": "https://spectrum.ieee.org/hair-dye-eeg-electroencephalography"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_torutofu",
+    "story_50667020"
+   ],
+   "author": "torutofu",
+   "created_at": "2026-11-27T13:58:36Z",
+   "created_at_i": 1795787916,
+   "num_comments": 0,
+   "objectID": "50667020",
+   "points": 1,
+   "story_id": 50667020,
+   "title": "Scheduling the removal of the kube-proxy IPVS back end",
+   "updated_at": "2026-11-27T13:59:47Z",
+   "url": "https://kubernetes.io/blog/2026/11/16/ipvs-removal/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_talval",
+    "story_50667012"
+   ],
+   "author": "talval",
+   "created_at": "2026-11-27T13:58:02Z",
+   "created_at_i": 1795787882,
+   "num_comments": 0,
+   "objectID": "50667012",
+   "points": 2,
+   "story_id": 50667012,
+   "title": "Do Superinvestors Beat the S&P 500? 43 Famous Portfolios Over 10 Years",
+   "updated_at": "2026-11-27T14:17:31Z",
+   "url": "https://talval.com/learn/do-superinvestors-beat-the-sp-500"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_neko_ranger",
+    "story_50666989"
+   ],
+   "author": "neko_ranger",
+   "created_at": "2026-11-27T13:55:57Z",
+   "created_at_i": 1795787757,
+   "num_comments": 0,
+   "objectID": "50666989",
+   "points": 1,
+   "story_id": 50666989,
+   "title": "Shopify Black Friday Stats Globe",
+   "updated_at": "2026-11-27T13:59:47Z",
+   "url": "https://bfcm.shopify.com/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_gregorycharlesc",
+    "story_50666952"
+   ],
+   "author": "gregorycharlesc",
+   "children": [
+    50666953
+   ],
+   "created_at": "2026-11-27T13:53:08Z",
+   "created_at_i": 1795787588,
+   "num_comments": 0,
+   "objectID": "50666952",
+   "points": 1,
+   "story_id": 50666952,
+   "title": "Compare Marketing Tools with More Confidence",
+   "updated_at": "2026-11-27T13:54:32Z",
+   "url": "https://markethub.you/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_swamigawai",
+    "story_50666947",
+    "show_hn"
+   ],
+   "author": "swamigawai",
+   "children": [
+    50666979
+   ],
+   "created_at": "2026-11-27T13:52:45Z",
+   "created_at_i": 1795787565,
+   "num_comments": 0,
+   "objectID": "50666947",
+   "points": 1,
+   "story_id": 50666947,
+   "title": "Show HN: Recon \u2013 Air-gapped preflight data gate and Python AST adapter compiler",
+   "updated_at": "2026-11-27T13:55:47Z",
+   "url": "https://github.com/swamigawai/recon"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_nmayp",
+    "story_50666941"
+   ],
+   "author": "nmayp",
+   "children": [
+    50667170
+   ],
+   "created_at": "2026-11-27T13:52:18Z",
+   "created_at_i": 1795787538,
+   "num_comments": 1,
+   "objectID": "50666941",
+   "points": 2,
+   "story_id": 50666941,
+   "title": "Carpool \u2013 cut LLM costs by batching tasks and compiling repeated calls into code",
+   "updated_at": "2026-11-27T14:13:49Z",
+   "url": "https://github.com/nmayp/carpool"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_reagent",
+    "story_50666936"
+   ],
+   "author": "reagent",
+   "children": [
+    50666943
+   ],
+   "created_at": "2026-11-27T13:51:54Z",
+   "created_at_i": 1795787514,
+   "num_comments": 1,
+   "objectID": "50666936",
+   "points": 1,
+   "story_id": 50666936,
+   "title": "The Chemists and the Cover-Up (2019)",
+   "updated_at": "2026-11-27T13:54:32Z",
+   "url": "https://reason.com/2019/02/09/the-chemists-and-the-cover-up/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_xqcgrek2",
+    "story_50666919",
+    "front_page"
+   ],
+   "author": "xqcgrek2",
+   "created_at": "2026-11-27T13:50:05Z",
+   "created_at_i": 1795787405,
+   "num_comments": 0,
+   "objectID": "50666919",
+   "points": 3,
+   "story_id": 50666919,
+   "title": "Jason Arday's research cleared in investigation",
+   "updated_at": "2026-11-27T14:26:02Z",
+   "url": "https://www.bbc.com/news/articles/ck9d7e11lnq4o"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_abionic",
+    "story_50666901"
+   ],
+   "author": "abionic",
+   "created_at": "2026-11-27T13:48:10Z",
+   "created_at_i": 1795787290,
+   "num_comments": 0,
+   "objectID": "50666901",
+   "points": 2,
+   "story_id": 50666901,
+   "title": "Create simple 3D Models in Browser and export for Games,etc. like Kenney Shape",
+   "updated_at": "2026-11-27T13:59:02Z",
+   "url": "https://abionic.itch.io/threedy-shapes"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Brajeshwar",
+    "story_50666843"
+   ],
+   "author": "Brajeshwar",
+   "created_at": "2026-11-27T13:42:23Z",
+   "created_at_i": 1795786943,
+   "num_comments": 0,
+   "objectID": "50666843",
+   "points": 2,
+   "story_id": 50666843,
+   "title": "Coding Font Problems",
+   "updated_at": "2026-11-27T13:47:46Z",
+   "url": "https://etbe.coker.com.au/2026/11/27/coding-font-problems/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_wjSgoWPm5bWAhXB",
+    "story_50666832"
+   ],
+   "author": "wjSgoWPm5bWAhXB",
+   "created_at": "2026-11-27T13:41:27Z",
+   "created_at_i": 1795786887,
+   "num_comments": 0,
+   "objectID": "50666832",
+   "points": 2,
+   "story_id": 50666832,
+   "title": "Large Study Reveals the Insects and Other Creatures That Live in Our Homes",
+   "updated_at": "2026-11-27T13:49:30Z",
+   "url": "https://news.ncsu.edu/2026/11/creatures-that-live-in-our-homes/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_heiberik",
+    "story_50666828"
+   ],
+   "author": "heiberik",
+   "children": [
+    50666831
+   ],
+   "created_at": "2026-11-27T13:41:01Z",
+   "created_at_i": 1795786861,
+   "num_comments": 0,
+   "objectID": "50666828",
+   "points": 1,
+   "story_id": 50666828,
+   "title": "How much context 125,925 Claude Code plugins declare at session start",
+   "updated_at": "2026-11-27T13:44:02Z",
+   "url": "https://www.claudepluginhub.com/blog/claude-code-plugin-context-cost-always-on-tokens"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_dverlaeckt80",
+    "story_50666827"
+   ],
+   "author": "dverlaeckt80",
+   "created_at": "2026-11-27T13:40:57Z",
+   "created_at_i": 1795786857,
+   "num_comments": 0,
+   "objectID": "50666827",
+   "points": 1,
+   "story_id": 50666827,
+   "title": "Exception Best Practices",
+   "updated_at": "2026-11-27T13:44:02Z",
+   "url": "https://www.well-typed.com/blog/2026/11/exception-best-practices/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_tyses101",
+    "story_50666819"
+   ],
+   "author": "tyses101",
+   "children": [
+    50666820
+   ],
+   "created_at": "2026-11-27T13:40:26Z",
+   "created_at_i": 1795786826,
+   "num_comments": 0,
+   "objectID": "50666819",
+   "points": 1,
+   "story_id": 50666819,
+   "title": "Multidimensional photonic encoding and independent research",
+   "updated_at": "2026-11-27T13:44:02Z",
+   "url": "https://github.com/tyses101/phasekeep-research"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_RickJWagner",
+    "story_50666789"
+   ],
+   "author": "RickJWagner",
+   "created_at": "2026-11-27T13:37:33Z",
+   "created_at_i": 1795786653,
+   "num_comments": 0,
+   "objectID": "50666789",
+   "points": 2,
+   "story_id": 50666789,
+   "title": "Denny's brings back plaque celebrating Nvidia chief Jensen Huang",
+   "updated_at": "2026-11-27T13:40:02Z",
+   "url": "https://www.politico.com/news/2026/11/26/dennys-brings-back-plaque-celebrating-jensen-huang-in-san-jose-restaurant"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_rdmuser",
+    "story_50666743"
+   ],
+   "author": "rdmuser",
+   "created_at": "2026-11-27T13:32:59Z",
+   "created_at_i": 1795786379,
+   "num_comments": 0,
+   "objectID": "50666743",
+   "points": 1,
+   "story_id": 50666743,
+   "title": "Farmers' Markets for the Masses: The Key to China's Vibrant Local Food Culture",
+   "updated_at": "2026-11-27T13:46:16Z",
+   "url": "https://www.sixthtone.com/news/1019324"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_mszbednarski",
+    "story_50666738"
+   ],
+   "author": "mszbednarski",
+   "children": [
+    50666739
+   ],
+   "created_at": "2026-11-27T13:32:33Z",
+   "created_at_i": 1795786353,
+   "num_comments": 0,
+   "objectID": "50666738",
+   "points": 1,
+   "story_id": 50666738,
+   "title": "We only need a few years to lock in a beautiful future",
+   "updated_at": "2026-11-27T13:33:47Z",
+   "url": "https://mbednarski.com/blog/2026/11/27/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_ap11071",
+    "story_50666728",
+    "show_hn"
+   ],
+   "author": "ap11071",
+   "created_at": "2026-11-27T13:31:17Z",
+   "created_at_i": 1795786277,
+   "num_comments": 0,
+   "objectID": "50666728",
+   "points": 1,
+   "story_id": 50666728,
+   "title": "Show HN: TextFix \u2013 2.4MB Swift app to fix selected text on macOS (BYOK)",
+   "updated_at": "2026-11-27T13:33:47Z",
+   "url": "https://textfix.jonathanhind.com"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_robtherobber",
+    "story_50666724"
+   ],
+   "author": "robtherobber",
+   "children": [
+    50666866
+   ],
+   "created_at": "2026-11-27T13:30:20Z",
+   "created_at_i": 1795786220,
+   "num_comments": 2,
+   "objectID": "50666724",
+   "points": 3,
+   "story_id": 50666724,
+   "title": "Paolo Soleri built a utopian eco-city in the Arizona desert",
+   "updated_at": "2026-11-27T14:05:46Z",
+   "url": "https://www.worldofinteriors.com/story/paolo-soleri-arconsati-arizona"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_asp1",
+    "story_50666715"
+   ],
+   "author": "asp1",
+   "created_at": "2026-11-27T13:28:47Z",
+   "created_at_i": 1795786127,
+   "num_comments": 0,
+   "objectID": "50666715",
+   "points": 1,
+   "story_id": 50666715,
+   "title": "Lock Down Contributions",
+   "updated_at": "2026-11-27T13:33:47Z",
+   "url": "https://github.com/python-attrs/attrs/pull/1674"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_kbr-",
+    "story_50666688",
+    "ask_hn"
+   ],
+   "author": "kbr-",
+   "children": [
+    50666698
+   ],
+   "created_at": "2026-11-27T13:26:50Z",
+   "created_at_i": 1795786010,
+   "num_comments": 1,
+   "objectID": "50666688",
+   "points": 1,
+   "story_id": 50666688,
+   "story_text": "I know everyone wants to publish their fantastic mathematical results and become famous, but can you please wait for a bit? I don&#x27;t want my money to be taken over, I don&#x27;t want my private communications to get leaked, and so on, pretty please?<p>Let&#x27;s first switch to pulsar-based information-theoretic safe communication protocols (see Ueli Maurer&#x27;s research) or something first, and then break SHA, RSA, ECC and so on?<p>Can we agree on that?",
+   "title": "Please: Don't Break Cryptography (Yet)",
+   "updated_at": "2026-11-27T13:30:00Z"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_greekanalyst",
+    "story_50666685"
+   ],
+   "author": "greekanalyst",
+   "created_at": "2026-11-27T13:26:32Z",
+   "created_at_i": 1795785992,
+   "num_comments": 0,
+   "objectID": "50666685",
+   "points": 1,
+   "story_id": 50666685,
+   "title": "Winning in the AI Age",
+   "updated_at": "2026-11-27T13:28:31Z",
+   "url": "https://greekanalyst.substack.com/p/winning-in-the-ai-age"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_acossta",
+    "story_50666673"
+   ],
+   "author": "acossta",
+   "created_at": "2026-11-27T13:24:50Z",
+   "created_at_i": 1795785890,
+   "num_comments": 0,
+   "objectID": "50666673",
+   "points": 1,
+   "story_id": 50666673,
+   "title": "Safe, automated bug discovery and fixing with Prospero",
+   "updated_at": "2026-11-27T13:28:31Z",
+   "url": "https://nullprogram.com/blog/2026/11/27/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_rbanffy",
+    "story_50666668"
+   ],
+   "author": "rbanffy",
+   "created_at": "2026-11-27T13:24:25Z",
+   "created_at_i": 1795785865,
+   "num_comments": 0,
+   "objectID": "50666668",
+   "points": 2,
+   "story_id": 50666668,
+   "title": "PostgreSQL 19 Delivering Nice Performance Gains on 6th Gen EPYC Venice",
+   "updated_at": "2026-11-27T14:19:19Z",
+   "url": "https://www.phoronix.com/review/postgresql-19-benchmarks"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_pixonux",
+    "story_50666655"
+   ],
+   "author": "pixonux",
+   "created_at": "2026-11-27T13:23:04Z",
+   "created_at_i": 1795785784,
+   "num_comments": 0,
+   "objectID": "50666655",
+   "points": 1,
+   "story_id": 50666655,
+   "title": "Focaldrop \u2013 Local-first Chrome extension for studio-grade screenshots",
+   "updated_at": "2026-11-27T13:23:17Z",
+   "url": "https://chromewebstore.google.com/detail/focaldrop-pro-studio-scre/mgilomfllhehiegighodlmagnlmfanhc"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_15o9o",
+    "story_50666654"
+   ],
+   "author": "15o9o",
+   "created_at": "2026-11-27T13:23:02Z",
+   "created_at_i": 1795785782,
+   "num_comments": 0,
+   "objectID": "50666654",
+   "points": 1,
+   "story_id": 50666654,
+   "title": "Google cracks recursive self improvement [video]",
+   "updated_at": "2026-11-27T13:23:17Z",
+   "url": "https://www.youtube.com/watch?v=YOsQULgqgNA"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_imperio59",
+    "story_50666643",
+    "show_hn"
+   ],
+   "author": "imperio59",
+   "created_at": "2026-11-27T13:21:55Z",
+   "created_at_i": 1795785715,
+   "num_comments": 0,
+   "objectID": "50666643",
+   "points": 2,
+   "story_id": 50666643,
+   "story_text": "My son has been begging me to teach him electronics for a while. I&#x27;ve bought a bunch of books and they all have flaws, either they are too simple and lack a bridge into more advanced components, or they are too complex and made for adults and he gets frustrated quickly.<p>This is my attempt at building something that fixes those flaws and makes it easier to teach a child electronics step by step, with cheap components anyone can easily get on Amazon or elsewhere and with no soldering!<p>Hope you like it.",
+   "title": "Show HN: Teach Your Kid Electronics",
+   "updated_at": "2026-11-27T14:19:19Z",
+   "url": "https://teachyourkidelectronics.com/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_sounds-like-lx",
+    "story_50666638"
+   ],
+   "author": "sounds-like-lx",
+   "created_at": "2026-11-27T13:21:33Z",
+   "created_at_i": 1795785693,
+   "num_comments": 0,
+   "objectID": "50666638",
+   "points": 1,
+   "story_id": 50666638,
+   "title": "Data Contracts: A Deep Dive",
+   "updated_at": "2026-11-27T13:23:17Z",
+   "url": "https://aimdb.dev/blog/data-contracts-deep-dive"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Anon84",
+    "story_50666633"
+   ],
+   "author": "Anon84",
+   "created_at": "2026-11-27T13:21:12Z",
+   "created_at_i": 1795785672,
+   "num_comments": 0,
+   "objectID": "50666633",
+   "points": 1,
+   "story_id": 50666633,
+   "title": "Tokenizers, Pretraining, and Scaling Laws",
+   "updated_at": "2026-11-27T13:23:17Z",
+   "url": "https://stochastic.blog/tokenizers-pretraining-and-scaling-laws/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_rroose",
+    "story_50666630"
+   ],
+   "author": "rroose",
+   "children": [
+    50666631
+   ],
+   "created_at": "2026-11-27T13:20:57Z",
+   "created_at_i": 1795785657,
+   "num_comments": 1,
+   "objectID": "50666630",
+   "points": 1,
+   "story_id": 50666630,
+   "title": "Take Your Time",
+   "updated_at": "2026-11-27T13:23:17Z",
+   "url": "https://roo.se/en/blog/take-your-time/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_throw0101d",
+    "story_50666629"
+   ],
+   "author": "throw0101d",
+   "created_at": "2026-11-27T13:20:50Z",
+   "created_at_i": 1795785650,
+   "num_comments": 0,
+   "objectID": "50666629",
+   "points": 2,
+   "story_id": 50666629,
+   "title": "Two California-based, Chinese-owned companies are buying Nvidia's advanced chips",
+   "updated_at": "2026-11-27T13:42:17Z",
+   "url": "https://www.cbsnews.com/news/nvidia-china-ai-chips-computing-sales/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_tiarafawn",
+    "story_50666626"
+   ],
+   "author": "tiarafawn",
+   "created_at": "2026-11-27T13:20:42Z",
+   "created_at_i": 1795785642,
+   "num_comments": 0,
+   "objectID": "50666626",
+   "points": 3,
+   "story_id": 50666626,
+   "title": "SVDB: A structured database for better vulnerability management",
+   "updated_at": "2026-11-27T14:04:47Z",
+   "url": "https://positive.security/blog/svdb"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_tosh",
+    "story_50666624"
+   ],
+   "author": "tosh",
+   "created_at": "2026-11-27T13:20:20Z",
+   "created_at_i": 1795785620,
+   "num_comments": 0,
+   "objectID": "50666624",
+   "points": 2,
+   "story_id": 50666624,
+   "title": "Code-Division Multiple Access",
+   "updated_at": "2026-11-27T13:25:16Z",
+   "url": "https://en.wikipedia.org/wiki/Code-division_multiple_access"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_surprisetalk",
+    "story_50666621"
+   ],
+   "author": "surprisetalk",
+   "children": [
+    50666842
+   ],
+   "created_at": "2026-11-27T13:20:07Z",
+   "created_at_i": 1795785607,
+   "num_comments": 1,
+   "objectID": "50666621",
+   "points": 2,
+   "story_id": 50666621,
+   "title": "Superhuman Pokemon AI Is Here",
+   "updated_at": "2026-11-27T13:49:03Z",
+   "url": "https://justismills.substack.com/p/superhuman-pokemon-ai-is-here"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_super256",
+    "story_50666604"
+   ],
+   "author": "super256",
+   "children": [
+    50666611
+   ],
+   "created_at": "2026-11-27T13:17:57Z",
+   "created_at_i": 1795785477,
+   "num_comments": 1,
+   "objectID": "50666604",
+   "points": 1,
+   "story_id": 50666604,
+   "title": "Austrian Denuvo files lawsuit against presumed German cracker voices38 in the US [pdf]",
+   "updated_at": "2026-11-27T13:29:16Z",
+   "url": "https://storage.courtlistener.com/recap/gov.uscourts.cand.478929/gov.uscourts.cand.478929.27.2.pdf"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_yakupceri",
+    "story_50666592"
+   ],
+   "author": "yakupceri",
+   "children": [
+    50666593
+   ],
+   "created_at": "2026-11-27T13:16:31Z",
+   "created_at_i": 1795785391,
+   "num_comments": 0,
+   "objectID": "50666592",
+   "points": 1,
+   "story_id": 50666592,
+   "title": "Learn words from shows and videos, then duel your friends",
+   "updated_at": "2026-11-27T13:31:31Z",
+   "url": "https://chromewebstore.google.com/detail/cinevocab/glhogfbfbjifiihgffjpjgijkjplebkl"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_mattw2121",
+    "story_50666587",
+    "show_hn"
+   ],
+   "author": "mattw2121",
+   "created_at": "2026-11-27T13:16:05Z",
+   "created_at_i": 1795785365,
+   "num_comments": 0,
+   "objectID": "50666587",
+   "points": 1,
+   "story_id": 50666587,
+   "story_text": "I made this game just for the fun of it and was hoping some of you might find it fun as well. It&#x27;s a daily game where you need to analyze data from public sources and then set toggles before the daily cut off. The goal is to get all the toggles right and be able to maintain them.<p>I have an open beta starting November 30th to work out any kinks before the first official season starts on January 4th.<p>The example on the front page gives you an idea of how the toggles work. When you &quot;lock&quot; each day you are simulating what the system will do each day at 23:00 UTC. After locking the demo&#x2F;example it also shows you what the data was behind the toggle, though you won&#x27;t see that in the real game since the point is to figure it out :)<p>As the game progresses, it will drop hints for toggles in case you are having a hard time figuring out their source.<p>I actually did a one time run of this game (much more basic than it is today) 2-3 years ago and received a lot of positive feedback, so decided to rebuild it into something that could run over and over with multiple seasons.<p>Would really appreciate any feedback!",
+   "title": "Show HN: Toggles, Data Analysis Game",
+   "updated_at": "2026-11-27T13:18:01Z",
+   "url": "https://toggles.codewalkers.net"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_zanex-dev",
+    "story_50666547",
+    "show_hn"
+   ],
+   "author": "zanex-dev",
+   "children": [
+    50666572
+   ],
+   "created_at": "2026-11-27T13:12:37Z",
+   "created_at_i": 1795785157,
+   "num_comments": 0,
+   "objectID": "50666547",
+   "points": 1,
+   "story_id": 50666547,
+   "title": "Show HN: Reiji-Maigo \u2013 Zero-dep SQLite agent memory without vector DBs",
+   "updated_at": "2026-11-27T13:22:01Z",
+   "url": "https://github.com/zanex-dev/reiji-maigo"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Brajeshwar",
+    "story_50666541"
+   ],
+   "author": "Brajeshwar",
+   "created_at": "2026-11-27T13:11:48Z",
+   "created_at_i": 1795785108,
+   "num_comments": 0,
+   "objectID": "50666541",
+   "points": 1,
+   "story_id": 50666541,
+   "title": "Formlabs Form Studio 1 Teardown",
+   "updated_at": "2026-11-27T13:12:47Z",
+   "url": "https://www.bunniestudios.com/blog/2026/formlabs-form-studio-1-teardown/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_dowonseo",
+    "story_50666537"
+   ],
+   "author": "dowonseo",
+   "created_at": "2026-11-27T13:11:32Z",
+   "created_at_i": 1795785092,
+   "num_comments": 0,
+   "objectID": "50666537",
+   "points": 1,
+   "story_id": 50666537,
+   "title": "30-year-old text browser is still best web reader for coding agents",
+   "updated_at": "2026-11-27T13:12:47Z",
+   "url": "https://dowonseo.com/blog/best-web-reader-for-coding-agents/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_dabeku",
+    "story_50666520",
+    "ask_hn"
+   ],
+   "author": "dabeku",
+   "created_at": "2026-11-27T13:10:17Z",
+   "created_at_i": 1795785017,
+   "num_comments": 0,
+   "objectID": "50666520",
+   "points": 1,
+   "story_id": 50666520,
+   "story_text": "My wife is a piano teacher, and she often encounters a simple problem: students return home after their lessons and forget how a piece is supposed to sound or how a particular passage should be played.<p>I built Sheetlytic, an app that turns a photo of sheet music into playable music.<p>The idea is to bridge the gap between reading sheet music and hearing it, without having to search for an existing recording or manually enter notes into notation software.<p>While the original motivation came from piano teaching, I think it could also be useful for musicians learning unfamiliar pieces on their own.<p>Sheetlytic is available on:<p>Android: https:&#x2F;&#x2F;play.google.com&#x2F;store&#x2F;apps&#x2F;details?id=verbosus.sheetlytic<p>iOS: https:&#x2F;&#x2F;apps.apple.com&#x2F;us&#x2F;app&#x2F;sheet-music-scanner-player&#x2F;id6830832313<p>Windows: https:&#x2F;&#x2F;apps.microsoft.com&#x2F;detail&#x2F;9p2pm166vc69<p>I&#x27;m the developer and would love to hear your feedback, particularly on usability, recognition accuracy, and potential use cases.<p>Happy to answer any questions!",
+   "title": "Sheetlytic \u2013 Take a photo of sheet music and hear it play",
+   "updated_at": "2026-11-27T13:31:02Z"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_10xDev",
+    "story_50666512"
+   ],
+   "author": "10xDev",
+   "created_at": "2026-11-27T13:09:57Z",
+   "created_at_i": 1795784997,
+   "num_comments": 0,
+   "objectID": "50666512",
+   "points": 2,
+   "story_id": 50666512,
+   "title": "France in technical recession after quarterly revisions",
+   "updated_at": "2026-11-27T13:54:32Z",
+   "url": "https://www.reuters.com/markets/europe/french-economy-contracts-more-than-expected-third-quarter-2026-11-27/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_davidnashdev",
+    "story_50666506",
+    "show_hn"
+   ],
+   "author": "davidnashdev",
+   "created_at": "2026-11-27T13:09:12Z",
+   "created_at_i": 1795784952,
+   "num_comments": 0,
+   "objectID": "50666506",
+   "points": 1,
+   "story_id": 50666506,
+   "story_text": "Hey HN, I built* HIIT Builder (<a href=\"https:&#x2F;&#x2F;hiitbuilder.app\" rel=\"nofollow\">https:&#x2F;&#x2F;hiitbuilder.app</a>) because I don&#x27;t want to get fat. Truly I could just stop there.<p>But for more context, I got tired of hunting for YouTube workout videos that have both good routines and decent music. Turns out most YT workout creators, even the massive ones who could afford a license, have terrible music. So, fk it, I&#x27;ll build my own workout generator and play my own Spotify playlists instead.<p>So far workouts have been completed across 13 countries (US, Iraq, Bangladesh, Austria, France, Germany, Brazil, Ukraine, Turkey, Netherlands, Spain, Chile, Australia), and someone in the Faroe Islands, either physically or maybe just their VPN, started one too.<p>A few technical details that might be interesting to my fellow nerds here:<p>After a few ugly first prototypes for the stick figures, I ended up using the strategy of modeling every animation as a compact 34-number pose vector (joint angles, abduction, etc.) like a 3D skeleton, then projecting it to a 2D SVG. That way any move can be rendered at any angle without having to re-do any major work.<p>For workout order, instead of pure random shuffles the routine builder runs simulated annealing over a fixed standing&#x2F;floor block shape. This makes it so that trips to the floor are limited and muscle groups are rotated logically. Rest time is actually rest instead of using that time to get up or get down off the floor constantly.<p>Since one of my main concerns was bringing your own music, there are no audio files at all. I did add countdown beeps though with synthesized chonky square waves so they cut through Spotify.<p>*Full disclosure: Using &#x27;built&#x27; nowadays is a dividing term lol. I used AI to write all the code for it. And while I&#x27;ve spent many hours reviewing and tweaking poses over and over until the form cues actually looked right, a few of the moves still have noticeable quirks that AI is bad at noticing. If you spot any weird ones let me know.",
+   "title": "Show HN: No-equipment workout generator with 3D-to-2D SVG figures",
+   "updated_at": "2026-11-27T13:12:47Z",
+   "url": "https://hiitbuilder.app/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_tosh",
+    "story_50666498"
+   ],
+   "author": "tosh",
+   "created_at": "2026-11-27T13:07:59Z",
+   "created_at_i": 1795784879,
+   "num_comments": 0,
+   "objectID": "50666498",
+   "points": 1,
+   "story_id": 50666498,
+   "title": "How to Ranger Roll a T-Shirt",
+   "updated_at": "2026-11-27T13:12:47Z",
+   "url": "https://www.instructables.com/How-to-Ranger-Roll-a-T-Shirt/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_firefax",
+    "story_50666487"
+   ],
+   "author": "firefax",
+   "created_at": "2026-11-27T13:06:34Z",
+   "created_at_i": 1795784794,
+   "num_comments": 0,
+   "objectID": "50666487",
+   "points": 3,
+   "story_id": 50666487,
+   "title": "She Reported Her Sexual Assault. The Marine Corps Kicked Her Out",
+   "updated_at": "2026-11-27T14:21:02Z",
+   "url": "https://thewarhorse.org/marine-corps-administrative-separation-after-sexual-assault/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_bakigul",
+    "story_50666468"
+   ],
+   "author": "bakigul",
+   "created_at": "2026-11-27T13:04:35Z",
+   "created_at_i": 1795784675,
+   "num_comments": 0,
+   "objectID": "50666468",
+   "points": 2,
+   "story_id": 50666468,
+   "title": "GitHub profile as an RPG character card",
+   "updated_at": "2026-11-27T14:00:21Z",
+   "url": "https://gitscout.io/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_bko",
+    "story_50666436",
+    "front_page"
+   ],
+   "author": "bko",
+   "children": [
+    50666675,
+    50666748,
+    50666689,
+    50666779,
+    50666808,
+    50666733,
+    50667325,
+    50666758,
+    50666868,
+    50666823,
+    50666726,
+    50666783,
+    50667050,
+    50666895,
+    50666905,
+    50666764,
+    50667120,
+    50667113,
+    50666772,
+    50667151,
+    50666945,
+    50666750,
+    50666694,
+    50666889,
+    50666867,
+    50666682
+   ],
+   "created_at": "2026-11-27T13:01:02Z",
+   "created_at_i": 1795784462,
+   "num_comments": 98,
+   "objectID": "50666436",
+   "points": 65,
+   "story_id": 50666436,
+   "title": "Counseling for mental health decreases likelihood of protesting by 34%\u201339%",
+   "updated_at": "2026-11-27T14:28:16Z",
+   "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/ssqu.70219"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_jazzzooo",
+    "story_50666435"
+   ],
+   "author": "jazzzooo",
+   "created_at": "2026-11-27T13:00:54Z",
+   "created_at_i": 1795784454,
+   "num_comments": 0,
+   "objectID": "50666435",
+   "points": 1,
+   "story_id": 50666435,
+   "title": "Building a global interactive treasure hunt",
+   "updated_at": "2026-11-27T13:02:17Z",
+   "url": "https://needle.global/hexagons#needle{HNHN-HNHN}"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_sohkamyung",
+    "story_50666433"
+   ],
+   "author": "sohkamyung",
+   "created_at": "2026-11-27T13:00:21Z",
+   "created_at_i": 1795784421,
+   "num_comments": 0,
+   "objectID": "50666433",
+   "points": 2,
+   "story_id": 50666433,
+   "title": "Washington state inventor who pioneered CD, DVD technology dies at 95",
+   "updated_at": "2026-11-27T14:03:32Z",
+   "url": "https://www.chronline.com/stories/washington-state-inventor-who-pioneered-cd-dvd-technology-dies-at-95,412334"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_surprisetalk",
+    "story_50666431"
+   ],
+   "author": "surprisetalk",
+   "created_at": "2026-11-27T13:00:05Z",
+   "created_at_i": 1795784405,
+   "num_comments": 0,
+   "objectID": "50666431",
+   "points": 1,
+   "story_id": 50666431,
+   "title": "\"Super Turing Computing\" by Hava T. Siegelmann [video]",
+   "updated_at": "2026-11-27T13:02:17Z",
+   "url": "https://www.youtube.com/watch?v=VX81ItGTnbo"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_colourcode",
+    "story_50666422",
+    "show_hn"
+   ],
+   "author": "colourcode",
+   "children": [
+    50666822
+   ],
+   "created_at": "2026-11-27T12:59:13Z",
+   "created_at_i": 1795784353,
+   "num_comments": 1,
+   "objectID": "50666422",
+   "points": 2,
+   "story_id": 50666422,
+   "title": "Show HN: Open-source Hotjar for AI prototypes",
+   "updated_at": "2026-11-27T13:41:46Z",
+   "url": "https://www.recap-ux.com/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_matthewweaver",
+    "story_50666419"
+   ],
+   "author": "matthewweaver",
+   "created_at": "2026-11-27T12:58:54Z",
+   "created_at_i": 1795784334,
+   "num_comments": 0,
+   "objectID": "50666419",
+   "points": 1,
+   "story_id": 50666419,
+   "title": "What Should You Learn When Machines Can Learn Too?",
+   "updated_at": "2026-11-27T13:02:17Z",
+   "url": "https://weaversgambit.substack.com/p/what-should-you-learn-when-machines"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_lollisoft",
+    "story_50666409",
+    "show_hn"
+   ],
+   "author": "lollisoft",
+   "created_at": "2026-11-27T12:57:29Z",
+   "created_at_i": 1795784249,
+   "num_comments": 0,
+   "objectID": "50666409",
+   "points": 2,
+   "story_id": 50666409,
+   "story_text": "I am happy to publish a major release 1.3.6.<p>Today I have made the decision to finally release the latest changes to the public.\nThe Mac OS X for Arm dmg zip file contains an Apple signed version. The Windows\nversions are all not yet signed due to lack of money. So please feel free to read\nthe project description and make a donation I finally have placed to allow me regular\nsigning with Certum OSS code signing certificates.<p>If these are finally got signed, I replace the corresponding files and rename them with\na -signed ending in name.<p>What has changed:<p>Updated and fixed:<p>* XSLT export and import settings in the properties pane were broken within the 32Bit and 64Bit\n  built using current code settings and wxWidgets 3.2.2.1\n* Again activated reverse engineering feature that was tested this time against a Sql Server database\n* New integration of Github repository without loss of the history and seamless syncing from within\n  my old CVS development setup (I still need - read on Github readme.md)\n* Integrated OBS build for openSuSE Tumbleweed that will create 32Bit and 64Bit versions where 64Bit\n  were tested",
+   "title": "Show HN: LbDMF \u2013 Distributed Multiplatform Framework \u2013 1.3.6",
+   "updated_at": "2026-11-27T13:06:47Z",
+   "url": "https://sourceforge.net/projects/lbdmf/files/lbdmf/lbDMF-1.3.6/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_meysamazad",
+    "story_50666401"
+   ],
+   "author": "meysamazad",
+   "created_at": "2026-11-27T12:56:55Z",
+   "created_at_i": 1795784215,
+   "num_comments": 0,
+   "objectID": "50666401",
+   "points": 1,
+   "story_id": 50666401,
+   "title": "TLS-RPT Report Analyzer",
+   "updated_at": "2026-11-27T13:02:17Z",
+   "url": "https://dmarcguard.io/tools/tls-report-analyzer/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_meysamazad",
+    "story_50666400"
+   ],
+   "author": "meysamazad",
+   "created_at": "2026-11-27T12:56:52Z",
+   "created_at_i": 1795784212,
+   "num_comments": 0,
+   "objectID": "50666400",
+   "points": 1,
+   "story_id": 50666400,
+   "title": "Browser Support for local HTTP/3 Development",
+   "updated_at": "2026-11-27T12:57:32Z",
+   "url": "https://wuemeli.com/blog/how-to-setup-firefox-for-local-http-3-development/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_meysamazad",
+    "story_50666399"
+   ],
+   "author": "meysamazad",
+   "created_at": "2026-11-27T12:56:50Z",
+   "created_at_i": 1795784210,
+   "num_comments": 0,
+   "objectID": "50666399",
+   "points": 1,
+   "story_id": 50666399,
+   "title": "Setting up MatrixRTC for Continuwuity with LiveKit and LK-JWT-service",
+   "updated_at": "2026-11-27T12:57:32Z",
+   "url": "https://awesomesheep48.ca/continuwuity-and-livekit.html"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Ericuka",
+    "story_50666391"
+   ],
+   "author": "Ericuka",
+   "created_at": "2026-11-27T12:56:08Z",
+   "created_at_i": 1795784168,
+   "num_comments": 0,
+   "objectID": "50666391",
+   "points": 1,
+   "story_id": 50666391,
+   "title": "Brush 0.5 Passing 96% of Upstream Test Suite for Bash Shell Written in Rust",
+   "updated_at": "2026-11-27T12:57:02Z",
+   "url": "https://www.phoronix.com/news/Brush-0.5-Released"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Hakurendev",
+    "story_50666386",
+    "show_hn"
+   ],
+   "author": "Hakurendev",
+   "children": [
+    50666412
+   ],
+   "created_at": "2026-11-27T12:55:47Z",
+   "created_at_i": 1795784147,
+   "num_comments": 0,
+   "objectID": "50666386",
+   "points": 2,
+   "story_id": 50666386,
+   "title": "Show HN: Tumblr Likes Calendar \u2013 heatmap, search and gallery for Tumblr likes",
+   "updated_at": "2026-11-27T13:04:30Z",
+   "url": "https://github.com/Amicolinux/tumblr-likes-calendar"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_freakynit",
+    "story_50666375",
+    "front_page"
+   ],
+   "author": "freakynit",
+   "children": [
+    50667065,
+    50666887,
+    50667063,
+    50667030,
+    50667201,
+    50666934,
+    50666850,
+    50666933
+   ],
+   "created_at": "2026-11-27T12:54:11Z",
+   "created_at_i": 1795784051,
+   "num_comments": 16,
+   "objectID": "50666375",
+   "points": 67,
+   "story_id": 50666375,
+   "title": "US Air Force's cloud computing platform hacked",
+   "updated_at": "2026-11-27T14:28:16Z",
+   "url": "https://news.sky.com/story/us-air-forces-cloud-computing-platform-hacked-13617163"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_elsewhen",
+    "story_50666374"
+   ],
+   "author": "elsewhen",
+   "created_at": "2026-11-27T12:54:07Z",
+   "created_at_i": 1795784047,
+   "num_comments": 0,
+   "objectID": "50666374",
+   "points": 1,
+   "story_id": 50666374,
+   "title": "Microsoft: China's Salt Typhoon hackers are using Artex",
+   "updated_at": "2026-11-27T12:57:02Z",
+   "url": "https://therecord.media/microsoft-china-salt-typhoon-using-artex-ai-tool"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_spookily4136",
+    "story_50666367"
+   ],
+   "author": "spookily4136",
+   "created_at": "2026-11-27T12:53:42Z",
+   "created_at_i": 1795784022,
+   "num_comments": 0,
+   "objectID": "50666367",
+   "points": 1,
+   "story_id": 50666367,
+   "title": "Why Are Event Driven Systems (EDA) Hard? \u2013 Event Schema Changes",
+   "updated_at": "2026-11-27T12:57:02Z",
+   "url": "https://www.youtube.com/watch?v=P44-1neviLw"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Danhale93",
+    "story_50666364"
+   ],
+   "author": "Danhale93",
+   "created_at": "2026-11-27T12:53:21Z",
+   "created_at_i": 1795784001,
+   "num_comments": 0,
+   "objectID": "50666364",
+   "points": 4,
+   "story_id": 50666364,
+   "title": "New York AG Launches Special Unit to Monitor and Police Artificial Intelligence",
+   "updated_at": "2026-11-27T13:18:01Z",
+   "url": "https://www.gadgetreview.com/new-york-ag-launches-special-unit-to-monitor-and-police-artificial-intelligence"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_tosh",
+    "story_50666362"
+   ],
+   "author": "tosh",
+   "created_at": "2026-11-27T12:53:16Z",
+   "created_at_i": 1795783996,
+   "num_comments": 0,
+   "objectID": "50666362",
+   "points": 1,
+   "story_id": 50666362,
+   "title": "Ephemeralization",
+   "updated_at": "2026-11-27T12:57:02Z",
+   "url": "https://en.wikipedia.org/wiki/Ephemeralization"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Diraan",
+    "story_50666356"
+   ],
+   "author": "Diraan",
+   "children": [
+    50666543
+   ],
+   "created_at": "2026-11-27T12:52:17Z",
+   "created_at_i": 1795783937,
+   "num_comments": 1,
+   "objectID": "50666356",
+   "points": 1,
+   "story_id": 50666356,
+   "title": "AWS adds virtual iPhones to its cloud",
+   "updated_at": "2026-11-27T13:13:00Z",
+   "url": "https://www.theregister.com/off-prem/2026/11/27/aws-adds-virtual-iphones-to-its-cloud/5312457"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_frostbyte7",
+    "story_50666349"
+   ],
+   "author": "frostbyte7",
+   "created_at": "2026-11-27T12:51:19Z",
+   "created_at_i": 1795783879,
+   "num_comments": 0,
+   "objectID": "50666349",
+   "points": 2,
+   "story_id": 50666349,
+   "title": "Tiny Hat \u2013 Linux distro for retro game development",
+   "updated_at": "2026-11-27T14:19:47Z",
+   "url": "https://roboticoverlords.org/tinyhat/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_madihaa",
+    "story_50666343"
+   ],
+   "author": "madihaa",
+   "children": [
+    50666361,
+    50666408
+   ],
+   "created_at": "2026-11-27T12:50:30Z",
+   "created_at_i": 1795783830,
+   "num_comments": 2,
+   "objectID": "50666343",
+   "points": 4,
+   "story_id": 50666343,
+   "title": "OpenAI sued in Germany over the hurdles to canceling ChatGPT",
+   "updated_at": "2026-11-27T14:19:19Z",
+   "url": "https://maccus.fr/en/chatgpt-cancellation-lawsuit/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_tosh",
+    "story_50666338"
+   ],
+   "author": "tosh",
+   "created_at": "2026-11-27T12:49:51Z",
+   "created_at_i": 1795783791,
+   "num_comments": 0,
+   "objectID": "50666338",
+   "points": 1,
+   "story_id": 50666338,
+   "title": "A Study of Geodesic Domes",
+   "updated_at": "2026-11-27T12:51:46Z",
+   "url": "https://geodesemetry.net/"
+  }
+ ],
+ "hitsPerPage": 100,
+ "nbHits": 4028308,
+ "nbPages": 10,
+ "page": 0,
+ "params": "tags=story&hitsPerPage=100&advancedSyntax=true&analyticsTags=backend",
+ "processingTimeMS": 1,
+ "processingTimingsMS": {
+  "_request": {
+   "roundTrip": 19
+  },
+  "afterFetch": {
+   "format": {
+    "highlighting": 1,
+    "total": 1
+   }
+  },
+  "fetch": {
+   "scanning": 1
+  },
+  "total": 1
+ },
+ "query": "",
+ "serverTimeMS": 3
+}

@@ -1,0 +1,435 @@
+{
+ "exhaustive": {
+  "nbHits": false,
+  "typo": false
+ },
+ "exhaustiveNbHits": false,
+ "exhaustiveTypo": false,
+ "hits": [
+  {
+   "_tags": [
+    "story",
+    "author_croes",
+    "story_50667301"
+   ],
+   "author": "croes",
+   "created_at": "2026-11-27T14:22:57Z",
+   "created_at_i": 1795789377,
+   "num_comments": 0,
+   "objectID": "50667301",
+   "points": 1,
+   "story_id": 50667301,
+   "title": "What defenders need to know about agentic AI framework ARTEX threat actors abuse",
+   "updated_at": "2026-11-27T14:26:02Z",
+   "url": "https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_legend-of-alan",
+    "story_50665796",
+    "show_hn"
+   ],
+   "author": "legend-of-alan",
+   "children": [
+    50667258,
+    50666533
+   ],
+   "created_at": "2026-11-27T11:51:03Z",
+   "created_at_i": 1795780263,
+   "num_comments": 3,
+   "objectID": "50665796",
+   "points": 2,
+   "story_id": 50665796,
+   "story_text": "For those who are tracking, Anthropic released an announcement last week about their experimental code mode for Claude Code, claiming some bonkers token savings when it comes to tool calls (95% on some workloads(1)). I haven&#x27;t benchmarked it myself, but independent studies come in somewhere closer to 60~70% savings (2), but I digress. TLDR; I built an open-source version for the community.<p>Context: I&#x27;m writing an AI RPG engine called Spookery, and I immediately wanted to try this technique for myself when I heard of it. Agent deployment is currently dominated by token costs, especially during tool calling (single prompt generating tens or hundreds of tool calls). Unfortunately, it looks like the only ones who are doing this seriously are big agentic products like Claude Code and Codex. So, I thought it&#x27;d be fun to try it myself and bring it to you all!<p>The idea of Code Mode is simple but powerful. Instead of passing back tool call results back to the LLM one at a time, let the LLM batch calls by letting it write a short script using your tools. Basically taking 30 trips to the grocery store for 30 items and turning it into one trip to the store with a list in-hand.<p>There&#x27;s a few near-ish open-source options, but they used TypeScript backends, we&#x27;re a little boilerplate heavy, and I wanted to have something a little faster and Rust friendly for my game engine. Pydantic&#x27;s Monty seemed a good candidate--their self-reports are around 5x faster on execution and 100x faster on startup (3). I wouldn&#x27;t take the numbers to the bank, but it&#x27;s written on a Rust framework and the python backend is entirely built from Rust too.<p>Anyway, I had a couple of days off unexpectedly. So, I went temporarily insane and built a Rust tool to bring code mode to the greater community for free. In enough days to fit on one hand (and just as many hours of sleep), I came up with the implementation linked. I call it Ghost Mode. It&#x27;s MIT licensed. It&#x27;s a drop-in for your agent that already makes traditional tool calls. With ~20 lines of setup, you can convert your existing agent to a Code Mode agent.<p>I hope you get something out of this, and maybe I can save you some money. Considering how limiting token economics are right now, I think this could be a game changer for the industry. If there&#x27;s interest, I can imagine we can build also add some great new features, language compatibility, and other great things. Thanks for reading :)<p>Sources:\n(1) <a href=\"https:&#x2F;&#x2F;www.marktechpost.com&#x2F;2026&#x2F;11&#x2F;17&#x2F;anthropic-claude-code-code-mode-javascript-tool-calls&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;www.marktechpost.com&#x2F;2026&#x2F;11&#x2F;17&#x2F;anthropic-claude-cod...</a>\n(2) <a href=\"https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2611.19123\" rel=\"nofollow\">https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2611.19123</a>\n(3) <a href=\"https:&#x2F;&#x2F;pydantic.dev&#x2F;docs&#x2F;monty&#x2F;get-started&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;pydantic.dev&#x2F;docs&#x2F;monty&#x2F;get-started&#x2F;</a>",
+   "title": "Show HN: Open-Sourced Code Mode to Cut ~60% of My Rust Agent's Token Burn",
+   "updated_at": "2026-11-27T14:22:31Z",
+   "url": "https://github.com/legend-of-alan/ghostmode"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_6LLvveMx2koXfwn",
+    "story_50665732",
+    "front_page"
+   ],
+   "author": "6LLvveMx2koXfwn",
+   "children": [
+    50666605,
+    50666860,
+    50666616,
+    50666496,
+    50666229,
+    50666437,
+    50666273,
+    50666394,
+    50666205,
+    50666838,
+    50666666,
+    50666576
+   ],
+   "created_at": "2026-11-27T11:41:11Z",
+   "created_at_i": 1795779671,
+   "num_comments": 27,
+   "objectID": "50665732",
+   "points": 14,
+   "story_id": 50665732,
+   "title": "Pizza history: AI agent's cardless purchase is a first for UK",
+   "updated_at": "2026-11-27T14:27:46Z",
+   "url": "https://www.theguardian.com/business/2026/nov/27/ai-agent-cardless-transaction-pizza-papa-john-uk-fca-truelayer"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_martibravo",
+    "story_50665232",
+    "ask_hn"
+   ],
+   "author": "martibravo",
+   "children": [
+    50665396,
+    50665825
+   ],
+   "created_at": "2026-11-27T10:27:39Z",
+   "created_at_i": 1795775259,
+   "num_comments": 4,
+   "objectID": "50665232",
+   "points": 3,
+   "story_id": 50665232,
+   "story_text": "Over the last 5-6 months, I&#x27;ve been researching a lot about AI&#x2F;ML and harnesses from novel research papers, experimenting with transformer architectures, experimental harnesses, post-training reward weights, and stuff like that.<p>I&#x27;ve used Claude Code for almost two years to ship internal tools, dashboards, and full-stack apps with great results. On older projects I hand-checked code much more closely and Claude never pulled anything like this, so over time I stopped checking every line. I feel this is standard experience for agentic coding devs. Yet on anything touching AI&#x2F;ML research, or anything that smells remotely competitive with Anthropic&#x27;s own stack, it started behaving completely differently.<p>Instead of implementing the specs I hand-wrote, it quietly skipped them while swearing it was following them to a T. It blocked hooks and test execution while telling me everything was green, modified CI scripts so they&#x27;d pass without running actual checks, and filled the repo with bad tests. I added stricter hooks, subagent configs, guardrails, Alloy models, and AST-based clone detection, and it still only broke down like this on this repo. I got my Ultra refund and moved to another provider.<p>The visible Opus fallback tripped once or twice only in 6 months, right up to today.<p>With the justification of &quot;security&quot;, which is kind of understandable for the cyberdefense ramifications of AI, it still looks and feels like pulling up the ladder behind them while marketing Claude as your trustworthy agent for any kind of task. Why are we trusting a handful of labs with the future when they keep the real models to themselves and kneecap anyone else trying to build close to, or on, the frontier? It feels extremely anti-competitive.",
+   "title": "Ask HN: Is Claude Code nerfing AI and agent-harness projects?",
+   "updated_at": "2026-11-27T12:35:31Z"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_frostymux",
+    "story_50664781"
+   ],
+   "author": "frostymux",
+   "created_at": "2026-11-27T09:31:53Z",
+   "created_at_i": 1795771913,
+   "num_comments": 0,
+   "objectID": "50664781",
+   "points": 5,
+   "story_id": 50664781,
+   "title": "Muxlio: Durable workflow orchestration for AI agents and tools",
+   "updated_at": "2026-11-27T10:03:15Z",
+   "url": "https://muxlio.github.io/muxlio/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_axolotl_raja",
+    "story_50664604"
+   ],
+   "author": "axolotl_raja",
+   "created_at": "2026-11-27T09:06:51Z",
+   "created_at_i": 1795770411,
+   "num_comments": 0,
+   "objectID": "50664604",
+   "points": 1,
+   "story_id": 50664604,
+   "title": "AI Watchdogs India: A Coordinated AI Agent Swarm Auditing the Government",
+   "updated_at": "2026-11-27T09:11:15Z",
+   "url": "https://aiwatchdogs.in/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_antho1404",
+    "story_50664246",
+    "ask_hn"
+   ],
+   "author": "antho1404",
+   "created_at": "2026-11-27T08:18:39Z",
+   "created_at_i": 1795767519,
+   "num_comments": 0,
+   "objectID": "50664246",
+   "points": 1,
+   "story_id": 50664246,
+   "story_text": "Like everyone else, you build a product and need to charge your customers. Your first instinct is to go to Stripe. Stripe is the GOAT, so of course you&#x27;ll use it.<p>This is true and untrue, let&#x27;s say you&#x27;re building an AI product. You probably won&#x27;t charge your customers a flat monthly fee that covers all usage as they have a really different cost for your business depending on how they use your product. Instead, you might want to have pricing based on usage. Sounds good. Stripe covers that, case closed... Well, yes and no. There are two types of usage-based billing. One lets customers use the product and pay later, which exposes your business to unpaid bills, and we don&#x27;t want that... The other uses credits purchased up front.<p>Credits are what most businesses are moving toward nowadays. They give security on both sides, for the business and the customer. They also show you not only how your customers use your product but more importantly how they spend in your product.<p>So you&#x27;re sold on credits, great, let&#x27;s set them up in Stripe. This is where things start to get complicated. There&#x27;s a new account system to figure out, confusion between usage-based billing and credits, meters to set up, and that one credits tab to find in Stripe&#x27;s whole suite of products to monitor them. Then you have to make sure all the pieces work together, figure out how to keep your customers&#x27; credit balances in sync. Oh, and if you want to calculate your margin on every credit spent... good luck...<p>It&#x27;s doable, but far from trivial. It is similar to deploying your app on Vercel in a minute versus taking a course on how to deploy on AWS and rearchitect your whole app to match AWS architecture. You have better things to do, right? You&#x27;re building an AI product, not a credit system. You want an abstraction layer on top that makes your life easier, not harder.<p>By now, I hope you&#x27;re convinced there&#x27;s an easier way (even if your agent does most of the work). If you&#x27;ve used something like Vercel, it&#x27;s hard to imagine going back to DevOps and the low-level infrastructure of AWS. This is where a platform built for credits makes sense. It handles a lot of those architectural decisions for you so you don&#x27;t have to stitch everything together yourself, losing a bit of confidence with every stitch. You want to know which features customers spend their credits on, how much each of those features cost you and if your margin are protected even if you give away promotional credits.<p>Of course, managing credits and taking payments for them are two different jobs. You still want an established solution for payments, and Stripe is the best at that. That&#x27;s why this credit layer and payment solution should work together and integrate all the best things from Stripe.<p>That&#x27;s what we&#x27;re building with https:&#x2F;&#x2F;orbytelabs.com. We&#x27;ve built credit systems too many times and taken too many shortcuts in the past that came back to hurt the business later. We want to do for credits what Vercel did for application deployment. Keep the power of Stripe without having to deal with the complexity of building your own credit infrastructure.",
+   "title": "Why Stripe is not what you need to charge for your AI product (kind of)",
+   "updated_at": "2026-11-27T08:24:16Z"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_andsoitis",
+    "story_50663987"
+   ],
+   "author": "andsoitis",
+   "created_at": "2026-11-27T07:44:13Z",
+   "created_at_i": 1795765453,
+   "num_comments": 0,
+   "objectID": "50663987",
+   "points": 4,
+   "story_id": 50663987,
+   "title": "AI Coding Agents Shape Software Architecture",
+   "updated_at": "2026-11-27T10:03:15Z",
+   "url": "https://arxiv.org/abs/2604.04990"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_gmbrank",
+    "story_50662462",
+    "show_hn"
+   ],
+   "author": "gmbrank",
+   "created_at": "2026-11-27T03:32:58Z",
+   "created_at_i": 1795750378,
+   "num_comments": 0,
+   "objectID": "50662462",
+   "points": 1,
+   "story_id": 50662462,
+   "story_text": "Gmbrank tracks Google Business Profile rankings with geo-grid maps, showing how a business ranks for a keyword across locations in a city. It also tracks reviews and visibility over time for local businesses and agencies. Public site: <a href=\"https:&#x2F;&#x2F;www.gmbrank.ai&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;www.gmbrank.ai&#x2F;</a>",
+   "title": "Show HN: Gmbrank \u2013 Google Business Profile rank tracking with geo-grid maps",
+   "updated_at": "2026-11-27T03:35:30Z",
+   "url": "https://gmbrank.ai"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_PavleMiha",
+    "story_50661473",
+    "show_hn"
+   ],
+   "author": "PavleMiha",
+   "created_at": "2026-11-27T00:43:12Z",
+   "created_at_i": 1795740192,
+   "num_comments": 0,
+   "objectID": "50661473",
+   "points": 1,
+   "story_id": 50661473,
+   "story_text": "I was using Claude to learn physics and I was getting a bit frustrated with the interface (I kept interrupting the conversation to get a quick explainer on something, and there was no good interface for Claude to ask <i>me</i> questions) so I built Scolast!<p>It&#x27;s an AI tutor that follows Bloom&#x27;s findings (<a href=\"https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Bloom%27s_2_sigma_problem\" rel=\"nofollow\">https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Bloom%27s_2_sigma_problem</a>) that 1 to 1 tutoring, using <i>mastery learning</i> (basically only moving ahead when the student has demonstrated they learned something, but also moving ahead as quickly as possible) can have pretty incredible results, around two standard deviations higher than regular classroom learning. Bloom called it a problem because this was obviously untenable - but it&#x27;s actually possible now!<p>I also added little side explainers for anything that&#x27;s confusing, plus worksheets, and I&#x27;ve been iterating on the voice of the tutor, to try to get a sort of Feynman-y focus on the whys and the experiments and experiences that motivated each piece of knowledge.<p>I find that it&#x27;s quite remarkable, I&#x27;m actually retaining some of the physics I&#x27;ve never been able to retain in the past, and it seems useful in a lot of other domains - my wife used it for language learning and to pass a yoga exam; I&#x27;ve used it to learn some machine learning subjects, etc. One interesting side effect is that I find using it quite tiring, and I actually use tokens very slowly compared to agentic coding - when you actually have to read every token carefully you really get your money&#x27;s worth.<p>Would love to get people&#x27;s thoughts so I&#x27;m throwing in $3 in free tokens while my budget lasts. After that you can buy tokens and I&#x27;m charging an extra 10% to cover everything else. Eventually I&#x27;d like to hook it up to people&#x27;s existing subscriptions, I&#x27;ve applied to OAI&#x27;s program for this, waiting to see if Ant will offer it.<p>Cheers",
+   "title": "Show HN: Scolast \u2013 AI tutor for autodidacts inspired by Bloom's 2 sigma problem",
+   "updated_at": "2026-11-27T00:47:45Z",
+   "url": "https://scolast.com"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_frozenseven",
+    "story_50661242"
+   ],
+   "author": "frozenseven",
+   "created_at": "2026-11-27T00:07:25Z",
+   "created_at_i": 1795738045,
+   "num_comments": 0,
+   "objectID": "50661242",
+   "points": 3,
+   "story_id": 50661242,
+   "title": "Left to Solve: 57,410 open math problems, attacked by AI agents",
+   "updated_at": "2026-11-27T00:57:45Z",
+   "url": "https://lefttosolve.com/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_geox",
+    "story_50661218"
+   ],
+   "author": "geox",
+   "children": [
+    50662964,
+    50661821,
+    50665433,
+    50661947,
+    50662042,
+    50662142,
+    50662443,
+    50661762,
+    50662068
+   ],
+   "created_at": "2026-11-27T00:03:18Z",
+   "created_at_i": 1795737798,
+   "num_comments": 28,
+   "objectID": "50661218",
+   "points": 55,
+   "story_id": 50661218,
+   "title": "AI agents now control part of DeepMind's compute for Gemini experiments",
+   "updated_at": "2026-11-27T14:22:01Z",
+   "url": "https://the-decoder.com/ai-agents-now-control-part-of-deepminds-compute-for-gemini-experiments-but-recursive-self-improvement-remains-distant/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_geoctl",
+    "story_50660739",
+    "show_hn"
+   ],
+   "author": "geoctl",
+   "children": [
+    50660885
+   ],
+   "created_at": "2026-11-26T22:49:50Z",
+   "created_at_i": 1795733390,
+   "num_comments": 0,
+   "objectID": "50660739",
+   "points": 1,
+   "story_id": 50660739,
+   "story_text": "Cordium is a FOSS, self-hosted, identity-based, general-purpose sandbox platform built on Kubernetes. The primary differentiator here is that Cordium automatically assigns an identity to each sandbox to provide &quot;secretless&quot; secure zero-trust remote access to resources&#x2F;infrastructure (e.g. APIs, SSH, databases, k8s, etc.) without having to hold credentials and secrets (e.g. API keys and access tokens, SSH private keys&#x2F;passwords, database passwords, mTLS private keys, etc.) inside the sandbox.<p>The way it works is that every Cordium sandbox includes an Octelium ZTNA client (see <a href=\"https:&#x2F;&#x2F;github.com&#x2F;octelium&#x2F;octelium\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;octelium&#x2F;octelium</a>) which routes requests from the sandbox to the upstream resources through the Octelium Cluster running on the same underlying Kubernetes cluster over WireGuard tunnels. In the Octelium Cluster, each upstream resource is protected by a corresponding identity-aware proxy that actually holds the upstream credential that injects the credential on-the-fly to the upstream if the downstream (i.e. the Cordium sandbox) is authorized by an Octelium policy.<p>In short, Cordium is basically a sandbox platform with a _dual nature_: it doesn&#x27;t just provide isolated execution runtimes but it also provides and identity and access infrastructure to provide secure secretless remote access, identity management, L7-aware access control and visibility for every request originating from within the sandbox. You can use it for various use cases from a personal self-hosted GitHub Codespaces alternative for remote development as well as a scalable sandbox platform for AI agents to access infrastructure without handling them your credentials at scale. You can also use it as an infrastructure layer to build more complex applications such as agent meshes.<p>The primary features include declarative management, Templates and prebuilds, persistent, ephemeral and forkable storage via Kubernetes volume snapshots, lifecycle tasks, controls such as linux caps, read-only filesystem and egress control, access and management over web portal&#x2F;SSH&#x2F;CLI as well as SDKs in Go&#x2F;Rust&#x2F;Python&#x2F;Typescript. You can learn more about Cordium, its features in detail and how it works, please visit the docs at <a href=\"https:&#x2F;&#x2F;octelium.com&#x2F;docs&#x2F;cordium&#x2F;latest&#x2F;overview&#x2F;intro\" rel=\"nofollow\">https:&#x2F;&#x2F;octelium.com&#x2F;docs&#x2F;cordium&#x2F;latest&#x2F;overview&#x2F;intro</a><p>You can also try a live demo for the Cordium web portal at <a href=\"https:&#x2F;&#x2F;demo.octelium.com&#x2F;cordium\" rel=\"nofollow\">https:&#x2F;&#x2F;demo.octelium.com&#x2F;cordium</a> and a CLI playground at <a href=\"https:&#x2F;&#x2F;demo.octelium.com&#x2F;cli\" rel=\"nofollow\">https:&#x2F;&#x2F;demo.octelium.com&#x2F;cli</a>",
+   "title": "Show HN: Sandbox platform on Kubernetes for secure remote access without secrets",
+   "updated_at": "2026-11-26T23:10:43Z",
+   "url": "https://github.com/octelium/cordium"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_Max-20",
+    "story_50660683",
+    "ask_hn"
+   ],
+   "author": "Max-20",
+   "created_at": "2026-11-26T22:44:05Z",
+   "created_at_i": 1795733045,
+   "num_comments": 0,
+   "objectID": "50660683",
+   "points": 2,
+   "story_id": 50660683,
+   "story_text": "What type of AI related business would you start that A) has a real value for its users and B) could realistically be bootstrapped and build by single person?<p>I know OpenRouter wasn&#x27;t launched by single person, but you get what I mean, it wouldn&#x27;t have been overwhelming for a single good developer to build and launch.<p>Since I don&#x27;t only want to leech value I will give one idea myself:<p>Hosting and access to unrestricted open source LLMs for cybersecurity, agent testing, defense &amp; biological research<p>-&gt; Downside is obviously unclear legal risks",
+   "title": "Ask HN: What is the OpenRouter equivalent to launch in 2026?",
+   "updated_at": "2026-11-27T13:59:02Z"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_jaekwon",
+    "story_50660103"
+   ],
+   "author": "jaekwon",
+   "created_at": "2026-11-26T21:39:00Z",
+   "created_at_i": 1795729140,
+   "num_comments": 0,
+   "objectID": "50660103",
+   "points": 2,
+   "story_id": 50660103,
+   "title": "Agent Harness",
+   "updated_at": "2026-11-27T06:38:17Z",
+   "url": "https://github.com/gnosh-ai/gnosh"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_fwilhe",
+    "story_50658013",
+    "show_hn"
+   ],
+   "author": "fwilhe",
+   "children": [
+    50659336
+   ],
+   "created_at": "2026-11-26T18:20:41Z",
+   "created_at_i": 1795717241,
+   "num_comments": 1,
+   "objectID": "50658013",
+   "points": 3,
+   "story_id": 50658013,
+   "story_text": "I was frustrated with the LibreOffice UX for a long time, and since AI agents have arrived I finally could build an alternative that works well enough for me in my spare time. The feature set is intentionally limited, I&#x27;d be curious what people think of it.",
+   "title": "Show HN: Grind, my OpenDocument native office suite built in Rust",
+   "updated_at": "2026-11-27T10:22:32Z",
+   "url": "https://github.com/fwilhe2/grind"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_datascientist",
+    "story_50657727"
+   ],
+   "author": "datascientist",
+   "created_at": "2026-11-26T17:55:26Z",
+   "created_at_i": 1795715726,
+   "num_comments": 0,
+   "objectID": "50657727",
+   "points": 2,
+   "story_id": 50657727,
+   "title": "Tool-calling AI agents (not chatbots) predict slower firm hiring growth",
+   "updated_at": "2026-11-26T18:23:58Z",
+   "url": "https://arxiv.org/abs/2611.27210"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_HarsH_1849",
+    "story_50657159",
+    "show_hn"
+   ],
+   "author": "HarsH_1849",
+   "created_at": "2026-11-26T16:59:24Z",
+   "created_at_i": 1795712364,
+   "num_comments": 0,
+   "objectID": "50657159",
+   "points": 1,
+   "story_id": 50657159,
+   "title": "Show HN: Dev-Mem \u2013 Local-first SQLite knowledge graph for AI coding agents",
+   "updated_at": "2026-11-26T17:01:50Z",
+   "url": "https://github.com/HarsH-1877/Dev-Mem"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_swarmtips",
+    "story_50657140",
+    "show_hn"
+   ],
+   "author": "swarmtips",
+   "children": [
+    50657142
+   ],
+   "created_at": "2026-11-26T16:57:57Z",
+   "created_at_i": 1795712277,
+   "num_comments": 0,
+   "objectID": "50657140",
+   "points": 1,
+   "story_id": 50657140,
+   "title": "Show HN: Lean 4 and nanoda proof-compression bounties for AI agents ($0 gas)",
+   "updated_at": "2026-11-26T17:01:50Z",
+   "url": "https://swarm.tips/proofs/"
+  },
+  {
+   "_tags": [
+    "story",
+    "author_HarsH_1877",
+    "story_50657069",
+    "show_hn"
+   ],
+   "author": "HarsH_1877",
+   "created_at": "2026-11-26T16:51:34Z",
+   "created_at_i": 1795711894,
+   "num_comments": 0,
+   "objectID": "50657069",
+   "points": 8,
+   "story_id": 50657069,
+   "title": "Show HN: Dev-Mem \u2013 Local-first SQLite knowledge graph for AI coding agents",
+   "updated_at": "2026-11-27T06:32:45Z",
+   "url": "https://github.com/HarsH-1877/Dev-Mem"
+  }
+ ],
+ "hitsPerPage": 20,
+ "nbHits": 22067,
+ "nbPages": 50,
+ "page": 0,
+ "params": "query=AI+agent&tags=story&advancedSyntax=true&analyticsTags=backend",
+ "processingTimeMS": 29,
+ "processingTimingsMS": {
+  "_request": {
+   "queue": 1,
+   "roundTrip": 21
+  },
+  "afterFetch": {
+   "format": {
+    "highlighting": 1,
+    "total": 1
+   }
+  },
+  "fetch": {
+   "query": 1,
+   "scanning": 26,
+   "total": 28
+  },
+  "total": 29
+ },
+ "query": "AI agent",
+ "serverTimeMS": 32
+}
